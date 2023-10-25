@@ -1,0 +1,67 @@
+﻿@model ICollection<CommodityGroup>
+
+@{
+    ViewData["Title"] = "Danh mục nhóm hàng";
+   
+    var statusMessage = TempData["StatusMessage"] as string;
+}
+<div class="container">
+    <h3 class="title-list">@ViewData["Title"] </h3>
+    <partial name="_AlertMessage" model="@statusMessage" />
+    <a asp-action="create" asp-area="manager" asp-controller="commoditygroup" class="btn btn-primary">Thêm + </a>
+    <form autocomplete="off" asp-controller="commoditygroup" asp-antiforgery="true" asp-action="DownloadReport" method="post">
+        <button type="submit" id="btnsubmit" class="btn btn-success">Xuất file</button>
+    </form>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Tên</th>
+                <th scope="col">Id</th>
+                <th scope="col">Tính năng</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                await RenderTreeViewTable(Model, 0);
+            }
+           
+        </tbody>
+    </table>
+</div>
+
+
+@{
+    async Task RenderTreeViewTable(IEnumerable<CommodityGroup> groups, int leve)
+    {
+        var temp = leve;
+
+        var padingletf = temp + "px";
+
+        foreach (var group in groups)
+        {
+
+            <tr>
+
+                <td style="padding-left: @padingletf">@group.Name</td>
+
+                <td>
+                    @group.Id
+                </td>
+
+                <td>
+                    <a asp-action="delete" asp-area="manager" asp-controller="commoditygroup" asp-route-id="@group.Id" class="btn btn-sm btn-light">Xóa</a>
+                    <a asp-action="edit" asp-area="manager" asp-controller="commoditygroup" asp-route-id="@group.Id" class="btn btn-sm btn-light" class="btn btn-sm btn-light">Sửa</a>
+                </td>
+            </tr>
+
+            @if (group.CommodityGroupChildrens?.Count > 0)
+            {
+                temp += 17;
+                await RenderTreeViewTable(group.CommodityGroupChildrens, leve + 20);
+            }
+
+            temp = 0;
+        }
+
+    }
+}

@@ -1,0 +1,30 @@
+﻿
+@model Commodity
+@{
+    ViewData["Title"] = "Thêm hàng hóa";
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <h2>@ViewData["Title"]</h2>
+            <hr />
+            <div class="form-floating mb-3">
+                <input asp-for="@Model.Name" class="form-control"/>
+                <label asp-for="@Model.Name">Tên</label>
+                <span asp-validation-for="@Model.Name" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class=" btn btn-lg btn-primary">Thêm</button>
+            <a asp-area="manager" asp-action="index" asp-controller="commodity" class="btn btn-lg btn-light">Về</a>
+        </form>
+
+        <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

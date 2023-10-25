@@ -1,0 +1,75 @@
+﻿@model PagedList<Product>
+@{
+    ViewData["Title"] = "Danh mục sản phẩm & thuốc";
+    int i = 1;
+    var statusMessage = TempData["StatusMessage"] as string;
+
+    var paging = new Pagin()
+            {
+                UrlAction = "index",
+                CurrentPage = Model.CurrentPage,
+                TotalPages = Model.TotalPages,
+            };
+}
+<div class="container">
+    <h3 class="title-list">@ViewData["Title"] </h3>
+    <partial name="_AlertMessage" model="@statusMessage" />
+    <div class="container-fluid">
+        <a asp-action="create" asp-area="manager" asp-controller="product" class="btn btn-primary mb-2">Thêm + </a>
+        <form autocomplete="off" asp-controller="product" asp-antiforgery="true" asp-action="DownloadReport" method="post">
+             <button type="submit" id="btnsubmit" class="btn btn-success">Xuất file</button>    
+        </form>
+    </div>
+   
+    <table style="overflow-x: auto;" class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Id</th>
+                <th scope="col">Tên</th>
+                <th scope="col">Ảnh</th>               
+                <th scope="col">Giá bán</th>
+                <th scope="col">Giá vốn</th>
+                <th scope="col">Mã vạch</th>
+                <th scope="col">Chức năg</th>
+               
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var product in Model)
+            {
+                <tr>
+                    <th scope="row">@i</th>
+                    <td>@product.Id</td>
+                    <td>@product.Name</td>
+                    <td>
+                        @if (!string.IsNullOrEmpty(product.UrlImage))
+                        {
+                            <img style="width:50px; height: 50px;" src="@product.UrlImage" />
+                        }else
+                        {
+                            <img style="width:50px; height: 50px;" src="~/image/product.jpg" />
+                        }
+                        
+                     </td>
+                    <td>@product.Price</td>
+                    <td>@product.CapitalPrice</td>
+                    <td>@product.Code</td>
+                    <td>
+                        <a asp-action="delete" asp-area="manager" asp-controller="product" asp-route-id="@product.Id" class="btn btn-sm btn-light">Xóa</a>
+                        <a asp-action="edit" asp-area="manager" asp-controller="product" asp-route-id="@product.Id" class="btn btn-sm btn-light" class="btn btn-sm btn-light">Sửa</a>
+                        
+                    </td>
+                 
+
+                </tr>
+
+                i++;
+            }
+        </tbody>
+    </table>
+
+    @await Html.PartialAsync("_PaginPartial", paging)
+</div>
+

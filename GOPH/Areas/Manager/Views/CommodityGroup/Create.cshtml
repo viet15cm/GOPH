@@ -1,0 +1,38 @@
+﻿@model CommodityGroup
+@{
+    ViewData["Title"] = "Thêm nhóm hàng";
+    var SeleteCommodityGroups = ViewData["SeleteCommodityGroups"] as List<CommodityGroup>;
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <h2>@ViewData["Title"]</h2>
+            <hr />
+            <div class="form-floating mb-3">
+                <input asp-for="@Model.Name" class="form-control" />
+                <label asp-for="@Model.Name">Tên</label>
+                <span asp-validation-for="@Model.Name" class="text-danger"></span>
+            </div>
+
+            <div class=" mb-3">
+                <label class="form-label">Nhóm cha</label>
+                <select class="form-select" aria-label="Default select example" asp-for="@Model.ParentCommodityGroupId"
+                        asp-items="@(new SelectList(SeleteCommodityGroups,"Id","Name"))">
+                    <option value="">Không</option>
+                </select>
+                <span asp-validation-for="@Model.ParentCommodityGroupId"></span>
+            </div>
+            <button type="submit" class=" btn btn-lg btn-primary">Thêm</button>
+            <a asp-area="manager" asp-action="index" asp-controller="commoditygroup" class="btn btn-lg btn-light">Về</a>
+        </form>
+
+        <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

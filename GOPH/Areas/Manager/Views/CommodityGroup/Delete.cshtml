@@ -1,0 +1,23 @@
+﻿@model CommodityGroup
+@{
+    ViewData["Title"] = "Xóa mục nhóm hàng hóa";
+}
+
+<div class="container">
+    <h2>@ViewData["Title"] @Model.Name</h2>
+    <div class="row">
+        <div class="col-md-4">
+            <form method="post" asp-route-id="@Model.Id">
+                <button type="submit" class=" btn btn-lg btn-primary">Xóa</button>
+                <a asp-area="manager" asp-action="index" asp-controller="commoditygroup" class="btn btn-lg btn-light">Về</a>
+            </form>
+        </div>
+
+        <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

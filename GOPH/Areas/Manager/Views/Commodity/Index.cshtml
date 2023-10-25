@@ -1,0 +1,40 @@
+﻿@using GOPH.Entites;
+@model IEnumerable<Commodity>
+@{
+    ViewData["Title"] = "Danh mục hàng hóa";
+    int i = 1;
+    var statusMessage = TempData["StatusMessage"] as string;
+}
+<div class="container">
+    <h3 class="title-list">@ViewData["Title"] </h3>
+    <partial name="_AlertMessage" model="@statusMessage" />
+    <a asp-action="create" asp-area="manager" asp-controller="commodity" class="btn btn-primary">Thêm + </a>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Id</th>
+                <th scope="col">Tên</th>
+                <th scope="col">Tính năng</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var commodity in Model)
+            {
+                <tr>
+                    <th scope="row">@i</th>
+                    <td>@commodity.Id</td>
+                    <td>@commodity.Name</td>   
+                    <td>
+                        <a asp-action="delete" asp-area="manager" asp-controller="commodity" asp-route-id="@commodity.Id" class="btn btn-sm btn-light">Xóa</a>
+                        <a asp-action="edit" asp-area="manager" asp-controller="commodity" asp-route-id="@commodity.Id" class="btn btn-sm btn-light" class="btn btn-sm btn-light">Sửa</a>
+                    </td>
+                   
+                </tr>
+
+                i++;
+            }
+        </tbody>
+    </table>
+</div>
