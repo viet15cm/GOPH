@@ -12,6 +12,36 @@ namespace GOPH.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Commodities",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Commodities", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CommodityGroups",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ParentCommodityGroupId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CommodityGroups", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_CommodityGroups_CommodityGroups_ParentCommodityGroupId",
+                        column: x => x.ParentCommodityGroupId,
+                        principalTable: "CommodityGroups",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Roles",
                 columns: table => new
                 {
@@ -51,6 +81,37 @@ namespace GOPH.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Products",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Code = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CapitalPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    UrlImage = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CommodidyId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    CommodityGroupId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    HangHoa = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NhomHang = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Products", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Products_Commodities_CommodidyId",
+                        column: x => x.CommodidyId,
+                        principalTable: "Commodities",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Products_CommodityGroups_CommodityGroupId",
+                        column: x => x.CommodityGroupId,
+                        principalTable: "CommodityGroups",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -160,6 +221,21 @@ namespace GOPH.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_CommodityGroups_ParentCommodityGroupId",
+                table: "CommodityGroups",
+                column: "ParentCommodityGroupId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Products_CommodidyId",
+                table: "Products",
+                column: "CommodidyId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Products_CommodityGroupId",
+                table: "Products",
+                column: "CommodityGroupId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_RoleClaims_RoleId",
                 table: "RoleClaims",
                 column: "RoleId");
@@ -203,6 +279,9 @@ namespace GOPH.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "Products");
+
+            migrationBuilder.DropTable(
                 name: "RoleClaims");
 
             migrationBuilder.DropTable(
@@ -216,6 +295,12 @@ namespace GOPH.Migrations
 
             migrationBuilder.DropTable(
                 name: "UserTokens");
+
+            migrationBuilder.DropTable(
+                name: "Commodities");
+
+            migrationBuilder.DropTable(
+                name: "CommodityGroups");
 
             migrationBuilder.DropTable(
                 name: "Roles");

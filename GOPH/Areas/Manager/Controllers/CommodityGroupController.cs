@@ -209,6 +209,7 @@ namespace GOPH.Areas.Manager.Controllers
         [HttpPost]
         public async Task<IActionResult> DownloadReport(IFormCollection obj)
         {
+            
             string reportname = $"nhom_hang_{Guid.NewGuid():N}.xlsx";
 
             var list = await _context.CommodityGroups.ToListAsync();

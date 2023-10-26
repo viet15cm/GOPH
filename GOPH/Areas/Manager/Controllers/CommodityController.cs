@@ -1,6 +1,11 @@
-﻿using GOPH.DbContextLayer;
+﻿using AutoMapper.Internal.Mappers;
+using GOPH.ATMapper;
+using GOPH.DbContextLayer;
+using GOPH.Dto;
 using GOPH.Entites;
+using GOPH.Extensions.Extensions;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace GOPH.Areas.Manager.Controllers
 {
@@ -150,6 +155,31 @@ namespace GOPH.Areas.Manager.Controllers
                 return NotFound("Lỗi thử lại hoặc liên hệ admin");
             }
 
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> DownloadReport(IFormCollection obj)
+        {
+
+            string reportname = $"hang_hoa_{Guid.NewGuid():N}.xlsx";
+
+            var list = await _context.Commodities.ToListAsync();
+
+            var listDto = ObjectMapper.Mapper.Map<List<CommodityDto>>(list);
+
+
+            if (list.Count > 0)
+            {
+                var exportbytes = ExportFile.ExporttoExcel<CommodityDto>(listDto, reportname);
+
+                return File(exportbytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", reportname);
+            }
+            else
+            {
+                TempData["Message"] = "Không có dữ liệu để xuất file";
+                return View("index");
+            }
         }
     }
 }

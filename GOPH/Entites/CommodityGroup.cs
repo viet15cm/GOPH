@@ -24,9 +24,9 @@ namespace GOPH.Entites
         [Display(Name = "Nhóm cha")]
         public virtual CommodityGroup ParentGroup { set; get; }
 
-        [NotMapped]
+   
         public virtual ICollection<CommodityGroup> CommodityGroupChildrens { get; set; }
-        [NotMapped]
+      
         public virtual ICollection<Product> Products { get; set; }
     }
 }

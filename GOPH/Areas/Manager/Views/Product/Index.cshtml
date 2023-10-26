@@ -1,4 +1,5 @@
-﻿@model PagedList<Product>
+﻿
+@model PagedList<Product>
 @{
     ViewData["Title"] = "Danh mục sản phẩm & thuốc";
     int i = 1;
@@ -17,7 +18,10 @@
     <div class="container-fluid">
         <a asp-action="create" asp-area="manager" asp-controller="product" class="btn btn-primary mb-2">Thêm + </a>
         <form autocomplete="off" asp-controller="product" asp-antiforgery="true" asp-action="DownloadReport" method="post">
-             <button type="submit" id="btnsubmit" class="btn btn-success">Xuất file</button>    
+             <button type="submit" class="btn btn-success">Xuất file</button>    
+        </form>
+        <form asp-controller="product" asp-antiforgery="true" asp-action="EditAllProduct" method="post">
+            <button type="submit" class="btn btn-success">Cập nhật danh sách</button>
         </form>
     </div>
    
@@ -31,7 +35,11 @@
                 <th scope="col">Giá bán</th>
                 <th scope="col">Giá vốn</th>
                 <th scope="col">Mã vạch</th>
+                <th scope="col">Nhóm hàng</th>
+                <th scope="col">Hàng hóa</th>
+
                 <th scope="col">Chức năg</th>
+                <th></th>
                
             </tr>
         </thead>
@@ -56,6 +64,8 @@
                     <td>@product.Price</td>
                     <td>@product.CapitalPrice</td>
                     <td>@product.Code</td>
+                    <td>@product.CommodityGroupId</td>
+                    <td>@product.CommodidyId</td>
                     <td>
                         <a asp-action="delete" asp-area="manager" asp-controller="product" asp-route-id="@product.Id" class="btn btn-sm btn-light">Xóa</a>
                         <a asp-action="edit" asp-area="manager" asp-controller="product" asp-route-id="@product.Id" class="btn btn-sm btn-light" class="btn btn-sm btn-light">Sửa</a>

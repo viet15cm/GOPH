@@ -12,6 +12,5 @@ namespace GOPH.Dto
 
         public string ParentCommodityGroupId { get; set; }
 
-
     }
 }

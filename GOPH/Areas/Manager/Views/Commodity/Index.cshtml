@@ -9,6 +9,9 @@
     <h3 class="title-list">@ViewData["Title"] </h3>
     <partial name="_AlertMessage" model="@statusMessage" />
     <a asp-action="create" asp-area="manager" asp-controller="commodity" class="btn btn-primary">Thêm + </a>
+    <form autocomplete="off" asp-controller="commodity" asp-antiforgery="true" asp-action="DownloadReport" method="post">
+        <button type="submit" id="btnsubmit" class="btn btn-success">Xuất file</button>
+    </form>
     <table class="table">
         <thead>
             <tr>

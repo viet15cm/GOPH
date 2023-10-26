@@ -9,6 +9,10 @@ namespace GOPH.ATMapper
         public MappingProfile()
         {
             CreateMap<CommodityGroup, CommodityGroupDto>();
+
+            CreateMap<Product, ProductDto>();
+
+            CreateMap<Commodity, CommodityDto>();
         }
     }
 }

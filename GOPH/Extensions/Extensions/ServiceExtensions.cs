@@ -24,7 +24,5 @@ namespace GOPH.Extensions.Extensions
                           .AddDefaultTokenProviders();
         }
 
-
-
     }
 }
