@@ -1,0 +1,222 @@
+﻿
+.navbar-search {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+    margin-bottom: 5px;
+    width: 100%;
+
+    
+}
+
+.sticky {
+    position: fixed;
+    background: #0693e3;
+    
+    width: 100%;
+    top: 0;
+    z-index: 9999;
+}
+
+
+.navbar-below-left{
+    
+   width: 50%;
+   float: left;
+   
+}
+.navbar-below-menu{
+    padding: 0px;
+    margin: 0px;
+    float: left;
+}
+
+.navbar-below-menu li {
+    list-style: none;
+    float: left;
+    margin-left: 20px;
+    
+}
+
+
+.navbar-below-icon {
+    float: left;
+
+}
+.navbar-below-menu li a {
+    text-decoration: none;
+
+    display: block;
+    cursor: pointer;
+
+    line-height: 35px;
+
+    
+}
+
+
+.navbar-below-right {
+    float: right;
+    
+    width: 50%;
+    
+}
+
+.search-input {
+    position: relative;
+    margin-right: 20px;
+    width: 70%;
+ 
+    float: left;
+    font: 16px Nunito;
+}
+
+
+.search-input input {
+    height: 40px;
+    width: 100%;
+    border: #d4d4d4;
+    border-radius: 5px;
+    padding-left: 10px;
+    font-size: 18px;
+    box-shadow: 0px 1px 5px rgba(0,0,0,0.1);
+}
+
+    .search-input input[type=text] {
+        width: 100%;
+    }
+
+ .search-input  input[type=submit] {
+    background-color: #046A38;
+    color: #fff;
+    cursor: pointer;
+}
+
+.search-input  input:focus {
+    outline: none !important;
+    box-shadow: 0 1px 6px rgba(32,33,36,0.28);
+}
+
+.search-input .icon-search {
+    position: absolute;
+   
+    background: #d4d4d4;
+    right: 0px;
+    top: 0px;
+    border: none;
+    text-align: center;
+    line-height: 38px;
+    font-size: 20px;
+    
+    cursor: pointer;
+}
+
+.search-input .icon-search:hover{
+    background: #808080;
+    
+}
+
+.label-item-search {
+    text-align: justify;
+    font-size: 15px;
+   
+}
+
+
+.list_item_container {
+    display: flex;
+  
+}
+
+.ui-autocomplete li img {
+    width: 50px;
+    height: 50px;
+}
+
+.ui-autocomplete {
+    max-height: 600px;
+    overflow-y: auto;
+}
+
+.autocom-box {
+    position: relative;
+    border: 1px solid #d4d4d4;
+    border-bottom: none;
+    border-top: none;
+    z-index: 3;
+    position: relative;
+    top: 100%;
+    left: 0;
+    right: 0;
+}
+
+/*giỏ hàng*/
+.cart {
+    padding: 0px;
+    margin: 0px;
+    float: right;
+    
+    width: 20%;
+}
+
+.cart li {
+    list-style: none;
+}
+
+.cart li a {
+    text-decoration: none;
+    font-size: 25px;
+    color: #000000;
+}
+
+.cart span {
+    top: 0px;
+    font-size: 7px;
+}
+
+#icon-load {
+    display: none;
+}
+
+@media only screen and (max-width: 910px) {
+}
+
+@media only screen and (max-width: 700px) {
+
+
+    .navbar-below-right, .navbar-below-left {
+        width: 100%;
+        float: none;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+
+
+    .search-input {
+      width: 100%;
+      margin-top: 5px;
+      
+    }
+    .cart {
+        width: 10%;
+        position: absolute;
+        top: 10px;
+        right: 0px;
+    }
+
+    
+}
+
+@media only screen and (max-width: 413px) {
+
+    
+}
+
+
+@media only screen and (max-width: 361px) {
+
+}
+
+@media only screen and (max-width: 290px) {
+
+   
+}

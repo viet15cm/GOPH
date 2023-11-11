@@ -1,4 +1,4 @@
-﻿using Microsoft.DotNet.Scaffolding.Shared.Messaging;
+﻿
 using System.ComponentModel.DataAnnotations;
 
 namespace GOPH.Entites

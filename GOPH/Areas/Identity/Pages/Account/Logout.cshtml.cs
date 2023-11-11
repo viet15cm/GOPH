@@ -1,15 +1,9 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-#nullable disable
 
-using System;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using GOPH.Entites;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Logging;
+
 
 namespace GOPH.Areas.Identity.Pages.Account
 {
@@ -23,21 +17,25 @@ namespace GOPH.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
         }
-
+        public string ReturnUrl { get; set; }
+        public void OnGet()
+        {
+        }
         public async Task<IActionResult> OnPost(string returnUrl = null)
         {
+            ReturnUrl = returnUrl ?? Url.Content("~/");
+            
             await _signInManager.SignOutAsync();
-            _logger.LogInformation("User logged out.");
-            if (returnUrl != null)
+          
+            if (ReturnUrl != null)
             {
-                return LocalRedirect(returnUrl);
+                return LocalRedirect(ReturnUrl);
             }
             else
             {
-                // This needs to be a redirect so that the browser performs a new
-                // request and the identity for the user gets updated.
                 return RedirectToPage();
             }
         }
     }
 }
+

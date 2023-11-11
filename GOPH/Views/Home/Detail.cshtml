@@ -1,0 +1,172 @@
+﻿@model HomeController.ViewModel
+@{
+    Layout = "~/Views/Shared/_LayoutProduct.cshtml";
+    ViewData["Title"] = Model.CurentProduct;
+
+    var format = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+    var url = ViewData["curenturl"] as string;
+}
+
+<div class="bd-right-main-product">
+    <input type="hidden" id="router-id" value="@Model.GroupId" />
+    <div class="curent-product row">
+        <div class="col-md-6 left-side-card">
+            <div class="heading-card-title mt-4">
+                <h3><i class="bi bi-bookmarks text-dark"></i> @Model.CurentProduct.CommodityGroup.Name</h3>
+
+            </div>
+            <div class="row mt-3 mb-3">
+                <div class="col-md-6">
+                    <div class="lenovo-brand ml-4">
+                        <div class="share-button mr-5">
+                            <div id="fb-root"></div>
+                            <script>
+                                (function (d, s, id) {
+                                    var js, fjs = d.getElementsByTagName(s)[0];
+                                    if (d.getElementById(id)) return;
+                                    js = d.createElement(s); js.id = id;
+                                    js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0";
+                                    fjs.parentNode.insertBefore(js, fjs);
+                                }(document, 'script', 'facebook-jssdk'));</script>
+
+                            <!-- Your share button code -->
+                            <div class="fb-share-button"
+                                 data-href="@url"
+                                 data-layout="button_count">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div  class="col-md-6">
+                    
+                </div>
+            </div>
+            <div class="product-detail-tumb">
+                <img src="@Model.CurentProduct.UrlImage" />
+            </div>
+        </div>
+        <!-- right side card -->
+        <div class="col-md-6 pb-2 right-side-card">
+            <div class="main-card">
+                
+                <div class="heading-card-title-info mt-4">
+                    <h1>@Model.CurentProduct.Name</h1>
+                </div>
+                <div class="card-product-info pt-3">
+                    <h5>THÔNG TIN </h5>
+                    <div class="information">
+                        @if (string.IsNullOrEmpty(Model.CurentProduct.Description))
+                        {
+                          <p>Xin lỗi hiện nhà thuốc chưa cập nhật thông tin về sản phẩm này , Mời bạn đến nhà thuốc để nghe các dược sĩ tư vấn , hoặt gọi qua host phone bên dưới.</p>
+                           
+                        }
+                    </div>
+                    
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="price-tag">
+                         
+                            <span class="amount"><i class="bi bi-cash-coin"></i> @String.Format(format, "{0:c0}", Model.CurentProduct.Price )</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 add-to-cart-button">
+                        <button class="btn btn-primary"><i class="bi bi-cart-plus-fill"></i> Thêm vào giỏ</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="content">
+            <h5>Mô tả :</h5>
+            <p>
+                Sản phẩm hiện đang bày bán tại quầy , liên hệ host phone bên dưới để được tư vấn.
+            </p>
+        </div>
+    </div>
+  </div>
+
+<div class="alert alert-light">Sản phẩm liên quan</div>
+ <div>
+    <div id="list-card-product" class="cards">
+       
+        @foreach (var item in Model.Products)
+        {
+            <div class="product-card">
+                @if (item.Hot)
+                {
+                    <div class="badge">Hot</div>
+                }
+
+                @if (@item.Promotion > 0)
+                {
+                    <div class="position-absolute end-0 bg-warning fw-bold p-1">
+                        @String.Format("{0}{1}{2}","-", @item.Promotion,"%")
+                    </div>
+                }
+                <div class="product-tumb">
+                    @if (!string.IsNullOrEmpty(item.UrlImage))
+                    {
+                        <img src="@item.UrlImage" alt="">
+                    }
+                    else
+                    {
+                        <img src="~/image/goph.jpg" />
+                    }
+                </div>
+                <div class="product-details">
+                    <span class="product-catagory">@item.CommodityGroup.Name</span>
+                    <h4><a asp-area="" asp-action="detail" asp-route-id="@item.Id" >@item.Name</a></h4>
+                    <p>@*Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero, possimus nostrum!*@</p>
+                    <div class="product-bottom-details">
+                        <div class="product-price">
+                            @if (item.Promotion > 0)
+                            {
+                                @if (item.IsPrice)
+                                {
+                                    <small>@String.Format(format, "{0:c0}", @item.Price )</small>
+                                    @String.Format(format, "{0:c0}",@String.Format(format, "{0:c0}", @item.Price - (@item.Price * item.Promotion) / 100 ))
+                                }
+                            }
+                            else
+                            {
+                                @if (item.IsPrice)
+                                {
+                                    @String.Format(format, "{0:c0}", @item.Price )
+                                }
+
+                            }
+                        </div>
+                        <div class="product-links">
+                            <a href=""><i class="bi bi-bag-plus"></i></a>
+                            <a href=""><i class="bi bi-chat-heart"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        }
+    </div>
+</div>
+@section MenuGroups {
+    @await Component.InvokeAsync(MenuGroups.COMPONENTNAME,
+             new MenuGroups.Menu()
+             {
+                 CurentGroup = Model.CurentGroup,
+                 Groups = Model.Groups,
+                 GroupId = Model.GroupId,
+                 listSerialUrl = Model.listSerialUrl
+
+             })
+}
+
+@section Scripts{
+}
+
+@section FacebookSharedHead{
+    <meta property="og:url" content="@url" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="@Model.CurentProduct.Name" />
+    <meta property="og:description" content="@Model.CurentProduct.Description" />
+    <meta property="og:image" content="@Model.CurentProduct.UrlImage" />
+}
+

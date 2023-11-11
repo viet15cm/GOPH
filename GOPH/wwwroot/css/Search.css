@@ -1,0 +1,156 @@
+﻿/*::selection {
+    color: #fff;
+    background: #ff654a;
+}*/
+
+
+/*.search-input {
+    position: relative;
+    margin-right: 20px;
+    width: 100%;
+   
+    font: 16px Nunito;
+}
+
+.dgdsg{
+ 
+    width: 600px;
+    background: red;
+}
+
+.search-input input {
+    height: 40px;
+    width: 100%;
+    border: #d4d4d4;
+    border-radius: 5px;
+    padding-left: 10px;
+    font-size: 18px;
+    box-shadow: 0px 1px 5px rgba(0,0,0,0.1);
+}
+
+    .search-input input[type=text] {
+        width: 100%;
+    }
+
+ .search-input  input[type=submit] {
+    background-color: #046A38;
+    color: #fff;
+    cursor: pointer;
+}
+
+.search-input  input:focus {
+    outline: none !important;
+    box-shadow: 0 1px 6px rgba(32,33,36,0.28);
+}*/
+
+/*.search-input .autocom-box {
+    padding: 0;
+    opacity: 0;
+    pointer-events: none;
+    overflow-y: auto;
+}
+
+.search-input.active .autocom-box {
+  
+    opacity: 1;
+    pointer-events: auto;
+}*/
+
+/*.autocom-box {
+    position: relative;
+    border: 1px solid #d4d4d4;
+    border-bottom: none;
+    border-top: none;
+    z-index: 99;
+    position : relative;
+    top: 100%;
+    left: 0;
+    right: 0;
+}*/
+
+/*.autocom-box li{
+    padding: 10px;
+    margin: 0px;
+    cursor: pointer;
+    background-color: #fff;
+    list-style: none;*/
+    /*border-bottom: 1px solid #d4d4d4; */
+/*}*/
+
+/*.ui-autocomplete{
+    position:unset;
+
+}
+.ui-autocomplete li img {
+    width: 50px;
+    height: 50px;
+
+}*/
+/*when hovering an item:*/
+/*.autocom-box li:hover {
+    background-color: #e9e9e9;
+}*/
+
+/*when navigating through the items using the arrow keys:*/
+/*.autocomplete-active {
+    background-color: DodgerBlue !important;
+    color: #ffffff;
+}*/
+
+/*.search-input .icon {
+    position: absolute;
+  
+    right: 0px;
+    top: 0px;
+    border: none;
+    text-align: center;
+    line-height: 38px;
+    font-size: 20px;
+    background:#fff;
+    cursor: pointer;
+}
+
+.search-input .icon:hover{
+    background: #808080;
+}
+
+@media only screen and (max-width: 1000px) {
+
+
+    
+}
+
+@media only screen and (max-width: 700px) {
+
+
+    .search-input {
+        width: 100%;
+       
+        
+    }
+}
+
+@media only screen and (max-width: 440px) {
+
+
+    .search-input {
+        width: 100%;
+        margin-right: 10px;
+
+        
+       
+    }
+}
+
+@media only screen and (max-width: 420px) {
+
+
+    .search-input {
+       
+      
+    }
+}*/
+
+
+
+

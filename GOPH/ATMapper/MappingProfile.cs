@@ -13,6 +13,19 @@ namespace GOPH.ATMapper
             CreateMap<Product, ProductDto>();
 
             CreateMap<Commodity, CommodityDto>();
+
+            CreateMap<Product, ProductForCreateDto>();
+
+            CreateMap<ProductForCreateDto, Product>()
+                .ForMember(dest => dest.IsPrice, opt => opt.MapFrom(src => src.GetIsPice()))
+                .ForMember(dest => dest.Hot, opt => opt.MapFrom(src => src.GetIsHot()));
+
+            CreateMap<ProductForUpdateDto, Product>()
+                .ForMember(dest => dest.IsPrice, opt => opt.MapFrom(src => src.GetIsPice()))
+                .ForMember(dest => dest.Hot, opt => opt.MapFrom(src => src.GetIsHot()));
+
+            CreateMap<Product, ProductForCreateDto>();
+
         }
     }
 }

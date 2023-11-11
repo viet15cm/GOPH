@@ -49,13 +49,13 @@
               "target": "Package",
               "version": "[6.2.10, )"
             },
-            "Microsoft.AspNetCore.Identity.UI": {
+            "MailKit": {
               "target": "Package",
-              "version": "[7.0.12, )"
+              "version": "[4.2.0, )"
             },
-            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+            "MimeKit": {
               "target": "Package",
-              "version": "[7.0.9, )"
+              "version": "[4.2.0, )"
             },
             "microsoft.aspnetcore.identity.entityframeworkcore": {
               "target": "Package",

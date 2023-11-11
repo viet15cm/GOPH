@@ -1,0 +1,43 @@
+﻿@using GOPH.Areas.Manager.Models;
+@model Cache;
+@{
+    ViewData["Title"] = "Cập nhật bộ nhớ cache";
+    var statusMessage = TempData["StatusMessage"] as string;
+
+}
+
+<div class="container mt-5">
+    <partial name="_AlertMessage" model="@statusMessage" />
+    <h3> @ViewData["Title"] </h3>
+    <form method="post" asp-action="update">
+        <button type="submit" class="btn btn-sm btn-primary">Cập nhật</button>
+    </form>
+    @if (Model?.ObjCache.Count() > 0)
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Tên</th>
+                    
+                   
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.ObjCache)
+                {
+                    <tr>
+                        <th scope="row">#</th>
+                        <td>@item.Value</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    }
+    else
+    {
+        @Html.ActionLink("Quay trở lại trang chủ", "Index")
+    }
+
+</div>

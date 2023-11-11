@@ -1,23 +1,37 @@
-using GOPH.Extensions.Extensions;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using GOPH.DbContextLayer;
-using GOPH.Entites;
-using Microsoft.AspNetCore.Identity.UI.Services;
-using GOPH.MailServices;
+﻿using GOPH.Extensions.Extensions;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
 
-builder.Services.ConfigureMySqlContext(builder.Configuration);
-
-
 // Add services to the container.
-builder.Services.AddScoped<IEmailSender, EmailSender>();
-
 builder.Services.AddControllersWithViews();
 
+
+
+//builder.Services.AddAutoMapper(typeof(Program));
+builder.Services.ConfigureServiceManager();
+
+
+builder.Services.ConfigureMySqlContext(builder.Configuration);
+
+builder.Services.ConfigureApplicationCookie(option =>
+{
+    option.ExpireTimeSpan = TimeSpan.FromDays(1);
+    option.LoginPath = "/Identity/Account/Login";
+    option.LogoutPath = "/Identity/Account/Logout";
+    option.AccessDeniedPath = $"/Identity/Account/Manager/AccessDenied";
+});
+
+builder.Services.ConfigureAuthorizationHandlerService();
+
+
+builder.Services.AddSignalR();
+
+builder.Services.AddControllers();
+
 builder.Services.AddRazorPages();
+
 
 var app = builder.Build();
 
@@ -34,7 +48,9 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseAuthorization();
+app.UseAuthentication();   // Phục hồi thông tin đăng nhập (xác thực)
+app.UseAuthorization();   // Phục hồi thông tinn về quyền của User
+
 
 
 app.MapAreaControllerRoute(

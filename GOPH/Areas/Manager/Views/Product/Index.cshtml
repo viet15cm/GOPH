@@ -16,13 +16,25 @@
     <h3 class="title-list">@ViewData["Title"] </h3>
     <partial name="_AlertMessage" model="@statusMessage" />
     <div class="container-fluid">
-        <a asp-action="create" asp-area="manager" asp-controller="product" class="btn btn-primary mb-2">Thêm + </a>
-        <form autocomplete="off" asp-controller="product" asp-antiforgery="true" asp-action="DownloadReport" method="post">
-             <button type="submit" class="btn btn-success">Xuất file</button>    
-        </form>
-        <form asp-controller="product" asp-antiforgery="true" asp-action="EditAllProduct" method="post">
+
+        <nav class="navbar navbar-light bg-light">
+            <div class="container-fluid">
+                <a class="navbar-brand">Navbar</a>
+                <a asp-action="create" asp-area="manager" asp-controller="product" class="btn btn-primary mb-2">Thêm + </a>
+                <form autocomplete="off" asp-controller="product" asp-antiforgery="true" asp-action="DownloadReport" method="post">
+                    <button type="submit" class="btn btn-success">Xuất file</button>
+                </form>
+                <form method="post" asp-action="SearchIndex" class="d-flex">
+                    <input class="form-control me-2" id="name-list" type="search" aria-label="Search" placeholder="Tên sản phẩm" name="search">
+                    <input id="hfProduct" name="productId" />
+                    <button class="btn btn-outline-success" type="submit"><i class="bi bi-search"></i></button>
+                </form>
+            </div>
+        </nav>
+
+       @* <form asp-controller="product" asp-antiforgery="true" asp-action="EditAllProduct" method="post">
             <button type="submit" class="btn btn-success">Cập nhật danh sách</button>
-        </form>
+        </form>*@
     </div>
    
     <table style="overflow-x: auto;" class="table">
@@ -60,7 +72,7 @@
                             <img style="width:50px; height: 50px;" src="~/image/product.jpg" />
                         }
                         
-                     </td>
+                    </td>
                     <td>@product.Price</td>
                     <td>@product.CapitalPrice</td>
                     <td>@product.Code</td>
@@ -68,11 +80,9 @@
                     <td>@product.CommodidyId</td>
                     <td>
                         <a asp-action="delete" asp-area="manager" asp-controller="product" asp-route-id="@product.Id" class="btn btn-sm btn-light">Xóa</a>
-                        <a asp-action="edit" asp-area="manager" asp-controller="product" asp-route-id="@product.Id" class="btn btn-sm btn-light" class="btn btn-sm btn-light">Sửa</a>
+                        <a asp-action="update" asp-area="manager" asp-controller="product" asp-route-id="@product.Id" class="btn btn-sm btn-light" class="btn btn-sm btn-light">Sửa</a>
                         
                     </td>
-                 
-
                 </tr>
 
                 i++;
@@ -80,6 +90,54 @@
         </tbody>
     </table>
 
+    <span class="text-danger"></span>
+
     @await Html.PartialAsync("_PaginPartial", paging)
 </div>
 
+
+@section Scripts 
+{
+    @*<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.10.0.min.js" type="text/javascript"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.9.2/jquery-ui.min.js" type="text/javascript"></script>*@
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+ 
+<script>
+        $(function () {
+            $('#name-list').autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: "https://localhost:7084/Manager/Product/Search",
+                        data: { "prefix": request.term },
+                        dataType: "json",
+                        type: "POST",
+                        success: function (data) {
+                            console.log(data);
+                            response(data);
+                        },
+                        error: function (response) {
+                            alert(response.responseText);
+                        },
+                        failure: function (response) {
+                            alert(response.responseText);
+                        }
+                    })
+                },
+                select: function (e, i) {
+                    debugger
+                    $("#hfProduct").val(i.item.val);
+                },
+                minLength: 1
+            }).autocomplete("instance")._renderItem = function (ul, item) {
+                console.log('test');
+                var item = $('<div class="list_item_container"><div class="image"><img class="imageClass" src="' + item.logoUrl + '"></div><div class="label">' + item.label +  '</div></div>')
+                return $("<li>").append(item).appendTo(ul);
+            };
+        });
+</script>
+     
+}
+
+
+                              

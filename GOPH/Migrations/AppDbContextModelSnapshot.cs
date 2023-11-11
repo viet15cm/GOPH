@@ -31,10 +31,21 @@ namespace GOPH.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Address")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<DateTime?>("BirthDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Company")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Describe")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
@@ -45,16 +56,22 @@ namespace GOPH.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("NativePlace")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
@@ -78,6 +95,10 @@ namespace GOPH.Migrations
 
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
+
+                    b.Property<string>("UrlImage")
+                        .HasMaxLength(100)
+                        .HasColumnType("Char");
 
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
@@ -107,6 +128,9 @@ namespace GOPH.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Id")
+                        .IsUnique();
+
                     b.ToTable("Commodities");
                 });
 
@@ -123,6 +147,9 @@ namespace GOPH.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Id")
+                        .IsUnique();
 
                     b.HasIndex("ParentCommodityGroupId");
 
@@ -146,11 +173,21 @@ namespace GOPH.Migrations
                     b.Property<string>("CommodityGroupId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("Description")
+                    b.Property<string>("Content")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
 
                     b.Property<string>("HangHoa")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Hot")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsPrice")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -162,6 +199,12 @@ namespace GOPH.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<int>("Promotion")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Rank")
+                        .HasColumnType("int");
+
                     b.Property<string>("UrlImage")
                         .HasColumnType("nvarchar(max)");
 
@@ -170,6 +213,9 @@ namespace GOPH.Migrations
                     b.HasIndex("CommodidyId");
 
                     b.HasIndex("CommodityGroupId");
+
+                    b.HasIndex("Id")
+                        .IsUnique();
 
                     b.ToTable("Products");
                 });

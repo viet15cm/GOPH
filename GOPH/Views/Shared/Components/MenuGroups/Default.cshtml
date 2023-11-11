@@ -1,0 +1,118 @@
+﻿@model MenuGroups.Menu
+
+@{
+
+     var listSerialUrl = Model.listSerialUrl ?? new List<string>();
+
+     int i = 0;
+}
+<div class="nemu-title">
+    
+    <div class="menu-title-content">
+        <img src="~/image/go-group.png" />
+    </div>
+   
+</div>
+<ul class="menu-group">
+    @{
+
+        await RenderGroup(Model.Groups.ToList(), i);
+    }
+
+</ul>
+
+@{
+    async Task RenderGroup(IEnumerable<CommodityGroup> groups, int size)
+    {
+
+        foreach (var group in groups)
+        {
+            string activeCollapse = "";
+            string activelink = "";
+            var myShow = listSerialUrl.Contains(group?.Id) ? "myshow" : null;
+
+            var parentProduct = "";
+
+            var myActive = listSerialUrl.Contains(group?.Id) ? "myactive" : null;
+
+            //@if (string.IsNullOrEmpty(Model.GroupId))
+            //{
+            //    myShow = "myshow";
+            //    myActive = "myactive";
+            //}
+            @if (!string.IsNullOrEmpty(Model.GroupId))
+            {
+                activeCollapse = Model.GroupId.Equals(group?.Id) ? "active-collapse" : null;
+                activelink = Model.GroupId.Equals(group?.Id) ? "active-link" : null;
+            }
+
+            @if (size == 0)
+            {
+                parentProduct = "parent-product";
+            }
+
+            string fontsize = "parent-size-text-post";
+
+            if (size > 0)
+            {
+                fontsize = "child-size-text-post";
+            }
+
+            <li class="@parentProduct d-flex bd-highlight">
+
+                @if (group.CommodityGroupChildrens?.Count > 0)
+                {
+
+                    <a class="tree-icon-mycollapse flex-shrink-1 bd-highlight @fontsize" onclick="showDetails(this)">
+
+                        <span class=" @myActive @activeCollapse" aria-hidden="true">
+
+                        </span>
+                    </a>
+
+                }
+                else
+                {
+                    <span class="tree-icon-mycollapse flex-shrink-1 bd-highlight">
+
+                    </span>
+
+                }
+                <span class="categorysidebar-title-post w-100 bd-highlight">
+                    <a class="@fontsize @activelink" asp-controller="home" asp-action="group" asp-route-group="@group.Id">@group.Name</a>
+                </span>
+
+            </li>
+
+            if (group.CommodityGroupChildrens?.Count >= 0)
+            {
+                <ul class="mycollapse categorysidebar-menu-post-child @myShow">
+                    @{
+
+                        await RenderGroup(group.CommodityGroupChildrens, size + 1);
+                    }
+
+                </ul>
+            }
+
+        }
+    }
+}
+
+
+<script>
+    function showDetails(data) {
+
+        var icon = data.childNodes[1];
+        var collapse = data.parentElement.nextElementSibling;
+
+        if (!collapse.classList.contains("myshow")) {
+            collapse.classList.add("myshow");
+            icon.classList.add("myactive");
+        } else {
+            collapse.classList.remove("myshow");
+            icon.classList.remove("myactive")
+        }
+    }
+
+</script>

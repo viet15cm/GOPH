@@ -1,0 +1,18 @@
+{
+
+  "version": "1.0",
+
+  "defaultProvider": "cdnjs",
+
+  "libraries": [
+
+    {
+
+      "library": "jquery-autocomplete@1.0.7",
+
+      "destination": "wwwroot/lib/autocomplete"
+    }
+
+  ]
+
+}

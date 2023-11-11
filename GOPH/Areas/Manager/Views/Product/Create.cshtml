@@ -1,0 +1,97 @@
+﻿@using GOPH.Dto;
+@using GOPH.Entites;
+@using GOPH.Areas.Manager.Models
+@model ProductForCreateDto
+@{
+    ViewData["Title"] = "Thêm sản phẩm";
+    var SeleteCommodityGroups = ViewData["SeleteCommodityGroups"] as List<CommodityGroup>;
+    var SeleteCommoditys = ViewData["SeleteCommoditys"] as List<Commodity>;
+    
+}
+<div class="row">
+    <form method="post">
+        <h3 class="mt-2">@ViewData["Title"]</h3>
+        <div class="row">
+            <div class="col-md-4">
+                <hr />
+                <div class="form-floating mb-3">
+                    <input asp-for="@Model.Code" autocomplete="off" aria-required="false" placeholder="" class="form-control" />
+                    <label asp-for="@Model.Code"></label>
+                    <span asp-validation-for="@Model.Code" class="text-danger"></span>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input asp-for="@Model.Name" autocomplete="off" aria-required="true" placeholder="" class="form-control" />
+                    <label asp-for="@Model.Name"></label>
+                    <span asp-validation-for="@Model.Name" class="text-danger"></span>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input asp-for="@Model.CapitalPrice" autocomplete="off" aria-required="false" placeholder="" class="form-control" />
+                    <label asp-for="@Model.CapitalPrice"></label>
+                    <span asp-validation-for="@Model.CapitalPrice" class="text-danger"></span>
+                </div>
+
+                <div class="form-floating  mb-3" autocomplete="off" aria-required="false" placeholder="">
+                    <input asp-for="@Model.Price" class="form-control" />
+                    <label asp-for="@Model.Price"></label>
+                    <span asp-validation-for="@Model.Price" class="text-danger"></span>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input asp-for="@Model.Promotion" autocomplete="off" aria-required="false" placeholder="" class="form-control" />
+                    <label asp-for="@Model.Promotion"></label>
+                    <span asp-validation-for="@Model.Promotion" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="mb-3">
+                    <label asp-for="@Model.Hot"></label>
+                    <select class="form-select" asp-for="@Model.Hot">
+                        <option value="False">Không</option>
+                        <option value="True">Có</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="@Model.IsPrice"></label>
+                    <select class="form-select" asp-for="@Model.IsPrice">
+                        <option value="False">Không</option>
+                        <option value="True">Có</option>
+                    </select>
+                </div>
+                <div class=" mb-3">
+                    <label asp-for="@Model.CommodityGroupId"></label>
+                    <select class="form-select" aria-label="Default select example" asp-for="@Model.CommodityGroupId"
+                            asp-items="@(new SelectList(SeleteCommodityGroups,"Id","Name"))">
+                    </select>
+                    <span asp-validation-for="@Model.CommodityGroupId"></span>
+                </div>
+
+                <div class=" mb-3">
+                    <label asp-for="@Model.CommodidyId"></label>
+                    <select class="form-select" aria-label="Default select example" asp-for="@Model.CommodidyId"
+                            asp-items="@(new SelectList(SeleteCommoditys,"Id","Name"))">
+                        <option value="">Không</option>
+                    </select>
+                    <span asp-validation-for="@Model.CommodidyId"></span>
+                </div>
+
+            </div>
+        </div>
+
+
+        <button type="submit" class=" btn btn-smal btn-primary">Thêm</button>
+        <a asp-area="manager" asp-action="index" asp-controller="product" class="btn btn-smal btn-light">Về</a>
+
+
+    </form>
+
+    <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+</div>
+
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

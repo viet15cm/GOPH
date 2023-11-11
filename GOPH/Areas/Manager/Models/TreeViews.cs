@@ -12,6 +12,7 @@ namespace GOPH.Areas.Manager.Models
                             {
                                 Id = c.Id,
                                 Name = c.Name,
+                                ParentGroup = c.ParentGroup,
                                 ParentCommodityGroupId = c.ParentCommodityGroupId,
                                 CommodityGroupChildrens = GetCommodityGroupChierarchicalTree(allCats.ToList(), c.Id)
                             })
