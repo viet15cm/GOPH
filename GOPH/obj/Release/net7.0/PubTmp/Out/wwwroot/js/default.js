@@ -1,0 +1,1 @@
+﻿var domain = document.getElementById("domain").value;

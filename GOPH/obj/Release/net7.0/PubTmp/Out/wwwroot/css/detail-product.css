@@ -1,0 +1,205 @@
+﻿img {
+  vertical-align: middle;
+}
+
+/* Position the image container (needed to position the left and right arrows) */
+.container {
+  position: relative;
+}
+
+/* Hide the images by default */
+.mySlides {
+  display: none;
+}
+
+/* Add a pointer when hovering over the thumbnail images */
+.cursor {
+  cursor: pointer;
+}
+
+/* Next & previous buttons */
+.prev,
+.next {
+  cursor: pointer;
+  position: absolute;
+  top: 40%;
+  width: auto;
+  padding: 16px;
+  margin-top: -50px;
+  color: white;
+  font-weight: bold;
+  font-size: 20px;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Position the "next button" to the right */
+.next {
+  right: 20px;
+  border-radius: 3px 0 0 3px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover,
+.next:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+/* Number text (1/3 etc) */
+.numbertext {
+  color: #f2f2f2;
+  font-size: 12px;
+  padding: 8px 12px;
+  position: absolute;
+  top: 0;
+}
+
+/* Container for image text */
+.caption-container {
+  text-align: center;
+  background-color: #ffffff;
+  padding: 2px 16px;
+ 
+}
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Six columns side by side */
+.column {
+  float: left;
+  width: 16.66%;
+}
+
+/* Add a transparency effect for thumnbail images */
+.demo {
+  opacity: 0.6;
+}
+
+.active,
+.demo:hover {
+  opacity: 1;
+}
+
+.curent-product {
+    background: #ffffff;
+    margin: 15px;
+
+    border-radius: 10px;
+}
+
+#fb-root {
+    margin-top: 10px;
+}
+
+.product-detail-tumb img {
+    margin-top: 10px;
+    max-height: 400px;
+    width: 100%;
+}
+
+
+.price-tag .amount {
+    font-size: 30px;
+    color: #1523c1;
+    font-weight: bold;
+  
+}
+
+.heading-card-title h3 {
+    font-size: 20px;
+    line-height: 16px;
+    font-weight: 600;
+}
+
+.heading-card-title-info h1 {
+    font-size: 30px;
+    line-height: 30px;
+    font-weight: 700;
+}
+
+.add-to-cart-button button {
+  
+    float: right;
+    
+}
+
+.add-to-cart-button button:hover{
+    color: #1523c1;
+}
+
+.title-list {
+    text-align: center;
+}
+
+.bd-right-main-product {
+    
+    
+}
+
+.counter {
+    margin: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f2f2f2;
+    height: 37px;
+    float: left;
+}
+
+.counter button{
+    border: none;
+  height: 37px;
+   
+}
+
+.counter input {
+    width: 40px;
+    background: #f2f2f2;
+    text-align: center;
+    border: none;
+
+   
+}
+
+.product-detail-tumb .container{
+    width: 100%;
+    margin: 0px;
+    padding: 0px;
+}
+
+@media only screen and (max-width: 1000px) {
+}
+
+@media only screen and (max-width: 700px) {
+    .add-to-cart-button button {
+       font-size: 16.2px;
+    }
+    .price-tag .amount {
+        font-size: 25px;
+        padding: 0px;
+     
+    }
+
+    .curent-product {
+        width: 100%;
+        margin: 0px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        padding: 0px;
+    }
+    .heading-card-title h3 {
+        font-size: 15px;
+    }
+
+
+    .heading-card-title-info h1 {
+        font-size: 25px;
+        line-height: 30px;
+        font-weight: 500;
+    }
+}

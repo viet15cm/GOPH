@@ -8,29 +8,31 @@
         <div class="product-card">
                 @if (item.Hot)
                 {
-                    <div class="badge">Hot</div>
+                    <div class="badge-hot">Hot</div>
                 }
               
                 @if (@item.Promotion > 0)
                 {
-                    <div class="position-absolute end-0 bg-warning fw-bold p-1">
+                    <div class="discount-product">
                         @String.Format("{0}{1}{2}","-", @item.Promotion,"%")
                     </div>
                 }
                 <div class="product-tumb">
                     @if (!string.IsNullOrEmpty(item.UrlImage))
                     {
-                        <img src="@item.UrlImage" alt="">
+                       <a asp-area="" asp-action="detail" asp-route-id="@item.Id"><img src="@item.UrlImage" alt=""></a>
+                        
                     }
                     else
                     {
-                        <img src="~/image/goph.jpg" />
+                        <a asp-area="" asp-action="detail" asp-route-id="@item.Id"><img src="~/image/goph.jpg" /></a>
+                        
                     }
                 </div>
                 <div class="product-details">
                     <span class="product-catagory">@item.CommodityGroup.Name</span>
                     <h4><a asp-area="" asp-action="detail" asp-route-id="@item.Id">@item.Name</a></h4>
-                    <p>@*Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero, possimus nostrum!*@</p>
+                    
                     <div class="product-bottom-details">
                         <div class="product-price">
                             @if (item.Promotion > 0)
@@ -40,7 +42,6 @@
                                     <small>@String.Format(format, "{0:c0}", @item.Price )</small>
                                     @String.Format(format, "{0:c0}",@String.Format(format, "{0:c0}", @item.Price - (@item.Price * item.Promotion) / 100 ))
                                 }
-                               
 
                             }
                             else
@@ -54,8 +55,9 @@
 
                         </div>
                         <div class="product-links">
-                            <a href=""><i class="bi bi-bag-plus"></i></a>
-                            <a href=""><i class="bi bi-chat-heart"></i></a>
+                                <a ><i class="bi bi-chat-heart"></i></a>
+                                <a  onclick="addtocart(this,`@item.Id`)"><i class="bi bi-bag-plus"></i></a>
+                                
                         </div>
                     </div>
                 </div>

@@ -5,6 +5,14 @@
       "PackagePath": "staticwebassets\\GOPH.bundle.scp.css"
     },
     {
+      "Id": "D:\\C#\\GOPH\\GOPH\\wwwroot\\Iconcontan\\delete-cart.png",
+      "PackagePath": "staticwebassets\\Iconcontan\\delete-cart.png"
+    },
+    {
+      "Id": "D:\\C#\\GOPH\\GOPH\\wwwroot\\Iconcontan\\hot-icon.gif",
+      "PackagePath": "staticwebassets\\Iconcontan\\hot-icon.gif"
+    },
+    {
       "Id": "D:\\C#\\GOPH\\GOPH\\wwwroot\\Iconcontan\\icon-facebook.png",
       "PackagePath": "staticwebassets\\Iconcontan\\icon-facebook.png"
     },
@@ -625,8 +633,16 @@
       "PackagePath": "staticwebassets\\Summernote-cr\\summernote-bs4.min.js.map"
     },
     {
-      "Id": "D:\\C#\\GOPH\\GOPH\\wwwroot\\css\\Search.css",
-      "PackagePath": "staticwebassets\\css\\Search.css"
+      "Id": "D:\\C#\\GOPH\\GOPH\\wwwroot\\css\\alert.css",
+      "PackagePath": "staticwebassets\\css\\alert.css"
+    },
+    {
+      "Id": "D:\\C#\\GOPH\\GOPH\\wwwroot\\css\\cart.css",
+      "PackagePath": "staticwebassets\\css\\cart.css"
+    },
+    {
+      "Id": "D:\\C#\\GOPH\\GOPH\\wwwroot\\css\\detail-product.css",
+      "PackagePath": "staticwebassets\\css\\detail-product.css"
     },
     {
       "Id": "D:\\C#\\GOPH\\GOPH\\wwwroot\\css\\navbar-search.css",
@@ -639,6 +655,22 @@
     {
       "Id": "D:\\C#\\GOPH\\GOPH\\wwwroot\\favicon.ico",
       "PackagePath": "staticwebassets\\favicon.ico"
+    },
+    {
+      "Id": "D:\\C#\\GOPH\\GOPH\\wwwroot\\js\\addtocart.js",
+      "PackagePath": "staticwebassets\\js\\addtocart.js"
+    },
+    {
+      "Id": "D:\\C#\\GOPH\\GOPH\\wwwroot\\js\\autocomplete.js",
+      "PackagePath": "staticwebassets\\js\\autocomplete.js"
+    },
+    {
+      "Id": "D:\\C#\\GOPH\\GOPH\\wwwroot\\js\\default.js",
+      "PackagePath": "staticwebassets\\js\\default.js"
+    },
+    {
+      "Id": "D:\\C#\\GOPH\\GOPH\\wwwroot\\js\\scrollbarsohowproduct.js",
+      "PackagePath": "staticwebassets\\js\\scrollbarsohowproduct.js"
     },
     {
       "Id": "D:\\C#\\GOPH\\GOPH\\wwwroot\\js\\site.js",

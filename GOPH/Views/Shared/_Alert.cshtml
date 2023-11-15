@@ -1,0 +1,28 @@
+﻿@model Alert
+
+@{
+    var alert = Model;
+    var backgound = "";
+
+    if (alert.IsResult)
+    {
+        backgound = "alert-success";
+    }else
+    {
+        backgound = "alert-warning";
+    }
+}
+
+<div class="alert @backgound alert-dismissible fade show" role="alert">
+    <strong>
+        @if (alert.IsResult)
+        {
+            <i class="bi bi-check-all text-success"></i>
+        }else
+        {
+            <i class="bi bi-exclamation-triangle text-secondary"></i>
+        }
+    </strong> @alert.Message
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+

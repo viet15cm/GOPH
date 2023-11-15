@@ -1,0 +1,103 @@
+﻿@using GOPH.Dto;
+@model IEnumerable<ProductCart>
+
+@{
+    var format = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+
+    var totalallprice = Model.Sum(x => x.TotalPrice);
+}
+
+
+  
+<div class="products">
+        @if (Model?.Count() > 0)
+        {
+            @foreach (var item in Model)
+            {
+                <div class="product">
+
+                    @if (string.IsNullOrEmpty(@item.UrlImage))
+                    {
+                        <img src="~/Image/goph.jpg" />
+                    }
+                    else
+                    {
+                        <img src="@item.UrlImage" />
+                    }
+
+                    <div class="product-info">
+
+                        <h3 class="product-name">@item.Name</h3>
+
+                            <h5 class="product-price">Đơn : @String.Format(format, "{0:c0}", item.Price )</h5>
+                            <h5 class="product-price">Tổng : @String.Format(format, "{0:c0}", item.TotalPrice )</h5>
+
+                        <h5 class="product-offer">Giảm: @item.Promotion %</h5>
+                            <div class="counter" >
+                                <button onClick='decreaseCount(`@item.Id`, this)' class="minus-btn" type="button" name="button">
+                                    -
+                                </button>
+
+                                <input type="text" name="name" value="@item.Quantity">
+                                <button onClick='increaseCount(`@item.Id`, this)' class="plus-btn" type="button" name="button">
+                                    +
+                                </button>
+                            </div>
+                        <div>
+                            <button class="product-remove" onclick='deletCart(this, `@item.Id`)'> <i class="bi bi-trash3-fill"></i></button>
+                        </div>
+                       
+                     
+                    </div>
+
+                </div>
+            }
+        }
+        else
+        {
+            <div class="cart-default">
+                <p>
+                    Chưa có hàng trong sản phẩm <a asp-area="" asp-controller="home" asp-action="index">Tới cửa hàng</a>
+                </p>
+                <a asp-area="" asp-controller="home" asp-action="index"><img src="~/logo/go-pharmacy.png" /></a>
+            </div>
+
+        }
+</div>
+
+
+
+
+
+<div class="cart-total">
+
+    <p>
+
+        <span>Tổng tiền:</span>
+
+        <span> @String.Format(format, "{0:c0}", totalallprice )</span>
+
+    </p>
+
+    <p>
+
+        <span>Số sản phẩm</span>
+
+        <span>@Model.Count()</span>
+
+    </p>
+
+    <p>
+
+        <span>Thành tiền</span>
+
+        <span>@String.Format(format, "{0:c0}", totalallprice )</span>
+
+    </p>
+    @if (Model?.Count() > 0)
+    {
+        <a href="#">Thanh toán</a>
+    }
+    
+
+</div>

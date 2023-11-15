@@ -21,6 +21,7 @@ namespace GOPH.Dto
 
         public decimal CapitalPrice { get; set; }
 
+        public string UrlImage { get; set; }
         public bool Hot { get; set; }
 
         [Display(Name = "Loại")]

@@ -5,142 +5,25 @@
 
     var format = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");   
 }
-
-
 <div class="bd-right-main-product">
     <input type="hidden" id="router-id" value="@Model.GroupId" />
-
     <div class="list-card-product">
         <img src="~/image/san-pham-ban-chay.svg" />
         <h2 class="special-offer-banner">Ưu đãi Hot</h2>
         <div id="list-card-special-offers" class=" cards">
-            @foreach (var item in Model.Products)
-            {
-                <div class="product-card">
-                    @if (item.Hot)
-                    {
-                        <div class="badge-hot">Hot</div>
-                    }
 
-                    @if (@item.Promotion > 0)
-                    {
-                        <div class="badge-discount ">
-                            @String.Format("{0}{1}{2}","-", @item.Promotion,"%")
-                        </div>
-                    }
-                    <div class="product-tumb">
-                        @if (!string.IsNullOrEmpty(item.UrlImage))
-                        {
-                            <img src="@item.UrlImage" alt="">
-                        }
-                        else
-                        {
-                            <img src="~/image/goph.jpg" />
-                        }
-                    </div>
-                    <div class="product-details">
-                        <span class="product-catagory">@item.CommodityGroup.Name</span>
-                        <h4><a asp-area="" asp-action="detail" asp-route-id="@item.Id">@item.Name</a></h4>
-                        <p>@*Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero, possimus nostrum!*@</p>
-                        <div class="product-bottom-details">
-                            <div class="product-price">
-                                @if (item.Promotion > 0)
-                                {
-                                    @if (item.IsPrice)
-                                    {
-                                        <small>@String.Format(format, "{0:c0}", @item.Price )</small>
-                                        @String.Format(format, "{0:c0}",@String.Format(format, "{0:c0}", @item.Price - (@item.Price * item.Promotion) / 100 ))
-                                    }
-
-
-                                }
-                                else
-                                {
-                                    @if (item.IsPrice)
-                                    {
-                                        @String.Format(format, "{0:c0}", @item.Price )
-                                    }
-
-                                }
-
-                            </div>
-                            <div class="product-links">
-                                <a href=""><i class="bi bi-bag-plus"></i></a>
-                                <a href=""><i class="bi bi-chat-heart"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            }
+            @await Html.PartialAsync("_CardProducts", Model.Products )
+        
+               
         </div>
 
-        </div>
-
+    </div>
   
     <div class="list-card-product">
         <img src="~/image/san-pham-ban-chay.svg" />
         <h2 class="special-offer-banner">Sản phẩm chất lượng</h2>
         <div id="list-card-product" class=" cards">
-            @foreach (var item in Model.Products)
-            {
-                <div class="product-card">
-                    @if (item.Hot)
-                    {
-                        <div class="badge-hot">Hot</div>
-                    }
-
-                    @if (@item.Promotion > 0)
-                    {
-                        <div class="position-absolute end-0 bg-warning fw-bold p-1">
-                            @String.Format("{0}{1}{2}","-", @item.Promotion,"%")
-                        </div>
-                    }
-                    <div class="product-tumb">
-                        @if (!string.IsNullOrEmpty(item.UrlImage))
-                        {
-                            <img src="@item.UrlImage" alt="">
-                        }
-                        else
-                        {
-                            <img src="~/image/goph.jpg" />
-                        }
-                    </div>
-                    <div class="product-details">
-                        <span class="product-catagory">@item.CommodityGroup.Name</span>
-                        <h4><a asp-area="" asp-action="detail" asp-route-id="@item.Id">@item.Name</a></h4>
-                        <p>@*Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero, possimus nostrum!*@</p>
-                        <div class="product-bottom-details">
-                            <div class="product-price">
-                                @if (item.Promotion > 0)
-                                {
-                                    @if (item.IsPrice)
-                                    {
-                                        <small>@String.Format(format, "{0:c0}", @item.Price )</small>
-                                        @String.Format(format, "{0:c0}",@String.Format(format, "{0:c0}", @item.Price - (@item.Price * item.Promotion) / 100 ))
-                                    }
-
-
-                                }
-                                else
-                                {
-                                    @if (item.IsPrice)
-                                    {
-                                        @String.Format(format, "{0:c0}", @item.Price )
-                                    }
-
-                                }
-
-                            </div>
-                            <div class="product-links">
-                                <a href=""><i class="bi bi-bag-plus"></i></a>
-                                <a href=""><i class="bi bi-chat-heart"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            }
+            @await Html.PartialAsync("_CardProducts", Model.Products )
         </div>
      
     </div>

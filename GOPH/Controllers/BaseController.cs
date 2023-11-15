@@ -1,14 +1,13 @@
 ﻿using GOPH.Areas.Manager.Models;
 using GOPH.DbContextLayer;
 using GOPH.Entites;
+using GOPH.Models;
+using GOPH.Services.CartServices;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
-using System.Collections.Generic;
-using System.Text.RegularExpressions;
-using System.Threading;
-
+using Newtonsoft.Json;
 
 namespace GOPH.Controllers
 {
@@ -18,16 +17,23 @@ namespace GOPH.Controllers
         private readonly IHttpContextAccessor _httpcontext;
         protected readonly AppDbContext _context;
         protected readonly ILogger<BaseController> _logger;
+        protected readonly ICartServices _cart;
         public static readonly SemaphoreSlim semaphore = new SemaphoreSlim(1, 1);
+
 
         [TempData]
         public string StatusMessage { get; set; }
-        public BaseController(IMemoryCache cache, AppDbContext appDbContext, ILogger<BaseController> logger, IHttpContextAccessor httpContextAccessor)
+        public BaseController(IMemoryCache cache,
+                            AppDbContext appDbContext,
+                            ILogger<BaseController> logger, 
+                            IHttpContextAccessor httpContextAccessor,
+                            ICartServices cartServices)
         {
             _cache = cache;
             _context = appDbContext;
             _logger = logger;
             _httpcontext = httpContextAccessor;
+            _cart = cartServices;
         }
 
         [NonAction]

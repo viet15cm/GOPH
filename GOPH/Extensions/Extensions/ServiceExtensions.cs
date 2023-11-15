@@ -1,6 +1,7 @@
 ﻿using GOPH.DbContextLayer;
 using GOPH.Entites;
 using GOPH.FileManager;
+using GOPH.Services.CartServices;
 using GOPH.Services.MailServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -12,7 +13,6 @@ namespace GOPH.Extensions.Extensions
     {
         //LocalHost
         //Freeasphosting
-        //msclusters
         //smarter
         //https://www.msclusters.com/
 
@@ -20,7 +20,7 @@ namespace GOPH.Extensions.Extensions
         {
             services.AddDbContext<AppDbContext>(
                     options => options.UseSqlServer(
-                    config.GetConnectionString("LocalHost"),
+                    config.GetConnectionString("smarter"),
                     providerOptions => providerOptions.EnableRetryOnFailure()));
 
             services.AddIdentity<AppUser, IdentityRole>()
@@ -38,7 +38,7 @@ namespace GOPH.Extensions.Extensions
 
             services.AddSingleton<ISendMailServices, SendMailServices>();
 
-           
+            services.AddTransient<ICartServices, CartServices>();
 
 
         }

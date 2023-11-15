@@ -3,11 +3,13 @@
 
 var builder = WebApplication.CreateBuilder(args);
 
-
+builder.Services.AddDistributedMemoryCache();           // Đăng ký dịch vụ lưu cache trong bộ nhớ (Session sẽ sử dụng nó)
+builder.Services.AddSession(cfg => {                    // Đăng ký dịch vụ Session
+    cfg.Cookie.Name = "GOPH";             // Đặt tên Session - tên này sử dụng ở Browser (Cookie)
+    cfg.IdleTimeout = new TimeSpan(0, 60, 0);    // Thời gian tồn tại của Session
+});
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-
-
 
 //builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.ConfigureServiceManager();
@@ -45,7 +47,7 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
+app.UseSession();
 app.UseRouting();
 
 app.UseAuthentication();   // Phục hồi thông tin đăng nhập (xác thực)

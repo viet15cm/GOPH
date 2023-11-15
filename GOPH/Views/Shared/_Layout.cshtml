@@ -10,10 +10,12 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/GOPH.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-    <link href="~/css/search.css" rel="stylesheet" />
     <link href="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.9.2/themes/blitzer/jquery-ui.css"
-          rel="Stylesheet" type="text/css" />
+      rel="Stylesheet" type="text/css" />
     <link href="~/css/navbar-search.css" rel="stylesheet" />
+    <link href="~/css/detail-product.css" rel="stylesheet" />
+    <link href="~/css/alert.css" rel="stylesheet" />
+    <link href="~/css/cart.css" rel="stylesheet" />
 </head>
 <body>
     <header>
@@ -40,15 +42,11 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Thông tin</a>
                         </li>
                     </ul>
-
-
                     <ul class="navbar-nav manager">
                         @await Html.PartialAsync("_ManagerPartial")
 
                     </ul>
 
-                   
-           
                     @await Html.PartialAsync("_LoginPartial")
                 </div>
                

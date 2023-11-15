@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\C#\\GOPH\\goph\\GOPH.csproj": {}
+    "D:\\C#\\GOPH\\GOPH\\GOPH.csproj": {}
   },
   "projects": {
-    "D:\\C#\\GOPH\\goph\\GOPH.csproj": {
+    "D:\\C#\\GOPH\\GOPH\\GOPH.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\C#\\GOPH\\goph\\GOPH.csproj",
+        "projectUniqueName": "D:\\C#\\GOPH\\GOPH\\GOPH.csproj",
         "projectName": "GOPH",
-        "projectPath": "D:\\C#\\GOPH\\goph\\GOPH.csproj",
+        "projectPath": "D:\\C#\\GOPH\\GOPH\\GOPH.csproj",
         "packagesPath": "C:\\Users\\Viet_Key\\.nuget\\packages\\",
-        "outputPath": "D:\\C#\\GOPH\\goph\\obj\\",
+        "outputPath": "D:\\C#\\GOPH\\GOPH\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Viet_Key\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -53,9 +53,25 @@
               "target": "Package",
               "version": "[4.2.0, )"
             },
+            "Microsoft.AspNet.Mvc": {
+              "target": "Package",
+              "version": "[5.3.0, )"
+            },
+            "Microsoft.AspNetCore.Session": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
+            "Microsoft.Extensions.Caching.Memory": {
+              "target": "Package",
+              "version": "[7.0.0, )"
+            },
             "MimeKit": {
               "target": "Package",
               "version": "[4.2.0, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.3, )"
             },
             "microsoft.aspnetcore.identity.entityframeworkcore": {
               "target": "Package",

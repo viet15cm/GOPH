@@ -89,3 +89,11 @@ D:\C#\GOPH\GOPH\bin\Release\net7.0\libman.json
 D:\C#\GOPH\GOPH\bin\Release\net7.0\BouncyCastle.Cryptography.dll
 D:\C#\GOPH\GOPH\bin\Release\net7.0\MailKit.dll
 D:\C#\GOPH\GOPH\bin\Release\net7.0\MimeKit.dll
+D:\C#\GOPH\GOPH\bin\Release\net7.0\Newtonsoft.Json.dll
+D:\C#\GOPH\GOPH\bin\Release\net7.0\System.Web.Mvc.dll
+D:\C#\GOPH\GOPH\bin\Release\net7.0\System.Web.Razor.dll
+D:\C#\GOPH\GOPH\bin\Release\net7.0\System.Web.Helpers.dll
+D:\C#\GOPH\GOPH\bin\Release\net7.0\System.Web.WebPages.Deployment.dll
+D:\C#\GOPH\GOPH\bin\Release\net7.0\System.Web.WebPages.Razor.dll
+D:\C#\GOPH\GOPH\bin\Release\net7.0\System.Web.WebPages.dll
+D:\C#\GOPH\GOPH\bin\Release\net7.0\Microsoft.Web.Infrastructure.dll

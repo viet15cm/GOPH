@@ -26,6 +26,9 @@ namespace GOPH.ATMapper
 
             CreateMap<Product, ProductForCreateDto>();
 
+            CreateMap<Product, ProductCart>()
+                 .ForMember(dest => dest.TotalPrice, opt => opt.MapFrom(src => src.Price));
+
         }
     }
 }

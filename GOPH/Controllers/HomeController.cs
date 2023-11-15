@@ -1,21 +1,33 @@
-﻿using GOPH.DbContextLayer;
+﻿using GOPH.ATMapper;
+using GOPH.DbContextLayer;
+using GOPH.Dto;
 using GOPH.Entites;
 using GOPH.Models;
 using GOPH.Paging;
+using GOPH.Services.CartServices;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ViewEngines;
+using Microsoft.AspNetCore.Routing.Matching;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Hosting;
 using System.Diagnostics;
-using System.Security.Cryptography;
-using System.Text.RegularExpressions;
+
 
 namespace GOPH.Controllers
 {
     public class HomeController : BaseController
     {
-        public HomeController(IMemoryCache cache, AppDbContext appDbContext, ILogger<BaseController> logger, IHttpContextAccessor httpContextAccessor) : base(cache, appDbContext, logger, httpContextAccessor)
+
+        private ICompositeViewEngine _viewEngine;
+        public HomeController(IMemoryCache cache,
+            AppDbContext appDbContext,
+            ILogger<BaseController> logger,
+            IHttpContextAccessor httpContextAccessor,
+            ICartServices cartServices,
+            ICompositeViewEngine viewEngine) : base(cache, appDbContext, logger, httpContextAccessor, cartServices)
         {
+            _viewEngine = viewEngine;
         }
 
         public class ViewModel
@@ -28,7 +40,7 @@ namespace GOPH.Controllers
 
             public CommodityGroup CurentGroup { get; set; }
 
-            public IEnumerable<Product> Products { get; set; }
+            public PagedList<Product> Products { get; set; }
 
             public Product CurentProduct { get; set; }
             public string ReturnUrl { get; set; }
@@ -49,10 +61,11 @@ namespace GOPH.Controllers
                 listSerialUrl = new List<string>(),
                 Groups = groups.ToList(),
                 CurentGroup = null,
-                Products = await _context.Products.Include(p => p.CommodityGroup).Include(p => p.Commodity).Take(15).ToListAsync(),
                 ReturnUrl = Domain()
             };
 
+            var productParameters = new ProductParameters();
+            viewModel.Products = PagedList<Product>.ToPagedList(_context.Products.Include(p => p.CommodityGroup).Include(p => p.Commodity), productParameters.PageNumber, productParameters.PageSize);
 
             return View(viewModel);
         }
@@ -95,10 +108,13 @@ namespace GOPH.Controllers
                 listSerialUrl = listSerialUrl,
                 Groups = groups.ToList(),
                 CurentGroup = curentgroup,
-                Products = products.AsQueryable().Take(15).ToList(),
-               
+                            
                 ReturnUrl = Domain()
             };
+            
+            var productParameters = new ProductParameters();
+            viewModel.Products = PagedList<Product>.ToPagedList(products, productParameters.PageNumber, productParameters.PageSize);
+
 
             return View(viewModel);
         }
@@ -147,7 +163,7 @@ namespace GOPH.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Detail(string id)
+        public async Task<IActionResult> Detail([FromRoute]string id)
         {
             var product = _context.Products.Include(p => p.CommodityGroup).Include(p => p.Commodity).FirstOrDefault(p => p.Id == id);
             if (product is null)
@@ -157,11 +173,13 @@ namespace GOPH.Controllers
 
             var groups = await GetCommodidtyGroups();
 
-            var curentgroup = FindGroup(groups.ToList(), product.CommodityGroup.Id);
 
-            var listGroups = new List<string>() { };
 
-            if (product.CommodityGroup.Id != null)
+            var curentgroup = FindGroup(groups.ToList(), product.CommodityGroupId);
+
+            var listGroups = new List<string>() { product.CommodityGroupId };
+
+            if (product.CommodityGroupId != null)
             {
                 SerialGroups(curentgroup, listGroups);
             }
@@ -170,13 +188,13 @@ namespace GOPH.Controllers
 
             if (curentgroup is null)
             {
-                return NotFound($"Không tìm thấy {product.CommodityGroup.Id}");
+                return NotFound($"Không tìm thấy {product.CommodityGroupId}");
             }
 
 
             var listSerialUrl = new List<string>();
 
-            FindPostBySlug(groups.ToList(), product.CommodityGroup.Id, listSerialUrl); // chỉnh lại code
+            FindPostBySlug(groups.ToList(), product.CommodityGroupId, listSerialUrl); // chỉnh lại code
 
             var viewModel = new ViewModel()
             {
@@ -185,9 +203,12 @@ namespace GOPH.Controllers
                 Groups = groups.ToList(),
                 CurentGroup = curentgroup,
                 CurentProduct = product,
-                Products = products.AsQueryable().Take(15).ToList(),
+                
                 ReturnUrl = Domain()
             };
+
+            var productParameters = new ProductParameters();
+            viewModel.Products = PagedList<Product>.ToPagedList(products, productParameters.PageNumber, productParameters.PageSize);
 
             ViewData["curenturl"] = HttpContextAccessorPathDomainFull();
 
@@ -240,11 +261,119 @@ namespace GOPH.Controllers
 
         }
 
+
+        [HttpGet]
+        public async Task<IActionResult> AddToCart(string id)
+        {
+            var product = await _context.Products.FindAsync(id);
+            if (product == null)
+            {
+                return Json(new AlertCart() { IsResult = false, Message = $"Lỗi không thêm được vào giỏ hàng"});
+            }
+             
+       
+
+            var cart = _cart.GetCartItems();
+            
+            cart.Add(product.Id);
+
+            // Lưu cart vào Session
+            _cart.SaveCartSession(cart);
+
+            var count = _cart.GetCountItem();
+
+            return Json(new AlertCart() { IsResult = true, Message = $"Thêm -{product.Name}- vào giỏ hàng", CountItem = count });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> DeleteCart(string id)
+        {
+           
+            var productCarts = _cart.GetCartItems();
+
+            var product = productCarts.Where(p => p == id).FirstOrDefault();
+
+            if (product != null)
+            {
+                productCarts.RemoveAll(p => p == id);
+            }
+
+            _cart.SaveCartSession(productCarts);
+
+            var count = _cart.GetCountItem();
+
+            PartialViewResult partialViewResult = PartialView("_ItemCartPartial", await _cart.GetJionCartItems());
+
+            string viewContent = PartialViewToString.ConvertViewToString(this.ControllerContext, partialViewResult, _viewEngine);
+
+            var alert = new AlertCart() { IsResult = true, Message = $"Xóa -{product}- khỏi giỏ hàng", CountItem = count, ReturnHtml = viewContent };
+            
+            return Json(alert);
+
+        }
+
+        [HttpGet]
+        public  async Task<IActionResult> AddCountCart(string id, int count)
+        {
+            var productCarts = _cart.GetCartItems();
+
+            var curentProduct = productCarts.Where(x => x == id).FirstOrDefault();
+
+            var curentProducts = productCarts.Where(x => x == id).ToList();
+
+            var curentCount = count - curentProducts.Count();
+
+            if (curentCount > 0)
+            {
+                for (int i = 0; i < curentCount; i++)
+                {
+                    
+                    productCarts.Add( curentProduct);
+                }
+            }
+            else if(curentCount < 0)
+            {
+                var coutf = 0;
+              
+                for (int i = productCarts.Count - 1; i >= 0; --i)
+                {
+                    if (productCarts[i] == id)
+                    {
+                        productCarts.RemoveAt(i);
+                        coutf++;
+                    }
+
+                    if (coutf == curentCount * (-1))
+                    {
+                        break;
+                    }
+                }
+                    
+            }
+
+
+             _cart.SaveCartSession(productCarts);
+
+            var countItem = _cart.GetCountItem();
+            
+            PartialViewResult partialViewResult = PartialView("_ItemCartPartial",await _cart.GetJionCartItems());
+
+            string viewContent = PartialViewToString.ConvertViewToString(this.ControllerContext, partialViewResult, _viewEngine);
+
+            var alert =  new AlertCart() { IsResult = true, Message = $"Cập nhật số lượng -{curentProduct}- thành công", CountItem = countItem , ReturnHtml = viewContent };
+
+            return Json(alert);
+
+
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        
 
 
 
