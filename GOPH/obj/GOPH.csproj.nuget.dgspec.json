@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\C#\\GOPH\\GOPH\\GOPH.csproj": {}
+    "D:\\C#\\GOPH\\goph\\GOPH.csproj": {}
   },
   "projects": {
-    "D:\\C#\\GOPH\\GOPH\\GOPH.csproj": {
+    "D:\\C#\\GOPH\\goph\\GOPH.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\C#\\GOPH\\GOPH\\GOPH.csproj",
+        "projectUniqueName": "D:\\C#\\GOPH\\goph\\GOPH.csproj",
         "projectName": "GOPH",
-        "projectPath": "D:\\C#\\GOPH\\GOPH\\GOPH.csproj",
+        "projectPath": "D:\\C#\\GOPH\\goph\\GOPH.csproj",
         "packagesPath": "C:\\Users\\Viet_Key\\.nuget\\packages\\",
-        "outputPath": "D:\\C#\\GOPH\\GOPH\\obj\\",
+        "outputPath": "D:\\C#\\GOPH\\goph\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Viet_Key\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -49,13 +49,17 @@
               "target": "Package",
               "version": "[6.2.10, )"
             },
+            "IronXL.Excel": {
+              "target": "Package",
+              "version": "[2023.12.19, )"
+            },
             "MailKit": {
               "target": "Package",
               "version": "[4.2.0, )"
             },
-            "Microsoft.AspNet.Mvc": {
+            "Microsoft.AspNetCore.Mvc.Core": {
               "target": "Package",
-              "version": "[5.3.0, )"
+              "version": "[2.2.5, )"
             },
             "Microsoft.AspNetCore.Session": {
               "target": "Package",

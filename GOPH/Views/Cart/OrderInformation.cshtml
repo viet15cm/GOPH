@@ -1,0 +1,175 @@
+﻿@model CartController.ViewCartModel
+
+@{
+    Layout = "~/Views/Shared/_LayoutTop.cshtml";
+
+
+    var format = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+
+    var itemcount = Model.ProductCarts.Sum(x => x.Quantity);
+
+    var productPromotions = Model.ProductCarts.Where(x => x.Promotion != 0).ToList();
+
+    var picePromotion = 0;
+    foreach (var item in productPromotions)
+    {
+        picePromotion += ((int)item.TotalPrice * item.Promotion) / 100;
+    }
+
+    var totalallpriceCurent = Model.ProductCarts.Sum(x => x.TotalPrice);
+
+    var totalallprice = totalallpriceCurent - picePromotion;
+}
+
+<div class="container">
+    <h5 class="mb-3 mt-3"><i class="bi bi-cart-check"></i> Đặt hàng</h5>
+    <form method="post">
+        <div class="row orderInformation">
+
+            <div class="col-md-7">
+                <p class="text-primary"><i class="bi bi-person-bounding-box"></i> Thông tin người đặt</p>
+                <div class="form-floating mb-3">
+                    <input asp-for="@Model.CustomerCreateDto.Name" autocomplete="off" aria-required="false" placeholder="" class="form-control" />
+                    <label asp-for="@Model.CustomerCreateDto.Name"></label>
+                    <span asp-validation-for="@Model.CustomerCreateDto.Name" class="text-danger"></span>
+                </div>
+                <div class="form-floating mb-3">
+                    <input asp-for="@Model.CustomerCreateDto.MobilePhone" autocomplete="off" aria-required="false" placeholder="" class="form-control" />
+                    <label asp-for="@Model.CustomerCreateDto.MobilePhone"></label>
+                    <span asp-validation-for="@Model.CustomerCreateDto.MobilePhone" class="text-danger"></span>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input asp-for="@Model.CustomerCreateDto.Email" autocomplete="off" aria-required="false" placeholder="" class="form-control" />
+                    <label asp-for="@Model.CustomerCreateDto.Email"></label>
+                    <span asp-validation-for="@Model.CustomerCreateDto.Email" class="text-danger"></span>
+                </div>
+                <hr />
+                <p class="text-primary"><i class="bi bi-geo-alt-fill"></i> Địa chỉ nhận hàng</p>
+                <div class="form-floating mb-3">
+                    <input asp-for="@Model.CustomerCreateDto.NameReceiver" autocomplete="off" aria-required="false" placeholder="" class="form-control" />
+                    <label asp-for="@Model.CustomerCreateDto.NameReceiver"></label>
+                    <span asp-validation-for="@Model.CustomerCreateDto.Name" class="text-danger"></span>
+                </div>
+                <div class="form-floating mb-3">
+                    <input asp-for="@Model.CustomerCreateDto.MobilePhoneReceiver" autocomplete="off" aria-required="false" placeholder="" class="form-control" />
+                    <label asp-for="@Model.CustomerCreateDto.MobilePhoneReceiver"></label>
+                    <span asp-validation-for="@Model.CustomerCreateDto.MobilePhoneReceiver" class="text-danger"></span>
+                </div>
+                <div class="form-floating mb-3">
+                    <input asp-for="@Model.CustomerCreateDto.AddressReceiver" autocomplete="off" aria-required="false" placeholder="" class="form-control" />
+                    <label asp-for="@Model.CustomerCreateDto.AddressReceiver"></label>
+                    <span asp-validation-for="@Model.CustomerCreateDto.AddressReceiver" class="text-danger"></span>
+                </div>
+                <div class="form-floating mb-3">
+                    <textarea rows="4" asp-for="@Model.CustomerCreateDto.Description" autocomplete="off" class="form-control" aria-required="false" placeholder=""></textarea>
+                    <label asp-for="@Model.CustomerCreateDto.Description"></label>
+                    <span asp-validation-for="@Model.CustomerCreateDto.Description" class="text-danger"></span>
+                </div>
+
+                <input id="input-voucher-code" type="hidden"  class="form-control" asp-for="@Model.Voucher.Code" />
+                <input id="input-voucher-price" type="hidden" class="form-control" asp-for="@Model.Voucher.Price" />
+            </div>
+           
+            <div id="order-information" class="col-md-5 mb-5">
+                @await Html.PartialAsync("_OrderInformationPartial", Model )
+            </div>
+            
+          @*  <input type="button" id="sendButton" value="Send Message" />*@
+       </div>
+    </form>
+
+</div>
+
+<div class="offcanvas offcanvas-end" tabindex="-1" id="voucher" aria-labelledby="voucherRightLabel">
+    <div class="offcanvas-header">
+        <h5 id="voucherRightLabel">Voucher</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <div class="form-floating mb-3">
+            <input id="input-voucher" autocomplete="off" aria-required="false" placeholder="" class="form-control" />
+            <label>Nhập mã giảm giá</label>
+            <span class="text-danger"></span>
+        </div>
+        <button onClick='voucher(this)' class="btn btn-primary">Nhập</button> <img id="load-voucher" style="float: right; width: 30px; height: 30px;" src="~/iconcontan/load.gif" />
+    </div>
+</div>
+
+@section MenuSmallGroups{
+    @await Component.InvokeAsync(MenuGroups.COMPONENTNAME,
+             new MenuGroups.Menu()
+             {
+                 Groups = Model.Groups,
+             })
+}
+
+@section Scripts {
+
+    <script>
+            var load = document.getElementById("load-voucher");
+            load.style.display = "none";
+
+            function voucher(object)
+            {
+                var code = document.getElementById("input-voucher").value;
+                var codebiding = document.getElementById("input-voucher-code");
+                var pricebiding  = document.getElementById("input-voucher-price");
+               
+                if (code == null || code == "") { 
+                    alert('Vui lòng nhập code');
+                }else{
+                    load.style.display = "block";
+                    $.ajax({
+                        url: domain + '/cart/voucher',
+                        contentType: 'application/html; charset=utf-8',
+                        data: { code: code },
+                        type: 'GET',
+                        dataType: 'json',
+                        success: function (response) {
+                            debugger
+                            load.style.display = "none";
+                            codebiding.value = response.code;
+                            pricebiding.value = response.price;
+                            $('#order-information').empty();
+                            $('#order-information').html(response.returnHtml);
+
+                             $('.offcanvas').offcanvas('hide');
+                          
+                            myAlertBottom(response.message);
+                            
+                        },
+                        error: function (response) {
+                            load.style.display = "none";
+                            alert(response.responseText);
+                        }
+                    });
+                }
+
+            }
+    </script>
+
+    <script>
+
+        //Disable the send button until connection is established.
+        document.getElementById("sendButton").disabled = true;
+
+        connection.start().then(function () {
+            document.getElementById("sendButton").disabled = false;
+        }).catch(function (err) {
+            return console.error(err.toString());
+        });
+
+        document.getElementById("sendButton").addEventListener("click", function (event) {
+          
+            var message = "okok";
+            connection.invoke("SendMessage", message).catch(function (err) {
+                return console.error(err.toString());
+            });
+            event.preventDefault();
+        });
+
+    </script>
+
+    <partial name="_ValidationScriptsPartial" />
+}

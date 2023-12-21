@@ -8,8 +8,10 @@
 .myAlert-bottom {
     position: fixed;
     bottom: 5px;
-    left: 2%;
+    right: 2%;
     width: 60%;
+    z-index: 2;
+    background: #0094ff;
 }
 .myAlert-bottom strong{
     font-size: 30px;
@@ -23,6 +25,10 @@ div.fullscreen {
     background-color: lightblue;
 }
 
-.alert {
+.alert-top {
+    display: none;
+}
+
+.myAlert-bottom {
     display: none;
 }

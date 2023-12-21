@@ -4,7 +4,21 @@
 @{
     var format = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
 
-    var totalallprice = Model.Sum(x => x.TotalPrice);
+    var productPromotions = Model.Where(x => x.Promotion != 0).ToList();
+
+    var picePromotion = 0;
+    
+    foreach (var item in productPromotions)
+    {
+        picePromotion += ((int)item.TotalPrice * item.Promotion) / 100;
+
+        
+    }
+
+    var totalallpriceCurent = Model.Sum(x => x.TotalPrice);
+
+    var totalallprice = totalallpriceCurent - picePromotion;
+
 }
 
 
@@ -16,29 +30,40 @@
             {
                 <div class="product">
 
-                    @if (string.IsNullOrEmpty(@item.UrlImage))
+                    @if (item.Images?.Count > 0)
                     {
-                        <img src="~/Image/goph.jpg" />
+                        <img src="~/ImageManager/ProductImg/@item.Images.ToList()[0].Url" alt="">
+                    }
+                    else if (!string.IsNullOrEmpty(item.UrlImage))
+                    {
+                        <img src="@item.UrlImage" alt="">
+
                     }
                     else
                     {
-                        <img src="@item.UrlImage" />
+                       <img src="~/image/goph.jpg" />
+
                     }
 
                     <div class="product-info">
 
                         <h3 class="product-name">@item.Name</h3>
 
-                            <h5 class="product-price">Đơn : @String.Format(format, "{0:c0}", item.Price )</h5>
-                            <h5 class="product-price">Tổng : @String.Format(format, "{0:c0}", item.TotalPrice )</h5>
-
+                        <h5 class="product-price">
+                            Đơn : @String.Format(format, "{0:c0}", item.Price )
+                            @if (item.isWholesale)
+                            {
+                                <span style="color: red; font-size: 16px;"> (Giá sỉ)</span>
+                            }
+                        </h5>
                         <h5 class="product-offer">Giảm: @item.Promotion %</h5>
+                        <h5 class="product-price">Tổng : @String.Format(format, "{0:c0}", item.TotalPrice  -  item.TotalPrice * item.Promotion /100 )</h5>
                             <div class="counter" >
                                 <button onClick='decreaseCount(`@item.Id`, this)' class="minus-btn" type="button" name="button">
                                     -
                                 </button>
 
-                                <input type="text" name="name" value="@item.Quantity">
+                                <input type="number" name="name" value="@item.Quantity">
                                 <button onClick='increaseCount(`@item.Id`, this)' class="plus-btn" type="button" name="button">
                                     +
                                 </button>
@@ -57,7 +82,7 @@
         {
             <div class="cart-default">
                 <p>
-                    Chưa có hàng trong sản phẩm <a asp-area="" asp-controller="home" asp-action="index">Tới cửa hàng</a>
+                    Chưa có sản phẩm trong giỏ hàng <a asp-area="" asp-controller="home" asp-action="index">Tới cửa hàng</a>
                 </p>
                 <a asp-area="" asp-controller="home" asp-action="index"><img src="~/logo/go-pharmacy.png" /></a>
             </div>
@@ -75,28 +100,28 @@
 
         <span>Tổng tiền:</span>
 
-        <span> @String.Format(format, "{0:c0}", totalallprice )</span>
+        <span> @String.Format(format, "{0:c0}", totalallpriceCurent )</span>
 
     </p>
 
     <p>
 
-        <span>Số sản phẩm</span>
+        <span>Giảm giá trực tiếp :</span>
 
-        <span>@Model.Count()</span>
+        <span>@String.Format(format, "{0:c0}", picePromotion )</span>
 
     </p>
 
     <p>
 
-        <span>Thành tiền</span>
+        <span>Thành tiền :</span>
 
         <span>@String.Format(format, "{0:c0}", totalallprice )</span>
 
     </p>
     @if (Model?.Count() > 0)
     {
-        <a href="#">Thanh toán</a>
+        <a asp-area="" asp-action="OrderInformation" asp-controller="cart">Đặt hàng</a>
     }
     
 

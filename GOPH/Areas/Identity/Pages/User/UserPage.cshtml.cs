@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 namespace GOPH.Areas.Identity.Pages.User
 {
 
-    [Authorize(Policy = "Administrator")]
+    //[Authorize(Policy = "Administrator")]
 
     public class UserPageModel : PageModel
     {

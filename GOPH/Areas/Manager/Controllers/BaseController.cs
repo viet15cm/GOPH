@@ -1,6 +1,7 @@
 ﻿using GOPH.Areas.Manager.Models;
 using GOPH.DbContextLayer;
 using GOPH.Entites;
+using GOPH.Services.CallApiServices;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
@@ -11,18 +12,19 @@ namespace GOPH.Areas.Manager.Controllers
     public class BaseController : Controller
     {
         protected readonly IMemoryCache _cache;
-
+        protected readonly IHttpClientServiceImplementation _client;
         protected readonly AppDbContext _context;
         protected readonly ILogger<BaseController> _logger;
         public static readonly SemaphoreSlim semaphore = new SemaphoreSlim(1, 1);
 
         [TempData]
         public string StatusMessage { get; set; }
-        public BaseController(IMemoryCache cache , AppDbContext appDbContext, ILogger<BaseController> logger)
+        public BaseController(IMemoryCache cache , AppDbContext appDbContext, ILogger<BaseController> logger, IHttpClientServiceImplementation httpClientServiceImplementation )
         {
             _cache = cache;
             _context = appDbContext;
             _logger = logger;
+            _client = httpClientServiceImplementation;
 
         }
 
@@ -174,6 +176,25 @@ namespace GOPH.Areas.Manager.Controllers
             await GetProducts();
             await GetCommodidtyGroups();
             await GetCommodidtys();
+        }
+
+        [NonAction]
+        public string GetId(string contain = "ID")
+        {
+           
+            var count = _context.Invoices.Count();
+            if (count == 0)
+            {
+                return contain + "100000";
+            }
+            else
+            {
+                var temp = Convert.ToInt32(_context.Invoices.ToList()[count - 1].Id.ToString().Substring(contain.Length));
+
+                temp = temp + 1;
+
+                return contain + temp.ToString();
+            }
         }
 
     }

@@ -2,12 +2,15 @@
 using GOPH.DbContextLayer;
 using GOPH.Entites;
 using GOPH.Models;
+using GOPH.Services.CallApiServices;
 using GOPH.Services.CartServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
+using System.Globalization;
 
 namespace GOPH.Controllers
 {
@@ -18,8 +21,10 @@ namespace GOPH.Controllers
         protected readonly AppDbContext _context;
         protected readonly ILogger<BaseController> _logger;
         protected readonly ICartServices _cart;
+        protected readonly  IAuthorizationService _authorizationService;
         public static readonly SemaphoreSlim semaphore = new SemaphoreSlim(1, 1);
 
+        protected readonly IHttpClientServiceImplementation _client;
 
         [TempData]
         public string StatusMessage { get; set; }
@@ -27,13 +32,17 @@ namespace GOPH.Controllers
                             AppDbContext appDbContext,
                             ILogger<BaseController> logger, 
                             IHttpContextAccessor httpContextAccessor,
-                            ICartServices cartServices)
+                            ICartServices cartServices,
+                            IHttpClientServiceImplementation clientServiceImplementation,
+                            IAuthorizationService authorizationService)
         {
             _cache = cache;
             _context = appDbContext;
             _logger = logger;
             _httpcontext = httpContextAccessor;
             _cart = cartServices;
+            _client = clientServiceImplementation;
+            _authorizationService = authorizationService;
         }
 
         [NonAction]
@@ -119,7 +128,7 @@ namespace GOPH.Controllers
                         _logger.Log(LogLevel.Information, "Groups list not found in cache. Fetching from database.");
 
 
-                        groups = await _context.CommodityGroups.AsNoTracking().ToListAsync();
+                        groups =  _context.CommodityGroups.AsNoTracking().ToList();
 
                         groups = TreeViews.GetCommodityGroupChierarchicalTree(groups);
 
@@ -251,12 +260,28 @@ namespace GOPH.Controllers
 
             return null;
 
-           
         }
 
-        public static IEnumerable<SelectListItem> GetEnumSelectList<T>()
+
+        [NonAction]
+        public string GetId(string contain = "ID")
         {
-            return (Enum.GetValues(typeof(T)).Cast<int>().Select(e => new SelectListItem() { Text = Enum.GetName(typeof(T), e), Value = e.ToString() })).ToList();
+
+            var count = _context.Orders.Count();
+            if (count == 0)
+            {
+                return contain + "100000";
+            }
+            else
+            {
+                var temp = Convert.ToInt32(_context.Orders.ToList()[count - 1].Id.ToString().Substring(contain.Length));
+
+                temp = temp + 1;
+
+                return contain + temp.ToString();
+            }
         }
+
     }
 }
+

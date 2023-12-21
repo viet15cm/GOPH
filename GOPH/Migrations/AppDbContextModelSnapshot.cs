@@ -45,6 +45,9 @@ namespace GOPH.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("CurrentPoint")
+                        .HasColumnType("int");
+
                     b.Property<string>("Describe")
                         .HasColumnType("nvarchar(max)");
 
@@ -56,12 +59,15 @@ namespace GOPH.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("FirstName")
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("LastName")
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
+
+                    b.Property<DateTime?>("LastTrading")
+                        .HasColumnType("datetime2");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -92,6 +98,9 @@ namespace GOPH.Migrations
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TotalPoints")
+                        .HasColumnType("int");
 
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
@@ -156,6 +165,178 @@ namespace GOPH.Migrations
                     b.ToTable("CommodityGroups");
                 });
 
+            modelBuilder.Entity("GOPH.Entites.Customer", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("AddressReceiver")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MobilePhone")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MobilePhoneReceiver")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("NameReceiver")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OrderId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId")
+                        .IsUnique()
+                        .HasFilter("[OrderId] IS NOT NULL");
+
+                    b.ToTable("Customers");
+                });
+
+            modelBuilder.Entity("GOPH.Entites.Event", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Banner")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Content")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsStatus")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Events");
+                });
+
+            modelBuilder.Entity("GOPH.Entites.Image", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("productId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("productId");
+
+                    b.ToTable("Images");
+                });
+
+            modelBuilder.Entity("GOPH.Entites.Invoice", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("DateCreate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("EmployeeId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("OrderId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<decimal>("TotalPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.HasIndex("OrderId")
+                        .IsUnique()
+                        .HasFilter("[OrderId] IS NOT NULL");
+
+                    b.ToTable("Invoices");
+                });
+
+            modelBuilder.Entity("GOPH.Entites.Order", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("DateCreate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsCloseTheOrder")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("RecycleBin")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("GOPH.Entites.OrderProduct", b =>
+                {
+                    b.Property<string>("OderId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProductId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("IsWholesale")
+                        .HasColumnType("bit");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("Promotion")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("OderId", "ProductId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("OrderProducts");
+                });
+
             modelBuilder.Entity("GOPH.Entites.Product", b =>
                 {
                     b.Property<string>("Id")
@@ -176,14 +357,28 @@ namespace GOPH.Migrations
                     b.Property<string>("Content")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("DateCreate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateUpdate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Description")
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DisplayName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EventId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("HangHoa")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("Hot")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsEvent")
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsPrice")
@@ -202,9 +397,6 @@ namespace GOPH.Migrations
                     b.Property<int>("Promotion")
                         .HasColumnType("int");
 
-                    b.Property<int>("Rank")
-                        .HasColumnType("int");
-
                     b.Property<string>("UrlImage")
                         .HasColumnType("nvarchar(max)");
 
@@ -214,10 +406,60 @@ namespace GOPH.Migrations
 
                     b.HasIndex("CommodityGroupId");
 
+                    b.HasIndex("EventId");
+
                     b.HasIndex("Id")
                         .IsUnique();
 
                     b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("GOPH.Entites.Voucher", b =>
+                {
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CustomerId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("OrderId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("Price")
+                        .HasColumnType("int");
+
+                    b.HasKey("Code");
+
+                    b.HasIndex("CustomerId");
+
+                    b.HasIndex("OrderId")
+                        .IsUnique()
+                        .HasFilter("[OrderId] IS NOT NULL");
+
+                    b.ToTable("Vouchers");
+                });
+
+            modelBuilder.Entity("GOPH.Entites.Wholesale", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("ProductId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("Promotion")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId")
+                        .IsUnique()
+                        .HasFilter("[ProductId] IS NOT NULL");
+
+                    b.ToTable("Wholesales");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -362,6 +604,69 @@ namespace GOPH.Migrations
                     b.Navigation("ParentGroup");
                 });
 
+            modelBuilder.Entity("GOPH.Entites.Customer", b =>
+                {
+                    b.HasOne("GOPH.Entites.Order", "Order")
+                        .WithOne("Customer")
+                        .HasForeignKey("GOPH.Entites.Customer", "OrderId");
+
+                    b.Navigation("Order");
+                });
+
+            modelBuilder.Entity("GOPH.Entites.Image", b =>
+                {
+                    b.HasOne("GOPH.Entites.Product", "Product")
+                        .WithMany("Images")
+                        .HasForeignKey("productId");
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("GOPH.Entites.Invoice", b =>
+                {
+                    b.HasOne("GOPH.Entites.AppUser", "Employee")
+                        .WithMany("IssueAnInvoices")
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("GOPH.Entites.Order", "Order")
+                        .WithOne("Invoice")
+                        .HasForeignKey("GOPH.Entites.Invoice", "OrderId");
+
+                    b.Navigation("Employee");
+
+                    b.Navigation("Order");
+                });
+
+            modelBuilder.Entity("GOPH.Entites.Order", b =>
+                {
+                    b.HasOne("GOPH.Entites.AppUser", "AppUser")
+                        .WithMany("Orders")
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("AppUser");
+                });
+
+            modelBuilder.Entity("GOPH.Entites.OrderProduct", b =>
+                {
+                    b.HasOne("GOPH.Entites.Order", "Order")
+                        .WithMany("OrderProducts")
+                        .HasForeignKey("OderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("GOPH.Entites.Product", "Product")
+                        .WithMany("OrderProducts")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Order");
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("GOPH.Entites.Product", b =>
                 {
                     b.HasOne("GOPH.Entites.Commodity", "Commodity")
@@ -372,9 +677,39 @@ namespace GOPH.Migrations
                         .WithMany("Products")
                         .HasForeignKey("CommodityGroupId");
 
+                    b.HasOne("GOPH.Entites.Event", "Event")
+                        .WithMany("Products")
+                        .HasForeignKey("EventId");
+
                     b.Navigation("Commodity");
 
                     b.Navigation("CommodityGroup");
+
+                    b.Navigation("Event");
+                });
+
+            modelBuilder.Entity("GOPH.Entites.Voucher", b =>
+                {
+                    b.HasOne("GOPH.Entites.AppUser", "User")
+                        .WithMany("Vouchers")
+                        .HasForeignKey("CustomerId");
+
+                    b.HasOne("GOPH.Entites.Order", "Order")
+                        .WithOne("Voucher")
+                        .HasForeignKey("GOPH.Entites.Voucher", "OrderId");
+
+                    b.Navigation("Order");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("GOPH.Entites.Wholesale", b =>
+                {
+                    b.HasOne("GOPH.Entites.Product", "Product")
+                        .WithOne("Wholesale")
+                        .HasForeignKey("GOPH.Entites.Wholesale", "ProductId");
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -428,6 +763,15 @@ namespace GOPH.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("GOPH.Entites.AppUser", b =>
+                {
+                    b.Navigation("IssueAnInvoices");
+
+                    b.Navigation("Orders");
+
+                    b.Navigation("Vouchers");
+                });
+
             modelBuilder.Entity("GOPH.Entites.Commodity", b =>
                 {
                     b.Navigation("Products");
@@ -438,6 +782,31 @@ namespace GOPH.Migrations
                     b.Navigation("CommodityGroupChildrens");
 
                     b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("GOPH.Entites.Event", b =>
+                {
+                    b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("GOPH.Entites.Order", b =>
+                {
+                    b.Navigation("Customer");
+
+                    b.Navigation("Invoice");
+
+                    b.Navigation("OrderProducts");
+
+                    b.Navigation("Voucher");
+                });
+
+            modelBuilder.Entity("GOPH.Entites.Product", b =>
+                {
+                    b.Navigation("Images");
+
+                    b.Navigation("OrderProducts");
+
+                    b.Navigation("Wholesale");
                 });
 #pragma warning restore 612, 618
         }

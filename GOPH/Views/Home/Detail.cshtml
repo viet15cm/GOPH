@@ -1,10 +1,12 @@
 ﻿@model HomeController.ViewModel
 @{
     Layout = "~/Views/Shared/_LayoutProduct.cshtml";
-    ViewData["Title"] = Model.CurentProduct;
+    ViewData["Title"] = Model.ProductDetailDto.Name;
 
     var format = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
     var url = ViewData["curenturl"] as string;
+
+    var count = 1;
 }
 
 <div class="bd-right-main-product">
@@ -12,7 +14,7 @@
     <div class="curent-product row">
         <div class="col-md-7 left-side-card">
             <div class="heading-card-title mt-4">
-                <h3><i class="bi bi-bookmarks text-dark"></i> @Model.CurentProduct.CommodityGroup.Name</h3>
+                <h3><i class="bi bi-bookmarks text-dark"></i> @Model.ProductDetailDto.CommodityGroup.Name</h3>
 
             </div>
             <div class="row mt-3 mb-3">
@@ -38,91 +40,100 @@
                     </div>
                 </div>
                 <div  class="col-md-6">
-                    
+                   
                 </div>
             </div>
             <div class="product-detail-tumb">
                 <div class="container">
-                      <div class="mySlides">
-                        <div class="numbertext">1 / 6</div>
-                        <img src="~/Image/goph.jpg" style="width:100%">
-                      </div>
+                    @if (Model.ProductDetailDto?.Images.Count > 0)
+                    {
+                        foreach (var img in Model.ProductDetailDto?.Images)
+                        {
+                            <div class="mySlides">
+                                <div class="numbertext">1 / @count</div>
+                                <img src="~/ImageManager/ProductImg/@img.Url" style="width:100%">
+                            </div>
 
-                      <div class="mySlides">
-                        <div class="numbertext">2 / 6</div>
-                        <img src="~/Image/goph.jpg" style="width:100%">
-                      </div>
+                            count += 1;
+                        }
+                        <a class="prev" onclick="plusSlides(-1)">❮</a>
+                        <a class="next" onclick="plusSlides(1)">❯</a>
 
-                      <div class="mySlides">
-                        <div class="numbertext">3 / 6</div>
-                        <img src="~/Image/goph.jpg" style="width:100%">
-                      </div>
-    
-                      <div class="mySlides">
-                        <div class="numbertext">4 / 6</div>
-                        <img src="~/Image/goph.jpg" style="width:100%">
-                      </div>
+                        @* <div class="caption-container">
+                            <p id="caption"></p>
+                        </div>*@
+                        count = 1;
+                        <div class="row">
+                            
+                            @foreach (var img in  Model.ProductDetailDto?.Images)
+                            {
+                                <div class="column">
+                                    <img class="demo cursor" src="~/ImageManager/ProductImg/@img.Url" style="width:100%" onclick="currentSlide(@count)" alt="The Woods">
+                                </div>
+                                count += 1;
+                            }
+                        </div>
+                    }
+                    else if (!string.IsNullOrEmpty(Model.ProductDetailDto.UrlImage))
+                    {
+                        <div class="mySlides">
+                            <div class="numbertext">1 / 1</div>
+                            <img src="@Model.ProductDetailDto.UrlImage" style="width:100%">
+                        </div>
 
-                      <div class="mySlides">
-                        <div class="numbertext">5 / 6</div>
-                        <img src="~/Image/goph.jpg" style="width:100%">
-                      </div>
-    
-                      <div class="mySlides">
-                        <div class="numbertext">6 / 6</div>
-                        <img src="~/Image/goph.jpg" style="width:100%">
-                      </div>
-    
-                      <a class="prev" onclick="plusSlides(-1)">❮</a>
-                      <a class="next" onclick="plusSlides(1)">❯</a>
+                    }else
+                    {
+                        <div class="mySlides">
+                            <div class="numbertext">1 / 1</div>
+                            <img src="~/Image/goph.jpg" style="width:100%">
+                        </div>
 
-                      <div class="caption-container">
-                        <p id="caption"></p>
-                      </div>
+                    }
 
-                      <div class="row">
-                        <div class="column">
-                            <img class="demo cursor" src="~/Image/goph.jpg" style="width:100%" onclick="currentSlide(1)" alt="The Woods">
-                        </div>
-                        <div class="column">
-                            <img class="demo cursor" src="~/Image/goph.jpg" style="width:100%" onclick="currentSlide(2)" alt="Cinque Terre">
-                        </div>
-                        <div class="column">
-                            <img class="demo cursor" src="~/Image/goph.jpg" style="width:100%" onclick="currentSlide(3)" alt="Mountains and fjords">
-                        </div>
-                        <div class="column">
-                            <img class="demo cursor" src="~/Image/goph.jpg" style="width:100%" onclick="currentSlide(4)" alt="Northern Lights">
-                        </div>
-                        <div class="column">
-                            <img class="demo cursor" src="~/Image/goph.jpg" style="width:100%" onclick="currentSlide(5)" alt="Nature and sunrise">
-                        </div>    
-                        <div class="column">
-                            <img class="demo cursor" src="~/Image/goph.jpg" style="width:100%" onclick="currentSlide(6)" alt="Snowy Mountains">
-                        </div>
-                      </div>
-                    </div>
+                 </div>
             </div>
 
             <div class="container mt-3">
                 <div class="price-tag">
-                    <span class="amount"><i class="bi bi-cash-coin"></i> @String.Format(format, "{0:c0}", Model.CurentProduct.Price )</span>
+                    @if (Model.ProductDetailDto.IsPrice)
+                    {
+                        @if (@Model.ProductDetailDto.Promotion > 0)
+                        {
+                            <small style="text-decoration: line-through;">@String.Format(format, "{0:c0}", @Model.ProductDetailDto.Price )</small>
+                        }
+                        <span class="amount mx-1"> @String.Format(format, "{0:c0}",  @Model.ProductDetailDto.Price - (@Model.ProductDetailDto.Price * Model.ProductDetailDto.Promotion) / 100) </span>
+                        @if (Model.ProductDetailDto.isWholesale)
+                        {
+
+                            <span class="badge rounded-pill bg-danger">(Giá sỉ)</span>
+                          
+                           
+                        }
+                         @if (Model.ProductDetailDto.Promotion > 0)
+                        {
+
+                            <span class="badge rounded-pill bg-danger">Giảm : @Model.ProductDetailDto.Promotion%</span>
+                           
+                        }
+                    }
+                    
                 </div>
-                <form method="post" id="submit-add-cart" class="submit-add-cart mt-1">
+                <div class="submit-add-cart mt-1">
                     <div class="counter">
-                        <button onClick='decreaseCount(event, this)' class="minus-btn" type="button" name="button">
+                        <button onClick='decreaseNumber(event, this)' class="minus-btn" type="button" name="button">
                             -
                         </button>
 
-                        <input type="text" name="name" value="1">
-                        <button onClick='increaseCount(event, this)' class="plus-btn" type="button" name="button">
+                        <input type="number" id="count-number" name="name" value="1">
+                        <button onClick='increaseNumber(event, this)' class="plus-btn" type="button" name="button">
                             +
                         </button>
                     </div>
 
                     <div class="add-to-cart-button">
-                        <button type="submit" class="btn btn-primary"><i class="bi bi-cart-plus-fill"></i> Thêm vào giỏ</button>
+                        <button onclick='submitAddCart(this,`@Model.ProductDetailDto.Id`)' class="btn btn-primary"><i class="bi bi-cart-plus-fill"></i> Thêm vào giỏ</button>
                     </div>
-                </form>
+                </div>
                
             </div>
 
@@ -132,15 +143,22 @@
             <div class="main-card">
                 
                 <div class="heading-card-title-info mt-4">
-                    <h1>@Model.CurentProduct.Name</h1>
+                    <h1>@Model.ProductDetailDto.DisplayName</h1>
                 </div>
                 <div class="card-product-info pt-3">
-                    <h5>THÔNG TIN </h5>
+                    <h5>Mô tả : </h5>
+                    <hr />
                     <div class="information">
-                        @if (string.IsNullOrEmpty(Model.CurentProduct.Description))
+                        <p class="fw-bold">
+                            @Model.ProductDetailDto.Name
+                        </p>
+                        @if (string.IsNullOrEmpty(Model.ProductDetailDto.Description))
                         {
                           <p>Xin lỗi hiện nhà thuốc chưa cập nhật thông tin về sản phẩm này , Mời bạn đến nhà thuốc để nghe các dược sĩ tư vấn , hoặt gọi qua host phone bên dưới.</p>
                            
+                        }else
+                        {
+                            @Html.Raw(Model.ProductDetailDto.Description)
                         }
                       
                     </div>
@@ -150,10 +168,19 @@
             </div>
         </div>
         <div class="content">
-            <h5>Mô tả :</h5>
-            <p>
-                Sản phẩm hiện đang bày bán tại quầy , liên hệ host phone bên dưới để được tư vấn.
-            </p>
+
+            <h5>Thông tin chi tiết : </h5>
+            <hr />
+            @if (string.IsNullOrEmpty(Model.ProductDetailDto.Content))
+            {
+                <p>
+                    Sản phẩm hiện đang bày bán tại quầy , liên hệ host phone bên dưới để được tư vấn.
+                </p>
+            }else
+            {
+                @Html.Raw(Model.ProductDetailDto.Content)
+            }
+            
         </div>
     </div>
   </div>
@@ -184,7 +211,7 @@
     <script>
         let slideIndex = 1;
         showSlides(slideIndex);
-
+      
         function plusSlides(n) {
             showSlides(slideIndex += n);
         }
@@ -213,14 +240,14 @@
     </script>
 
     <script type="text/javascript">
-        function increaseCount(a, b) {
+        function increaseNumber(a, b) {
             var input = b.previousElementSibling;
             var value = parseInt(input.value, 10);
             value = isNaN(value) ? 0 : value;
             value++;
             input.value = value;
         }
-        function decreaseCount(a, b) {
+        function decreaseNumber(a, b) {
             var input = b.nextElementSibling;
             var value = parseInt(input.value, 10);
             if (value > 1) {
@@ -229,17 +256,52 @@
                 input.value = value;
             }
         }
+
+
+        var numbercount = document.getElementById('count-number');
+
+        function submitAddCart(object, id) {
+
+            var number = numbercount.value;
+            var load = document.getElementById('modal-all');
+            load.style.display = "block";
+            $.ajax({
+               
+                url: domain + '/cart/addtocart',
+                contentType: 'application/html; charset=utf-8',
+                data: { id: id, count: number },
+                type: 'GET',
+                dataType: 'json',
+                success: function (response) {
+
+                    load.style.display = "none";
+                    $(".icon-item-count-cart").text(response.countItem);
+                    myAlertBottom(response.message);
+                },
+                error: function (response) {
+
+                    alert(response);
+                }
+            });
+
+        }
+
+        
     </script>
-   
+
+    <script src="~/js/addtocart.js"></script>
+
+    <script src="~/js/scrollbarsohowproduct.js"></script>
 }
+
 @section CurentLink{
     <li><a>/</a></li>
     <li>
-        <a asp-controller="home" asp-action="group" asp-route-group="@Model.CurentGroup.Id">@Model.CurentGroup.Name</a>
+        <a asp-controller="home" asp-action="group" asp-route-group="@Model.ProductDetailDto.Id">@Model.ProductDetailDto.CommodityGroup.Name</a>
     </li>
     <li><a>/</a></li>
     <li>
-        <a asp-controller="home" asp-action="detail" asp-route-id="@Model.CurentProduct.Id">@Model.CurentProduct.Name</a>
+        <a asp-controller="home" asp-action="detail" asp-route-id="@Model.ProductDetailDto.Id">@Model.ProductDetailDto.Name</a>
     </li>
     
 }
@@ -256,8 +318,9 @@
 @section FacebookSharedHead{
     <meta property="og:url" content="@url" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="@Model.CurentProduct.Name" />
-    <meta property="og:description" content="@Model.CurentProduct.Description" />
-    <meta property="og:image" content="@Model.CurentProduct.UrlImage" />
+    <meta property="og:title" content="@Model.ProductDetailDto.Name" />
+    <meta property="og:description" content="@Model.ProductDetailDto.Description" />
+    <meta property="og:image" content="@Model.ProductDetailDto.UrlImage" />
 }
+
 

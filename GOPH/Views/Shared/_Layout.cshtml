@@ -16,6 +16,11 @@
     <link href="~/css/detail-product.css" rel="stylesheet" />
     <link href="~/css/alert.css" rel="stylesheet" />
     <link href="~/css/cart.css" rel="stylesheet" />
+    @await RenderSectionAsync("ImageManager", required: false)
+
+    @RenderSection("BannerEvent", required: false)
+
+    
 </head>
 <body>
     <header>
@@ -36,11 +41,12 @@
                     
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Trang chủ</a>
+                            <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">Trang chủ</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Thông tin</a>
+                        <li class="nav-item text-white">
+                            <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Privacy">Thông tin</a>
                         </li>
+                        @await Html.PartialAsync("_WholesalePartial")
                     </ul>
                     <ul class="navbar-nav manager">
                         @await Html.PartialAsync("_ManagerPartial")
@@ -52,7 +58,7 @@
                
             </div>
         </nav>
-        @await RenderSectionAsync("NavbarCart", required: false)
+        @await RenderSectionAsync("NavbarTop", required: false)
       
         
     </header>
@@ -69,8 +75,11 @@
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/lib/microsoft-signalr/signalr.js"></script>
+    <script src="~/js/internal-message.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

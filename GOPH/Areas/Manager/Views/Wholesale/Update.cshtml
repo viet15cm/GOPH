@@ -1,0 +1,66 @@
+﻿@model Wholesale
+@{
+    Layout = "~/Views/Shared/_LayoutManagerProduct.cshtml";
+    ViewData["Title"] = "Chỉnh sửa giá sỉ";
+    ViewData["ActiveNavbar"] = "Product";
+    var format = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+}
+
+
+<div class="row">
+    <h5><span class="text-primary"><i class="bi bi-ticket-detailed"></i>  @Model.Product.Name</span></h5>
+    
+    <div class="col-md-5">
+        <form method="post" asp-action="delete" id="delete-wholesale" asp-route-id="@Model.Id">
+            <button style="float: right;" onclick="DeleteWholesale()" class="btn btn-sm btn-danger"><i class="bi bi-trash3-fill"></i></button>
+        </form>
+        <form method="post" asp-action="update" asp-route-id="@Model.Id">
+            <h5 class="mt-2"><i class="bi bi-bookmark-plus"></i> @ViewData["Title"]</h5>
+            
+           
+            <div class="form-floating  mb-3" autocomplete="off" aria-required="false" placeholder="">
+                <input asp-for="@Model.Price" class="form-control" />
+                <label asp-for="@Model.Price"></label>
+                <span asp-validation-for="@Model.Price" class="text-danger"></span>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input asp-for="@Model.Promotion" autocomplete="off" aria-required="false" placeholder="" class="form-control" />
+                <label asp-for="@Model.Promotion"></label>
+                <span asp-validation-for="@Model.Promotion" class="text-danger"></span>
+            </div>
+            <hr />
+
+            <div class="form-floating  mb-3">
+                <span style="font-weight: bold;">Giá bán lẻ</span> :   @Model.Product.Price (@String.Format(format, "{0:c0}",  @Model.Product.Price)
+            </div>
+
+            <div class="form-floating  mb-3">
+                <span style="font-weight: bold;">Giảm giá lẻ</span> : @Model.Product.Promotion %
+            </div>
+            <div class="d-flex">
+                <button type="submit" class=" btn btn btn-primary">Cập nhật</button>
+
+                <a asp-area="manager" asp-action="detail" asp-controller="product" asp-route-id="@Model.Product.Id" class="btn btn btn-secondary mx-1">Về</a>
+
+                
+            </div>
+           
+        </form>
+
+        <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        function DeleteWholesale() {
+                document.getElementById("delete-wholesale").submit();
+        }
+    </script>
+
+}

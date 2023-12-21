@@ -1,0 +1,85 @@
+﻿@model CartController.ViewCartModel
+
+@{
+
+    var format = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+
+    var itemcount = Model.ProductCarts.Sum(x => x.Quantity);
+
+    var productPromotions = Model.ProductCarts.Where(x => x.Promotion != 0).ToList();
+
+    var picePromotion = 0;
+    foreach (var item in productPromotions)
+    {
+        picePromotion += ((int)item.TotalPrice * item.Promotion) / 100;
+    }
+
+    var totalallpriceCurent = Model.ProductCarts.Sum(x => x.TotalPrice);
+
+    var totalallprice = totalallpriceCurent - picePromotion;
+
+    if (Model.Voucher?.Price >= 1000)
+    {
+        totalallprice -= (decimal)Model.Voucher?.Price;
+    }
+
+    <p class="text-primary"><i class="bi bi-check-square"></i> Thống kê chi tiết</p>
+
+    <p>
+        <span>Số sản phẩm :</span>
+
+        <span style="float: right">+@itemcount</span>
+
+    </p>
+
+    <p>
+
+        <span>Tổng tiền:</span>
+
+        <span style="float: right"> @String.Format(format, "{0:c0}", totalallpriceCurent )</span>
+
+    </p>
+
+    <p>
+
+        <span>Giảm giá trực tiếp :</span>
+
+        <span style="float: right">@String.Format(format, "{0:c0}", picePromotion )</span>
+
+    </p>
+
+    <p>
+
+        <span><a data-bs-toggle="offcanvas" data-bs-target="#voucher" aria-controls="offcanvasRight" class="btn btn-success btn-sm">Giảm giá voucher</a> </span>
+
+        @if (Model.Voucher != null)
+        {
+            <span style="float: right">@String.Format(format, "{0:c0}", Model.Voucher.Price)</span>
+        }
+        else
+        {
+            <span style="float: right">@String.Format(format, "{0:c0}", 0)</span>
+        }
+
+    </p>
+
+    <p>
+
+        <span>Phí vận chuyển</span>
+        <span style="float: right">0</span>
+
+    </p>
+
+    <p>
+
+        <span>Thành tiền :</span>
+
+        <span style="float: right">@String.Format(format, "{0:c0}", totalallprice )</span>
+
+    </p>
+
+    <button class="btn btn-sm btn-primary" type="submit">Hoàn tấc</button>
+    <a asp-action="index" asp-controller="cart" class="btn btn-sm btn-danger">Về giỏ hàng</a>
+}
+
+

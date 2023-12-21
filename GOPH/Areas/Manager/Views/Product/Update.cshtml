@@ -1,17 +1,24 @@
-﻿@model Product
+﻿@model ProductForUpdateDto
 
 @{
+    Layout = "~/Views/Shared/_LayoutManagerProduct.cshtml";
     ViewData["Title"] = "Cập nhật";
+    ViewData["ActiveNavbar"] = "Product";
     var SeleteCommodityGroups = ViewData["SeleteCommodityGroups"] as List<CommodityGroup>;
     var SeleteCommoditys = ViewData["SeleteCommoditys"] as List<Commodity>;
 }
 
 <div class="row">
-    <form method="post">
+    <form method="post" asp-route="id">
         <h3 class="mt-2">@ViewData["Title"]</h3>
         <div class="row">
             <div class="col-md-4">
                 <hr />
+                <div class="form-floating mb-3">
+                    <input asp-for="@Model.Id" autocomplete="off" aria-required="false" placeholder="" class="form-control" />
+                    <label asp-for="@Model.Id"></label>
+                    <span asp-validation-for="@Model.Id" class="text-danger"></span>
+                </div>
                 <div class="form-floating mb-3">
                     <input asp-for="@Model.Code" autocomplete="off" aria-required="false" placeholder="" class="form-control" />
                     <label asp-for="@Model.Code"></label>
@@ -24,6 +31,11 @@
                     <span asp-validation-for="@Model.Name" class="text-danger"></span>
                 </div>
 
+                <div class="form-floating mb-3">
+                    <input asp-for="@Model.DisplayName" autocomplete="off" aria-required="true" placeholder="" class="form-control" />
+                    <label asp-for="@Model.DisplayName"></label>
+                    <span asp-validation-for="@Model.DisplayName" class="text-danger"></span>
+                </div>
                 <div class="form-floating mb-3">
                     <input asp-for="@Model.CapitalPrice" autocomplete="off" aria-required="false" placeholder="" class="form-control" />
                     <label asp-for="@Model.CapitalPrice"></label>
@@ -59,11 +71,20 @@
                         <option value="True">Có</option>
                     </select>
                 </div>
+                <div class="mb-3">
+                    <label asp-for="@Model.IsEvent"></label>
+                    <select class="form-select" asp-for="@Model.IsEvent">
+                        <option value="False">Không</option>
+                        <option value="True">Có</option>
+                    </select>
+                </div>
                 <div class=" mb-3">
                     <label asp-for="@Model.CommodityGroupId"></label>
                     <select class="form-select" aria-label="Default select example" asp-for="@Model.CommodityGroupId"
                             asp-items="@(new SelectList(SeleteCommodityGroups,"Id","Name"))">
+                        <option value="">Không</option>
                     </select>
+                    
                     <span asp-validation-for="@Model.CommodityGroupId"></span>
                 </div>
 
@@ -79,9 +100,11 @@
             </div>
         </div>
 
-
-        <button type="submit" class=" btn btn-smal btn-primary">Cập nhật</button>
-        <a asp-area="manager" asp-action="index" asp-controller="product" class="btn btn-smal btn-light">Về</a>
+        <div class="d-flex mb-2">
+            <button type="submit" class=" btn btn btn-danger">Cập nhật</button>
+            <a asp-area="manager" asp-action="detail" asp-controller="product" asp-route-id="@Model.Id" class="btn btn-primary mx-1">Về</a>
+        </div>
+        
 
 
     </form>

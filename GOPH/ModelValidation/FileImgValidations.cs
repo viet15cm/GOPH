@@ -23,7 +23,7 @@ namespace GOPH.ModelValidation
             
             if (!IsValidAllowedExtensions(value))
             {
-                errorType = "đuôi mở rộng phải là (.jpg .jpeg .png .jfif) !";
+                errorType = "đuôi mở rộng phải là (.jpg .jpeg .png .jfif .webp) !";
             }
             else
             {

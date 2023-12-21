@@ -26,6 +26,8 @@ var $window = $(window);
 var $document = $(document);
 
 var object = Number(document.getElementById("number-page").value);
+
+var object_2 = Number(document.getElementById("number-page-isprice").value);
 $document.ready(function () {
 
     $window
@@ -44,9 +46,12 @@ function ScrollHandler(e) {
         if ($window.scrollTop() + $window.height() > $document.height() - 100) {
 
             document.getElementById("loader-scroll-img").style.display = "block";
+            object_2 = Number(document.getElementById("number-page-isprice").value)
             object = object + 1;
+            object_2 = object_2 + 1;
             document.getElementById("number-page").value = object;
-            showDrop(object)
+            document.getElementById("number-page-isprice").value = object_2;
+            showDrop(object, object_2)
         }
 
     }, _throttleDelay);
@@ -54,22 +59,31 @@ function ScrollHandler(e) {
 
 
 
-function showDrop(object) {
+function showDrop(object, object_2) {
 
     var numberpage = object;
+
+    var pageIsPireNumber = object_2;
+    debugger
 
     var group = document.getElementById("router-id").value;
 
     debugger
+
     $.ajax({
         url: domain + '/home/showCardProductPartial',
         contentType: 'application/html; charset=utf-8',
-        data: { pageNumber: numberpage, groupId: group },
+        data: { pageNumber: numberpage, groupId: group, pageIsPireNumber: pageIsPireNumber },
         type: 'GET',
-        dataType: 'html',
+        dataType: 'json',
         success: function (response) {
             debugger
-            $("#list-card-product").append(response);
+            $("#list-card-product").append(response.returnHtml);
+            if (response.isPrice === true) {
+
+                document.getElementById("number-page-isprice").value = response.pageNumber;
+                debugger
+            }
             document.getElementById("loader-scroll-img").style.display = "none";
         },
         error: function (response) {
@@ -78,3 +92,4 @@ function showDrop(object) {
         }
     });
 }
+

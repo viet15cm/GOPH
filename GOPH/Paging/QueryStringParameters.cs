@@ -10,7 +10,7 @@ namespace GOPH.Paging
     {
         const int maxPageSize = 50;
         public virtual int PageNumber { get; set; } = 1;
-        private int _pageSize = 15;
+        private int _pageSize = 12;
         public virtual int PageSize
         {
             get

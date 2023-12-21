@@ -1,0 +1,155 @@
+﻿@model OrderDetailDto
+
+@{
+    Layout = "~/Views/Shared/_LayOutOrderManager.cshtml";
+    var format = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+
+    var isInvoice = "Đã xuất";
+
+    if (Model.Invoice is null)
+    {
+        isInvoice = "Chưa xuất";
+    }
+
+    ViewData["ActiveNavbar"] = "Order";
+
+}
+
+    <div class="row mt-3">
+        <div class="col-md-9">
+        <p><span style="font-weight: bold;">Mã đơn hàng</span> : @Model.Id
+           @if (Model.RecycleBin)
+            {
+                <span style="font-weight: bold; color: red;">(Đơn hàng rác)</span>
+            }
+        </p>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Mục</th>
+                        <th scope="col">Số lượng</th>
+                        <th scope="col">Đơn giá</th>
+                        <th scope="col">Giảm giá</th>
+                        <th scope="col">Loại</th>
+                        <th scope="col">Thành tiền</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.OrderProducts)
+                    {
+                        var intoMoney = (item.Product.Price * item.Quantity) - (item.Product.Price * (item.Product.Promotion * item.Quantity) / 100);
+                        <tr>
+                            <td>@item.Product.Name</td>
+                            <td>@item.Quantity</td>
+                            <td>@String.Format(format,"{0:c0}",@item.Product.Price)</td>
+                            <td>@item.Product.Promotion%</td>
+                            <td>
+                                @if (item.IsWholesale)
+                                {
+
+                                     <span class="text-primary">Sỉ</span>
+                                }else
+                                {
+                                     <span style="color:#808080">Lẻ</span>
+                                }
+                            </td>
+                            <td>@String.Format(format,"{0:c0}",intoMoney)</td>
+                        </tr>
+                    }
+                    
+
+                </tbody>
+            </table>
+            @if (Model.Voucher != null)
+            {
+                <p><span style="font-weight: bold;">Tặng voucher</span> : @String.Format(format, "{0:c0}", Model.Voucher.Price ): </p>
+            }
+            <p><span style="font-weight: bold;">Tổng tiền thanh toán : </span>@String.Format(format,"{0:c0}",@Model.TotalPrice)</p>
+            <div style="float: right;" class="option-order d-flex">
+           
+               
+                @if (!Model.RecycleBin)
+                {
+                    <form  method="post" asp-route-id="@Model.Id" asp-action="canceltorecyclebin" asp-controller="order">
+                        <button type="submit" class="btn btn-sm  btn-danger" >Bỏ thùng rác</button>
+                    </form>
+                   
+                }else
+                {
+                    <form method="post" asp-route-id="@Model.Id" asp-action="Restore" asp-controller="order">
+                        <button type="submit" class="btn btn-sm  btn-info">Khôi phục</button>
+                    </form>
+
+                    <form method="post" asp-route-id="@Model.Id" asp-action="delete" asp-controller="order">
+                        <button type="submit" class="btn btn-sm  btn-danger mx-1">Xóa</button>
+                    </form>
+                }
+           
+                <form asp-route-id="@Model.Id" method="post" asp-action="IssueAnInvoice" asp-controller="order">
+                    <button type="submit" class="btn btn-sm btn-primary mx-1" >Xuất hóa đơn</button>
+                </form>
+
+                @if (Model.RecycleBin)
+                {
+                    <a asp-area="manager" asp-controller="order" asp-action="recyclebin" class="btn btn-sm btn-secondary ">Về thùng rác</a>
+                }
+                else
+                {
+                    <a asp-area="manager" asp-controller="order" asp-action="index" class="btn btn-sm btn-secondary ">Về danh sách</a>
+                }
+               
+                
+
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <h5><i class="bi bi-box2"></i> Chi tiết đơn đặt hàng</h5>
+            <hr>
+            <p><span style="font-weight: bold;">Người đặt</span>: @Model.Customer.Name</p>
+            <p><span style="font-weight: bold;">Số ĐT</span> : @Model.Customer.MobilePhone</p>
+            <p><span style="font-weight: bold;">Email</span> : @Model.Customer.Email</p>
+            <hr/>
+            <p><span style="font-weight: bold;">Người nhận</span> : @Model.Customer.NameReceiver</p>
+            <p><span style="font-weight: bold;">Số ĐT</span> : @Model.Customer.MobilePhoneReceiver</p>
+
+            <hr />
+
+            <div class="d-flex">
+                <span style="font-weight: bold;">Chốt đơn :&nbsp </span>
+                   <form method="post" id="close-the-order" asp-action="CloseTheOrder" asp-route-id="@Model.Id" asp-area="manager" asp-controller="order">
+                    <div class="d-flex justify-content-between">
+                        <div class="mb-2 form-check form-switch">
+                            <input asp-for="@Model.IsCloseTheOrder" class="form-check-input" type="checkbox" onclick="CloseTheOrder()">
+                            <label class="form-check-label">
+                                @if (@Model.IsCloseTheOrder)
+                                {
+                                    <span class="text-primary">Đã Chốt</span>
+                                }
+                                else
+                                {
+                                    <span style="color:#808080">Chưa chốt</span>
+                                }
+                            </label>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+            <p><span style="font-weight: bold;">Ngày giờ</span> : @Model.DatetimeDetail</p>
+            <p><span style="font-weight: bold;">Trạng thái</span> : @isInvoice</p>
+
+        </div>
+        <span></span>
+    </div>
+
+@section Scripts
+    {
+    <script>
+        function CloseTheOrder() {
+            document.getElementById("close-the-order").submit();
+        }
+
+    </script>
+}
+

@@ -1,17 +1,22 @@
 ﻿@using GOPH.Entites;
 @model IEnumerable<Commodity>
 @{
+    Layout = "~/Views/Shared/_LayoutManagerProduct.cshtml";
     ViewData["Title"] = "Danh mục hàng hóa";
+    ViewData["ActiveNavbar"] = "Commodity";
     int i = 1;
     var statusMessage = TempData["StatusMessage"] as string;
 }
 <div class="container">
     <h3 class="title-list">@ViewData["Title"] </h3>
-    <partial name="_AlertMessage" model="@statusMessage" />
-    <a asp-action="create" asp-area="manager" asp-controller="commodity" class="btn btn-primary">Thêm + </a>
-    <form autocomplete="off" asp-controller="commodity" asp-antiforgery="true" asp-action="DownloadReport" method="post">
-        <button type="submit" id="btnsubmit" class="btn btn-success">Xuất file</button>
-    </form>
+    <div class="d-flex">
+        <a asp-action="create" asp-area="manager" asp-controller="commodity" class="btn btn-primary">Thêm +</a>
+       
+        <form autocomplete="off" asp-controller="commodity" asp-antiforgery="true" asp-action="DownloadReport" method="post">
+            <button type="submit" id="btnsubmit" class="btn  btn-success mx-1">Xuất file</button>
+        </form>
+    </div>
+  
     <table class="table">
         <thead>
             <tr>

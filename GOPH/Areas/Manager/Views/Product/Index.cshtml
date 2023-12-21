@@ -1,10 +1,12 @@
 ﻿
 @model PagedList<Product>
 @{
+    Layout = "~/Views/Shared/_LayoutManagerProduct.cshtml";
+    ViewData["ActiveNavbar"] = "Product";
     ViewData["Title"] = "Danh mục sản phẩm & thuốc";
     int i = 1;
     var statusMessage = TempData["StatusMessage"] as string;
-
+    var format = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
     var paging = new Pagin()
             {
                 UrlAction = "index",
@@ -12,47 +14,58 @@
                 TotalPages = Model.TotalPages,
             };
 }
-<div class="container">
-    <h3 class="title-list">@ViewData["Title"] </h3>
-    <partial name="_AlertMessage" model="@statusMessage" />
-    <div class="container-fluid">
+<nav id="navbar-search" class="navbar navbar-light navbar-search">
+    <div class="container">
+        <div class="navbar-below-left">
+           
+        </div>
 
-        <nav class="navbar navbar-light bg-light">
-            <div class="container-fluid">
-                <a class="navbar-brand">Navbar</a>
-                <a asp-action="create" asp-area="manager" asp-controller="product" class="btn btn-primary mb-2">Thêm + </a>
-                <form autocomplete="off" asp-controller="product" asp-antiforgery="true" asp-action="DownloadReport" method="post">
-                    <button type="submit" class="btn btn-success">Xuất file</button>
-                </form>
-                <form method="post" asp-action="SearchIndex" class="d-flex">
-                    <input class="form-control me-2" id="name-list" type="search" aria-label="Search" placeholder="Tên sản phẩm" name="search">
-                    <input id="hfProduct" name="productId" />
-                    <button class="btn btn-outline-success" type="submit"><i class="bi bi-search"></i></button>
-                </form>
-            </div>
-        </nav>
+        <div class="navbar-below-right">
 
-       @* <form asp-controller="product" asp-antiforgery="true" asp-action="EditAllProduct" method="post">
-            <button type="submit" class="btn btn-success">Cập nhật danh sách</button>
-        </form>*@
+            <form id="submit-search" method="post" asp-action="searchindex">
+                <div class="search-input">
+                    <input id="name-list" type="search" aria-label="Search" placeholder="Nhập mã hoặc tên" name="search">
+                    <input type="hidden" id="hfProduct" name="productId" />
+
+                    <div id="autocom-box" class="autocom-box">
+                        <!-- here list are inserted from javascript -->
+                    </div>
+                    <button id="icon-search" class="icon-search" type="submit"><i class="bi bi-search"></i></button>
+                    <button id="icon-load" class="icon-search"><img style="width: 30px; height:30px;" src="~/iconcontan/load.gif" /></button>
+                </div>
+
+            </form>
+        </div>
+
     </div>
-   
-    <table style="overflow-x: auto;" class="table">
+</nav>
+
+<div style="width: 100%;" class="table-row">
+    <div class="d-flex mt-2">
+        <a asp-action="create" asp-area="manager" asp-controller="product" class="btn btn-primary">Thêm + </a>         
+        <form class="mx-1" autocomplete="off" asp-controller="product" asp-antiforgery="true" asp-action="DownloadReport" method="post">
+            <button type="submit" class="btn btn-success">Xuất file</button>
+        </form>
+
+        @*<form class="mx-1" autocomplete="off" asp-controller="product" asp-antiforgery="true" asp-action="UpdateImporrt" method="post">
+            <button type="submit" class="btn btn-success">update</button>
+        </form>*@
+        <a asp-controller="product" asp-action="newproducts" class="btn btn-success mx-1">Mới nhất</a>
+
+        <a asp-controller="product" asp-action="updateproducts" class="btn btn-success mx-1">Vừa cập nhật</a>
+    </div>
+    <table class="table mt-2">
         <thead>
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">Id</th>
                 <th scope="col">Tên</th>
-                <th scope="col">Ảnh</th>               
+                <th scope="col">Ảnh</th>
                 <th scope="col">Giá bán</th>
                 <th scope="col">Giá vốn</th>
                 <th scope="col">Mã vạch</th>
-                <th scope="col">Nhóm hàng</th>
-                <th scope="col">Hàng hóa</th>
-
                 <th scope="col">Chức năg</th>
                 <th></th>
-               
+
             </tr>
         </thead>
         <tbody>
@@ -61,27 +74,26 @@
             {
                 <tr>
                     <th scope="row">@i</th>
-                    <td>@product.Id</td>
+
                     <td>@product.Name</td>
                     <td>
                         @if (!string.IsNullOrEmpty(product.UrlImage))
                         {
                             <img style="width:50px; height: 50px;" src="@product.UrlImage" />
-                        }else
+                        }
+                        else
                         {
                             <img style="width:50px; height: 50px;" src="~/image/product.jpg" />
                         }
-                        
+
                     </td>
-                    <td>@product.Price</td>
-                    <td>@product.CapitalPrice</td>
+                    <td>@String.Format(format, "{0:c0}", @product.Price )</td>
+                    <td>@String.Format(format, "{0:c0}", @product.CapitalPrice )</td>
                     <td>@product.Code</td>
-                    <td>@product.CommodityGroupId</td>
-                    <td>@product.CommodidyId</td>
+
                     <td>
-                        <a asp-action="delete" asp-area="manager" asp-controller="product" asp-route-id="@product.Id" class="btn btn-sm btn-light">Xóa</a>
-                        <a asp-action="update" asp-area="manager" asp-controller="product" asp-route-id="@product.Id" class="btn btn-sm btn-light" class="btn btn-sm btn-light">Sửa</a>
-                        
+                        <a asp-action="detail" asp-area="manager" asp-controller="product" asp-route-id="@product.Id" class="btn btn-sm btn-light">Cập nhật</a>
+                      
                     </td>
                 </tr>
 
@@ -93,7 +105,14 @@
     <span class="text-danger"></span>
 
     @await Html.PartialAsync("_PaginPartial", paging)
+
 </div>
+
+
+
+@section NavbarTop{
+
+}
 
 
 @section Scripts 
@@ -105,10 +124,11 @@
  
 <script>
         $(function () {
+            var domain = document.getElementById("domain").value;
             $('#name-list').autocomplete({
                 source: function (request, response) {
                     $.ajax({
-                        url: "https://localhost:7084/Manager/Product/Search",
+                        url: domain + "/Manager/Product/Search",
                         data: { "prefix": request.term },
                         dataType: "json",
                         type: "POST",
@@ -124,14 +144,18 @@
                         }
                     })
                 },
+                appendTo: "#autocom-box",
                 select: function (e, i) {
-                    debugger
+
                     $("#hfProduct").val(i.item.val);
+                    document.getElementById("submit-search").submit();
                 },
                 minLength: 1
             }).autocomplete("instance")._renderItem = function (ul, item) {
+
+
                 console.log('test');
-                var item = $('<div class="list_item_container"><div class="image"><img class="imageClass" src="' + item.logoUrl + '"></div><div class="label">' + item.label +  '</div></div>')
+                var item = $('<div class="list_item_container d-flex flex-row bd-highlight mb-3"><div class="image-search-box"><img class="imageClass p-2 bd-highlight" src="' + item.logoUrl + '"></div><div class="label-item-search p-2 bd-highlight">' + item.label + '</div></div>')
                 return $("<li>").append(item).appendTo(ul);
             };
         });

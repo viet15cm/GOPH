@@ -4,7 +4,7 @@ using GOPH.ATMapper;
 using GOPH.DbContextLayer;
 using GOPH.Dto;
 using GOPH.Entites;
-using GOPH.Extensions.Extensions;
+using GOPH.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 

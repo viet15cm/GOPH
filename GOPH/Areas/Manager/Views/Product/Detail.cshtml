@@ -1,0 +1,262 @@
+﻿@using GOPH.Dto;
+@using GOPH.Entites;
+@using GOPH.Areas.Manager.Models
+@model Product
+@{
+    Layout = "~/Views/Shared/_LayoutManagerProduct.cshtml";
+    ViewData["Title"] = "Chi tiết sản phẩm ";
+    ViewData["ActiveNavbar"] = "Product";
+    var format = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+}
+<div class="mt-2 row">
+    <h5><span class="text-primary"><i class="bi bi-ticket-detailed"></i>  @Model.Name</span></h5>
+    <hr />
+        <dl>
+            <dt>
+                @Html.DisplayNameFor(model => model.Id)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Id)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Code)
+            </dt>
+
+            <dd>
+                @if (string.IsNullOrEmpty(Model.Code))
+                {
+                    <span class="text-danger">Chưa có</span>
+                }
+                else
+                {
+                    @Html.DisplayFor(model => model.Code)
+                }
+
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+
+
+            <dt>
+                @Html.DisplayNameFor(model =>  model.CapitalPrice)
+            </dt>
+
+            <dd>
+                @String.Format(format, "{0:c0}",Model.CapitalPrice)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Price)
+            </dt>
+
+            <dd>
+                @String.Format(format, "{0:c0}",Model.Price)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Promotion)
+            </dt>
+
+            <dd>
+                <spap>@Model.Promotion%</spap>
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.IsPrice)
+            </dt>
+
+            <dd>
+            <form method="Post" id="is-price" asp-action="IsPrice" asp-route-id="@Model.Id" asp-area="manager" asp-controller="product">
+                <div class="d-flex justify-content-between">
+                    <div class="mb-2 form-check form-switch">
+                        <input asp-for="@Model.IsPrice" class="form-check-input" type="checkbox" onclick="Price()">
+                        <label class="form-check-label">
+                            @if (Model.IsPrice)
+                            {
+                                <span class="text-primary">Có</span>
+                            }
+                            else
+                            {
+                                <span style="color:#808080">Không</span>
+                            }
+                        </label>
+                    </div>
+
+                </div>
+            </form>
+            </dd>
+
+
+            <dt>
+                Hot - bán chạy
+            </dt>
+
+            <dd>
+            <form method="Post" id="is-hot" asp-action="IsHot" asp-route-id="@Model.Id" asp-area="manager" asp-controller="product">
+                    <div class="d-flex justify-content-between">
+                        <div class="mb-2 form-check form-switch">
+                            <input asp-for="@Model.Hot" class="form-check-input" type="checkbox" onclick="IsHot()">
+                            <label class="form-check-label">
+                            @if (Model.Hot)
+                            {
+                                <span class="text-primary">Có</span>
+                            }
+                            else
+                            {
+                                <span style="color:#808080">Không</span>
+                            }
+                            </label>
+                        </div>
+                        
+                    </div>
+                </form>
+            </dd>
+
+
+            <dt>
+                Sự kiện - khuyến mãi
+            </dt>
+
+            <dd>
+            <form method="Post" id="is-event" asp-action="IsEvent" asp-route-id="@Model.Id" asp-area="manager" asp-controller="product">
+                    <div class="d-flex justify-content-between">
+                        <div class="mb-2 form-check form-switch">
+                        <input asp-for="@Model.IsEvent" class="form-check-input" type="checkbox" onclick="Event()">
+                            <label class="form-check-label" >
+                                @if (Model.IsEvent)
+                                {
+                                    <span class="text-primary">Có</span>
+                                }
+                                else
+                                {
+                                    <span style="color:#808080">Không</span>
+                                }
+                            </label>
+                        </div>
+
+                    </div>
+             </form>
+            </dd>
+
+            <dt>
+                Mặt hàng
+            </dt>
+
+            <dd>
+                @if (Model.Commodity is null)
+                {
+                   <span class="text-danger">Chưa có</span>
+                }else
+                {
+                  <span>@Model.Commodity.Name</span>
+                }
+            </dd>
+            <dt>
+                Nhóm
+            </dt>
+
+            <dd>
+                @if (Model.CommodityGroup is null)
+                {
+                   <span class="text-danger">Chưa có</span>
+                }else
+                {
+                  <span>@Model.CommodityGroup.Name</span>
+                }
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.UrlImage)
+                
+            </dt>
+
+            <dd>
+                @if (string.IsNullOrEmpty(Model.UrlImage))
+                {
+                    <img style="width: 50px; height: 50px;" src="~/image/goph.jpg" />
+                }
+                else
+                {
+                    <img style="width: 50px; height: auto;" src="@Model.UrlImage" />
+                }
+
+            </dd>
+            <dt>
+                Mô tả & nội dung
+            </dt>
+                
+            <dd>
+                @Html.ActionLink("Cập nhật", "contents", "product", new {id = Model.Id})
+            </dd>
+
+             <dt>
+                Giá sỉ
+            </dt>
+                
+            <dd>
+                @if (Model.Wholesale != null)
+                {
+                      @Html.ActionLink("Chỉnh sửa & Xóa", "update", "wholesale", new {id = Model.Wholesale?.Id})
+                }else
+                {
+                      @Html.ActionLink("+ Thêm giá sỉ", "create", "wholesale", new {id = Model.Id})
+                }
+               
+            </dd>
+        
+            <dt>
+                @Html.ActionLink("+ Thêm hình ảnh", "CreateImages", "product", new {id = Model.Id})
+            </dt>
+
+            <dd>
+                @if (Model.Images?.Count <= 0)
+                {
+                    <span class="text-danger">Chưa có</span>
+                }
+                else
+                {
+                    foreach (var item in Model.Images)
+                    {
+                      <a asp-controller="product" asp-action="EditImg" asp-route-id="@item.Id" ><img style="width: 50px; height: 50px;" src="~/ImageManager/ProductImg/@item.Url" /></a>
+                        
+                    }
+                }
+            </dd>
+        </dl>
+
+    <hr />
+    <div class="d-flex mb-2">
+        <a asp-action="delete" asp-area="manager" asp-controller="product" asp-route-id="@Model.Id" class="btn btn-danger">Xóa</a>
+        <a asp-action="update" asp-area="manager" asp-controller="product" asp-route-id="@Model.Id" class="btn btn-primary mx-1">Chỉnh sửa</a>
+        <a asp-action="index" asp-area="manager" asp-controller="product" class="btn btn-secondary mx-1">Về danh sách</a>
+    </div>
+ 
+</div>
+
+@section Scripts
+{
+    <script>
+        function Price() {
+            document.getElementById("is-price").submit();
+        }
+
+        function IsHot() {
+            document.getElementById("is-hot").submit();
+        }
+
+        function Event() {
+            document.getElementById("is-event").submit();
+        }
+
+
+    </script>
+}
+
+
+

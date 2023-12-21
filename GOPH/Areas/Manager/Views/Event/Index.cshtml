@@ -1,0 +1,45 @@
+﻿@using GOPH.Entites;
+@model IEnumerable<Event>
+@{
+    Layout = "~/Views/Shared/_LayoutManagerProduct.cshtml";
+    ViewData["Title"] = "Danh sách sự kiện";
+    ViewData["ActiveNavbar"] = "Event";
+    int i = 1;
+    var statusMessage = TempData["StatusMessage"] as string;
+}
+<div class="container">
+    <h3 class="title-list">@ViewData["Title"] </h3>
+    <div class="d-flex">
+        <a asp-action="create" asp-area="manager" asp-controller="event" class="btn btn-primary">Tạo mới +</a>
+
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Tiêu đề</th>
+
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <th scope="row">@i</th>
+
+                    <td>@item.Name</td>
+
+                    <td>
+                        <a asp-action="detail" asp-area="manager" asp-controller="event" asp-route-id="@item.Id" class="btn btn-sm btn-light">Cập nhật</a>
+                       
+                    </td>
+
+                </tr>
+
+                i++;
+            }
+        </tbody>
+    </table>
+</div>

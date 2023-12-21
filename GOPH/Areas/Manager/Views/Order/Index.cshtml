@@ -1,0 +1,82 @@
+﻿@model IEnumerable<OrderDetailDto>
+@{
+    Layout = "~/Views/Shared/_LayOutOrderManager.cshtml";
+    var curent = "Chưa xuất";
+    var format = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+    ViewData["ActiveNavbar"] = "Order";
+}
+
+    <div class="row mt-3">
+        <div class="col-md-8"> 
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Mã</th>
+                        <th scope="col">Ngày đặt</th>
+                        <th scope="col">Giá</th>
+                        <th scope="col">Chốt đơn</th>
+                        <th scope="col">Trạng thái</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var item in Model)
+                    {
+                        @if (item.Invoice is null)
+                        {
+                            curent = "Chưa xuất";
+                        }
+                        <tr>
+                            
+                            <td>@item.Id</td>
+                            <td>@item.DatetimeDetail</td>
+                            <td>@String.Format(format, "{0:c0}", item.TotalPrice)</td>
+                            <td>
+                          
+                                    @if (@item.IsCloseTheOrder)
+                                    {
+                                        <span class="text-primary">Chốt</span>
+                                    }
+                                    else
+                                    {
+                                        <span style="color:#808080">Chưa</span>
+                                    }
+                                  
+                           
+                                
+                            </td>
+                            <td>
+                                <a asp-action="detail" asp-area="manager" asp-route-id="@item.Id" class="btn btn-sm btn-danger">@curent</a>
+                            </td>
+                        </tr>
+                        curent = "Đã xuất";
+                    }
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="col-md-4">
+            <div class="order-message">
+                <h5>Thông báo</h5>
+                <hr>
+                <p><i class="bi bi-exclamation-circle-fill"></i> Có <span>@Model.Count()</span> đơn hàng chưa xuất hóa đơn </p>
+                <hr>
+                <p style="font-weight: bold;"><i class="bi bi-receipt-cutoff"></i> Đơn hàng gần đây</p>
+                 @foreach (var item in Model)
+                {
+                    <p><span style="font-weight: bold;">@item.Customer.Name</span> vừa đặt <a asp-action="detail" asp-area="manager" asp-route-id="@item.Id">đơn hàng</a> với giá trị  @String.Format(format,"{0:c0}",item.TotalPrice ) <br /> <spn style="font-style: oblique;">@item.ConvertDatetime</spn></p>
+                }
+                
+            </div>
+        </div>
+        
+    </div>
+
+
+
+@section Scripts{
+  
+}
+

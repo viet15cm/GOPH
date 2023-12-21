@@ -1,15 +1,20 @@
 ﻿@model Commodity
 @{
-    ViewData["Title"] = "Xóa mục hàng hóa";
+    Layout = "~/Views/Shared/_LayoutManagerProduct.cshtml";
+    ViewData["Title"] = "Xóa mặt hàng";
+    ViewData["ActiveNavbar"] = "Commodity";
 }
 
-<div class="container">
-    <h2>@ViewData["Title"] @Model.Name</h2>
+<div class="container mt-2">
+    <h5 style="font-weight: bold;"><i class="bi bi-trash"></i> @ViewData["Title"]</h5>
+    <hr />
     <div class="row">
         <div class="col-md-4">
-            <form method="post" asp-route-id="@Model.Id">
-                <button type="submit" class=" btn btn-lg btn-primary">Xóa</button>
-                <a asp-area="manager" asp-action="index" asp-controller="commodity" class="btn btn-lg btn-light">Về</a>
+            <p>-@Model.Name-</p>
+            <img style="width: 100%;" src="~/image/delete.png" />
+            <form class="mt-2" method="post" asp-route-id="@Model.Id">
+                <button type="submit" class=" btn btn-sm btn-danger">Xóa</button>
+                <a asp-area="manager" asp-action="index" asp-controller="commodity" class="btn btn-sm btn-light">Về</a>
             </form>
         </div>
 

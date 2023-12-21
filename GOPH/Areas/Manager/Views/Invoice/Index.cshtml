@@ -1,0 +1,67 @@
+﻿@model IEnumerable<InvoiceDetailDto>
+@{
+    Layout = "~/Views/Shared/_LayOutOrderManager.cshtml";
+
+    var format = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+
+    var curent = "Đã xuất";
+
+    ViewData["ActiveNavbar"] = "Invoice";
+
+    
+}
+
+<div class="row mt-3">
+    <div class="col-md-8">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Mã</th>
+                    <th scope="col">Ngày xuất</th>
+                    <th scope="col">Giá</th>
+                    <th scope="col">Nhân viên</th>
+                    <th scope="col">Trạng thái</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+                    @if (item.OrderId is null)
+                    {
+                        curent = "Chưa xuất";
+                    }
+                    <tr>
+
+                        <td>@item.Id</td>
+                        <td>@item.DatetimeDetail</td>
+                        <td>@String.Format(format, "{0:c0}", item.TotalPrice)</td>
+                        <td>@item.Employee.UserName</td>
+                        <td>
+                            <a asp-action="detail" asp-controller="invoice" asp-area="manager" asp-route-id="@item.Id" class="btn btn-sm btn-primary">@curent</a>
+                        </td>
+                    </tr>
+                    curent = "Đã xuất";
+                }
+
+            </tbody>
+        </table>
+    </div>
+
+    <div class="col-md-4">
+        <div class="order-message">
+            <h5>Thông báo</h5>
+            <hr>
+            <p><i class="bi bi-exclamation-circle-fill"></i> Có <span>@Model.Count()</span> Hóa đơn đã xuất </p>
+            <hr>
+            <p style="font-weight: bold;"><i class="bi bi-receipt-cutoff"></i> Hóa đơn gần nhất</p>
+            @foreach (var item in Model)
+            {
+                <p><span style="font-weight: bold;">@item.Employee.UserName</span> vừa xuất <a asp-action="detail" asp-area="manager" asp-route-id="@item.Id">hóa đơn</a> với giá trị  @String.Format(format,"{0:c0}", item.TotalPrice ) <br /> <spn style="font-style: oblique;">@item.ConvertDatetime</spn></p>
+            }
+
+        </div>
+    </div>
+
+</div>

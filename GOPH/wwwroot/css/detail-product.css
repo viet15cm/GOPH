@@ -98,7 +98,7 @@
 
 .product-detail-tumb img {
     margin-top: 10px;
-    max-height: 400px;
+    
     width: 100%;
 }
 
@@ -157,6 +157,9 @@
    
 }
 
+.counter input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
 .counter input {
     width: 40px;
     background: #f2f2f2;

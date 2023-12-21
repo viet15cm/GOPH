@@ -1,0 +1,73 @@
+﻿@inject IHttpContextAccessor _httpcontext
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var domain = string.Format("{0}://{1}", _httpcontext.HttpContext.Request.Scheme, _httpcontext.HttpContext.Request.Host.ToString());
+    var statusMessage = TempData["StatusMessage"] as string;
+}
+
+<div class="container mt-2">
+    <input type="hidden" id="domain" value="@domain" />
+    <input type="hidden" id="number-page" value="1" />
+    <partial name="_AlertMessage" model="@statusMessage" />
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+               
+                <div class="list-group  mt-2">
+                    <h5 class="list-group-item my-0"> Danh mục quản lý </h5>
+                    <a class="list-group-item @ActiveNavPages.ProductActiveClass(ViewContext) " asp-area="manager" asp-controller="product" asp-action="index">
+                            Sản phẩm & thuốc
+                        </a>
+                    <a class="list-group-item @ActiveNavPages.GroupActiveClass(ViewContext) " asp-area="manager" asp-controller="commodityGroup" asp-action="index">
+                             Nhóm
+                        </a>
+                    <a class="list-group-item @ActiveNavPages.CommodityActiveClass(ViewContext)" asp-area="manager" asp-controller="commodity" asp-action="index">
+                            Mặt hàng
+                    </a>
+
+                    <a class="list-group-item @ActiveNavPages.EventActiveClass(ViewContext)" asp-area="manager" asp-controller="event" asp-action="index">
+                        Sự kiện
+                    </a>
+
+                    <a class="list-group-item @ActiveNavPages.CacheActiveClass(ViewContext)" asp-area="manager" asp-controller="cache" asp-action="index">
+                            Cache
+                     </a>
+
+                </div>
+            </div>
+            <div class="col-md-9">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+  
+
+    <div class="myAlert-bottom alert alert-primary" role="alert">
+    </div>
+    <div id="modal-all" class="modal-all">
+        <div class="loadding-all"><img style="width: 50px; height:50px;" src="~/iconcontan/load.gif" /></div>
+    </div>
+
+</div>
+
+
+@section ImageManager{
+
+    <link href="~/css/img-manager.css" rel="stylesheet" />
+   
+
+}
+
+@section NavbarTop{
+
+
+    @await RenderSectionAsync("NavbarTop", required: false)
+    
+}
+
+@section Scripts{
+
+    @await RenderSectionAsync("Scripts", required: false)
+
+}

@@ -1,18 +1,14 @@
 {
-
   "version": "1.0",
-
   "defaultProvider": "cdnjs",
-
   "libraries": [
-
     {
-
       "library": "jquery-autocomplete@1.0.7",
-
       "destination": "wwwroot/lib/autocomplete"
+    },
+    {
+      "library": "microsoft-signalr@8.0.0",
+      "destination": "wwwroot\\lib\\microsoft-signalr"
     }
-
   ]
-
 }

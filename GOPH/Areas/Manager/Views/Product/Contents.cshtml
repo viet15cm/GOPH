@@ -1,0 +1,47 @@
+﻿@model ProductForContentUpdate
+
+@{
+    Layout = "~/Views/Shared/_LayoutSummernote.cshtml";
+    var statusMessage = TempData["StatusMessage"] as string;
+  
+    var description = "Description";
+
+    var content = "Content";
+}
+
+<div class="container mt-1">
+    <partial name="_AlertMessage" model="@statusMessage" />
+    <h5 style="text-align: right;">@Model.Name <i class="bi bi-pencil-square"></i></h5>
+    <hr />
+    <form method="post" asp-action="contents" asp-controller="product" asp-route-id="@Model.Id">
+        <div class="mb-3">
+            <label class="form-label" asp-for="@Model.Description"></label>
+            <textarea id="Description" name="Description" rows="3" class="form-control" asp-for="@Model.Description"></textarea>
+            <span asp-validation-for="@Model.Description"></span>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" asp-for="@Model.Content"></label>
+            <textarea id="Content" name="Content" rows="4" class="form-control" asp-for="@Model.Content"></textarea>
+            <span asp-validation-for="@Model.Content"></span>
+        </div>
+
+        <hr />
+        <div class="d-flex mb-3">
+            <button class="btn btn-sm btn-info" type="submit">Cập nhật</button>
+            <a class="btn btn-secondary mx-1" asp-area="manager" asp-action="detail" asp-route-id="@Model.Id" asp-controller="product">Quay về</a>
+        </div>
+    </form>
+  
+</div>
+
+@section Scripts{
+
+    <partial name="_Summernote" model="@description" />
+
+    <partial name="_Summernote" model="@content" />
+
+
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+
+}
+

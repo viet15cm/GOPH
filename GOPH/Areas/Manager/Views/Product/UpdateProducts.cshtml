@@ -1,0 +1,162 @@
+﻿@model PagedList<Product>
+@{
+    Layout = "~/Views/Shared/_LayoutManagerProduct.cshtml";
+    ViewData["ActiveNavbar"] = "Product";
+    ViewData["Title"] = "Vừa cập nhật";
+    int i = 1;
+    var statusMessage = TempData["StatusMessage"] as string;
+    var format = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+    var paging = new Pagin()
+            {
+                UrlAction = "newproduct",
+                CurrentPage = Model.CurrentPage,
+                TotalPages = Model.TotalPages,
+
+            };
+}
+<nav id="navbar-search" class="navbar navbar-light navbar-search">
+    <div class="container">
+        <div class="navbar-below-left">
+        </div>
+
+        <div class="navbar-below-right">
+
+            <form id="submit-search" method="post" asp-action="searchindex">
+                <div class="search-input">
+                    <input id="name-list" type="search" aria-label="Search" placeholder="Nhập mã hoặc tên" name="search">
+                    <input type="hidden" id="hfProduct" name="productId" />
+
+                    <div id="autocom-box" class="autocom-box">
+                        <!-- here list are inserted from javascript -->
+                    </div>
+                    <button id="icon-search" class="icon-search" type="submit"><i class="bi bi-search"></i></button>
+                    <button id="icon-load" class="icon-search"><img style="width: 30px; height:30px;" src="~/iconcontan/load.gif" /></button>
+                </div>
+
+            </form>
+        </div>
+
+    </div>
+</nav>
+
+<div style="width: 100%;" class="table-row">
+    <div class="d-flex mt-2">
+        <a asp-action="create" asp-area="manager" asp-controller="product" class="btn btn-primary">Thêm + </a>
+        <form class="mx-1" autocomplete="off" asp-controller="product" asp-antiforgery="true" asp-action="DownloadReport" method="post">
+            <button type="submit" class="btn btn-success">Xuất file</button>
+        </form>
+        @*<form class="mx-1" autocomplete="off" asp-controller="product" asp-antiforgery="true" asp-action="UpdateImporrt" method="post">
+        <button type="submit" class="btn btn-success">update</button>
+        </form>*@
+
+        <a asp-controller="product" asp-action="newproducts" class="btn btn-success mx-1">Mới nhất</a>
+
+        <a asp-controller="product" asp-action="updateproducts" class="btn btn-success mx-1">Vừa cập nhật</a>
+
+    </div>
+    <table class="table mt-2">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Tên</th>
+                <th scope="col">Ảnh</th>
+                <th scope="col">Giá bán</th>
+                <th scope="col">Giá vốn</th>
+                <th scope="col">Mã vạch</th>
+                <th scope="col">Chức năg</th>
+                <th></th>
+
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var product in Model)
+            {
+                <tr>
+                    <th scope="row">@i</th>
+
+                    <td>@product.Name</td>
+                    <td>
+                        @if (!string.IsNullOrEmpty(product.UrlImage))
+                        {
+                            <img style="width:50px; height: 50px;" src="@product.UrlImage" />
+                        }
+                        else
+                        {
+                            <img style="width:50px; height: 50px;" src="~/image/product.jpg" />
+                        }
+
+                    </td>
+                    <td>@String.Format(format, "{0:c0}", @product.Price )</td>
+                    <td>@String.Format(format, "{0:c0}", @product.CapitalPrice )</td>
+                    <td>@product.Code</td>
+
+                    <td>
+                        <a asp-action="detail" asp-area="manager" asp-controller="product" asp-route-id="@product.Id" class="btn btn-sm btn-light">Cập nhật</a>
+
+                    </td>
+                </tr>
+
+                i++;
+            }
+        </tbody>
+    </table>
+
+    <span class="text-danger"></span>
+
+    @await Html.PartialAsync("_PaginPartial", paging)
+
+</div>
+
+
+
+@section NavbarTop{
+
+}
+
+
+@section Scripts
+    {
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <script>
+        $(function () {
+            var domain = document.getElementById("domain").value;
+            $('#name-list').autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: domain + "/Manager/Product/Search",
+                        data: { "prefix": request.term },
+                        dataType: "json",
+                        type: "POST",
+                        success: function (data) {
+                            console.log(data);
+                            response(data);
+                        },
+                        error: function (response) {
+                            alert(response.responseText);
+                        },
+                        failure: function (response) {
+                            alert(response.responseText);
+                        }
+                    })
+                },
+                appendTo: "#autocom-box",
+                select: function (e, i) {
+
+                    $("#hfProduct").val(i.item.val);
+                    document.getElementById("submit-search").submit();
+                },
+                minLength: 1
+            }).autocomplete("instance")._renderItem = function (ul, item) {
+
+
+                console.log('test');
+                var item = $('<div class="list_item_container d-flex flex-row bd-highlight mb-3"><div class="image-search-box"><img class="imageClass p-2 bd-highlight" src="' + item.logoUrl + '"></div><div class="label-item-search p-2 bd-highlight">' + item.label + '</div></div>')
+                return $("<li>").append(item).appendTo(ul);
+            };
+        });
+    </script>
+
+}

@@ -1,5 +1,6 @@
 ﻿using GOPH.Areas.Manager.Models;
 using GOPH.DbContextLayer;
+using GOPH.Services.CallApiServices;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 
@@ -8,7 +9,7 @@ namespace GOPH.Areas.Manager.Controllers
     [Area("manager")]
     public class CacheController : BaseController
     {
-        public CacheController(IMemoryCache cache, AppDbContext appDbContext, ILogger<BaseController> logger) : base(cache, appDbContext, logger)
+        public CacheController(IMemoryCache cache, AppDbContext appDbContext, ILogger<BaseController> logger, IHttpClientServiceImplementation httpClientServiceImplementation) : base(cache, appDbContext, logger, httpClientServiceImplementation)
         {
         }
 

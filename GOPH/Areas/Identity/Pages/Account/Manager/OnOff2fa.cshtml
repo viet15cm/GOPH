@@ -9,7 +9,7 @@
     <div class="card mt-2">
         <h5 class="card-header text-secondary"><i class="fas fa-shield-alt"></i> Xác thực hai yếu tố</h5>
         <div class="card-body">
-            <form method="Post" id="Width2fa" asp-page="/Account/Manager/OnOff2fa" , asp-area="Identity">
+            <form method="Post" id="Width2fa" asp-page="/Account/Manager/OnOff2fa" asp-area="Identity">
                 <div class="d-flex justify-content-between">
                     <div class="mb-2 form-check form-switch">
                         <input asp-for="input.Check2fa" class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" onclick="Width2fa()">

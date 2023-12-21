@@ -6,22 +6,22 @@ namespace GOPH.Dto
     public class ProductForCreateDto
     {
         
-        public ProductForCreateDto()
-        {
-            Id = Guid.NewGuid().ToString();
-        }
 
-        [Key]
+        [Required(ErrorMessage = "{0} không được bỏ trống.")]
+        [Display(Name= "Mã")]
         public string Id { get; set; }
 
-        [Display(Name = "Mã")]
+        
         [NumberCodeConfirmed]
+        [Display(Name = "Mã vạch")]
         public string Code { get; set; }
 
         [Display(Name = "Tên")]
         [Required(ErrorMessage = "{0} không được bỏ trống.")]
         public string Name { get; set; }
 
+        [Display(Name = "Tên hiển thị")]
+        public string DisplayName { get; set; }
 
         [Display(Name = "Giá vốn")]
         [Required(ErrorMessage = "{0} không được bỏ trống.")]
@@ -43,10 +43,17 @@ namespace GOPH.Dto
         [Display(Name ="Loại")]
         public string CommodidyId { get; set; }
 
-      
+        [Display(Name = "Ngày tạo")]
+        public DateTime DateCreate { get; set; }
+
 
         [Display(Name = "Hiện giá")]
         public string  IsPrice { get; set; }
+
+
+        [Display(Name = "Sự kiện")]
+        public string IsEvent { get; set; }
+
 
         [Display(Name ="Nhóm")]
         public string CommodityGroupId { get; set; }
@@ -60,6 +67,11 @@ namespace GOPH.Dto
         {
             return bool.Parse(this.Hot);
         }
+        public bool GetIsEvent()
+        {
+            return bool.Parse(this.IsEvent);
+        }
+
 
     }
 }

@@ -1,0 +1,127 @@
+﻿@using GOPH.Dto;
+@using GOPH.Entites;
+@using GOPH.Areas.Manager.Models
+@model Event
+@{
+    Layout = "~/Views/Shared/_LayoutManagerProduct.cshtml";
+    ViewData["Title"] = "Chi tiết sự kiện ";
+    ViewData["ActiveNavbar"] = "Event";
+   
+}
+<div class="mt-2 row">
+    <h5><span class="text-primary"><i class="bi bi-ticket-detailed"></i>  @Model.Name</span></h5>
+    <hr />
+    <dl>
+        <dt>
+            @Html.DisplayNameFor(model => model.Id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+      
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsStatus)
+        </dt>
+
+
+        <dd>
+            <form method="post" id="is-status" asp-action="status" asp-route-id="@Model.Id" asp-area="manager" asp-controller="event">
+                <div class="d-flex justify-content-between">
+                    <div class="mb-2 form-check form-switch">
+                        <input asp-for="@Model.IsStatus" class="form-check-input" type="checkbox" onclick="status()">
+                        <label class="form-check-label">
+                            @if (Model.IsStatus)
+                            {
+                                <span class="text-primary">Hiển thị</span>
+                            }
+                            else
+                            {
+                                <span style="color:#808080">Ẩn</span>
+                            }
+                        </label>
+                    </div>
+
+                </div>
+            </form>
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model =>  model.Content)
+        </dt>
+        <dd>
+            <a asp-action="contents" asp-controller="event" asp-route-id="@Model.Id" >Cập nhật</a>
+        </dd>
+
+        <dt>
+            @Html.ActionLink("+ Banner", "banner", "event", new {id = Model.Id})
+           
+        </dt>
+
+        <dd>
+            @if (!string.IsNullOrEmpty(Model.Banner))
+            {
+                <img style="width: 50px; height: 50px;" src="~/ImageManager/BannerEvent/@Model.Banner" />
+            }
+        </dd>
+        <dt>
+            Sản phẩm hiện có
+        </dt>
+
+        <dd>
+            @if (Model.Products?.Count <= 0)
+            {
+                <span>Chưa có</span>
+            }else
+            {
+              <ul>
+                @foreach (var product in Model.Products)
+                {
+                   <li><a asp-action="detail" asp-controller="product" asp-route-id="@product.Id">@product.Name</a></li>
+                    
+                }
+
+              </ul>
+            }
+        </dd>
+     </dl>
+
+    <hr />
+    <div class="d-flex mb-2">
+
+        <a asp-action="delete" asp-area="manager" asp-controller="event" asp-route-id="@Model.Id" class="btn btn-danger">Xóa</a>
+        <a asp-action="update" asp-area="manager" asp-controller="event" asp-route-id="@Model.Id" class="btn btn-primary mx-1">Chỉnh sửa</a>
+        <a asp-action="index" asp-area="manager" asp-controller="event" class="btn btn-secondary mx-1">Về danh sách</a>
+    </div>
+</div>
+
+
+@section Scripts
+    {
+    <script>
+        function status() {
+            document.getElementById("is-status").submit();
+        }
+
+       
+
+    </script>
+}

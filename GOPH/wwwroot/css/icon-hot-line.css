@@ -1,0 +1,147 @@
+﻿#group-support-hotline {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background: transparent;
+    display: flex;
+    flex-direction: column;
+    z-index: 9;
+    gap: 16px;
+}
+
+
+
+#group-support-hotline  a img {
+    width: auto;
+    height: auto;
+}
+
+#group-support-hotline a {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 0 36px rgba(0,0,0,0.2);
+    cursor: pointer;
+}
+
+.effect-ring {
+    display: flex;
+    background: #f15822;
+    border-radius: 50%;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+    -webkit-animation: phonering-alo-circle-img-anim 1s infinite ease-in-out;
+    animation: phonering-alo-circle-img-anim 1s infinite ease-in-out;
+    -webkit-transform-origin: 50% 50%;
+    -ms-transform-origin: 50% 50%;
+    transform-origin: 50% 50%;
+}
+
+.effect-ring::before {
+    position: absolute;
+    content: " ";
+    z-index: -1;
+    background-color: #d3d3d3;
+    width: 60px;
+    height: 60px;
+    border-radius: 100%;
+    animation-fill-mode: both;
+    -webkit-animation-fill-mode: both;
+    opacity: .6;
+    -webkit-animation: pulse 1.2s infinite ease-in-out;
+    animation: pulse 1.2s infinite ease-in-out;
+    -webkit-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+    box-sizing: border-box;
+
+}
+
+.effect-ring::after {
+    content: " ";
+    z-index: -1;
+    width: 120px;
+    height: 120px;
+    position: absolute;
+    background-color: transparent;
+    border-radius: 100% !important;
+    border: 2px solid #fbfbfa;
+    opacity: .1;
+    -webkit-animation: phonering-alo-circle-anim 1.2s infinite ease-in-out;
+    animation: phonering-alo-circle-anim 1.2s infinite ease-in-out;
+    transition: all .5s;
+    -webkit-transform-origin: 50% 50%;
+    -ms-transform-origin: 50% 50%;
+    transform-origin: 50% 50%;
+    box-sizing: border-box;
+
+}
+
+@keyframes pulse {
+    0% {
+        -webkit-transform: rotate(0) scale(0.7) skew(1deg);
+        opacity: .2
+    }
+
+    50% {
+        -webkit-transform: rotate(0) scale(1) skew(1deg);
+        opacity: .2
+    }
+
+    100% {
+        -webkit-transform: rotate(0) scale(0.7) skew(1deg);
+        opacity: .2
+    }
+}
+
+@-webkit-keyframes phonering-alo-circle-img-anim {
+    0% {
+        -webkit-transform: rotate(0) scale(1) skew(1deg)
+    }
+
+    10% {
+        -webkit-transform: rotate(-25deg) scale(1) skew(1deg)
+    }
+
+    20% {
+        -webkit-transform: rotate(25deg) scale(1) skew(1deg)
+    }
+
+    30% {
+        -webkit-transform: rotate(-25deg) scale(1) skew(1deg)
+    }
+
+    40% {
+        -webkit-transform: rotate(25deg) scale(1) skew(1deg)
+    }
+
+    50% {
+        -webkit-transform: rotate(0) scale(1) skew(1deg)
+    }
+
+    100% {
+        -webkit-transform: rotate(0) scale(1) skew(1deg)
+    }
+}
+
+@-webkit-keyframes phonering-alo-circle-anim {
+    0% {
+        -webkit-transform: rotate(0) scale(0.5) skew(1deg);
+        -webkit-opacity: .1
+    }
+
+    30% {
+        -webkit-transform: rotate(0) scale(0.7) skew(1deg);
+        -webkit-opacity: .5
+    }
+
+    100% {
+        -webkit-transform: rotate(0) scale(1) skew(1deg);
+        -webkit-opacity: .1
+    }
+}

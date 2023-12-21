@@ -1,8 +1,9 @@
-﻿using GOPH.Extensions.Extensions;
-
+﻿using GOPH.Extensions;
+using ProjectWebNotes.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddSignalR();
 builder.Services.AddDistributedMemoryCache();           // Đăng ký dịch vụ lưu cache trong bộ nhớ (Session sẽ sử dụng nó)
 builder.Services.AddSession(cfg => {                    // Đăng ký dịch vụ Session
     cfg.Cookie.Name = "GOPH";             // Đặt tên Session - tên này sử dụng ở Browser (Cookie)
@@ -14,12 +15,14 @@ builder.Services.AddControllersWithViews();
 //builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.ConfigureServiceManager();
 
-
+builder.Services.AddScoped<OrderHub>();
 builder.Services.ConfigureMySqlContext(builder.Configuration);
 
 builder.Services.ConfigureApplicationCookie(option =>
 {
-    option.ExpireTimeSpan = TimeSpan.FromDays(1);
+
+    option.SlidingExpiration = true;
+    option.ExpireTimeSpan = TimeSpan.FromDays(30);
     option.LoginPath = "/Identity/Account/Login";
     option.LogoutPath = "/Identity/Account/Logout";
     option.AccessDeniedPath = $"/Identity/Account/Manager/AccessDenied";
@@ -72,4 +75,5 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
+app.MapHub<OrderHub>("/chatHub");
 app.Run();

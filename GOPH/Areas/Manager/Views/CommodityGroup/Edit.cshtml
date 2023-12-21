@@ -1,6 +1,8 @@
 ﻿@model CommodityGroup
 @{
+    Layout = "~/Views/Shared/_LayoutManagerProduct.cshtml";
     ViewData["Title"] = "Chỉnh sửa nhóm hàng";
+    ViewData["ActiveNavbar"] = "Group";
     var SeleteCommodityGroups = ViewData["SeleteCommodityGroups"] as List<CommodityGroup>;
 }
 

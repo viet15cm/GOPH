@@ -1,37 +1,31 @@
-﻿@*@using Microsoft.AspNetCore.Authorization
+﻿@using Microsoft.AspNetCore.Authorization
 @inject IAuthorizationService authorizationService
 
 @{
     var resultAuthorization = await authorizationService.AuthorizeAsync(this.User, "Employee");
+
+    var resultAuthorizationManager = await authorizationService.AuthorizeAsync(this.User, "Admin");
+
+
 }
 
 @if (resultAuthorization.Succeeded)
 {
-    <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="categorymanager" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Danh mục
-        </a>
-        <ul class="dropdown-menu" aria-labelledby="categorymanager">
-            <li><a class="dropdown-item" asp-area="Manager" asp-controller="Category" asp-action="index">Danh mục</a></li>
-            <li><a class="dropdown-item" asp-area="Manager" asp-controller="Post" asp-action="index">Bài viết</a></li>
-            <li><a class="dropdown-item" asp-area="Manager" asp-controller="MemoryCache" asp-action="index">Cache</a></li>
 
-        </ul>
-    </li>
-
-}*@
+    
+}
+<li class="nav-item">
+    <a class="nav-link" asp-area="manager" asp-controller="Order" asp-action="Index">Đơn hàng @*<span id="mesage-count-order">0</span>*@</a>
+</li>
 
 
-
-
+@if (resultAuthorizationManager.Succeeded)
+{
+    
+}
 <li class="nav-item dropdown">
-    <a class="nav-link dropdown-toggle" href="#" id="manager" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <a class="nav-link" asp-area="Manager" asp-controller="product" asp-action="index">
         Manager
     </a>
-    <ul class="dropdown-menu" aria-labelledby="manager">
-        <li><a class="dropdown-item" asp-area="Manager" asp-controller="product" asp-action="index">Sản phẩm & thuốc</a></li>
-        <li><a class="dropdown-item" asp-area="Manager" asp-controller="commodityGroup" asp-action="index">Nhóm hàng</a></li>
-        <li><a class="dropdown-item" asp-area="Manager" asp-controller="commodity" asp-action="index">Hàng hóa</a></li>
-        <li><a class="dropdown-item" asp-area="Manager" asp-controller="cache" asp-action="index">Cache</a></li>
-    </ul>
+
 </li>

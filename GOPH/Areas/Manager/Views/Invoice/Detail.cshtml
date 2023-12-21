@@ -1,0 +1,102 @@
+﻿@model InvoiceDetailDto
+
+@{
+    Layout = "~/Views/Shared/_LayOutOrderManager.cshtml";
+    var format = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+
+    var isInvoice = "Đã xuất";
+
+    if (Model.OrderId is null)
+    {
+        isInvoice = "Chưa xuất";
+    }
+
+    ViewData["ActiveNavbar"] = "Invoice";
+}
+
+<div class="row mt-3">
+    <div class="col-md-9">
+        <p> <span style="font-weight: bold;">Mã hóa đơn</span> : @Model.Id</p>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Mục</th>
+                    <th scope="col">Số lượng</th>
+                    <th scope="col">Đơn giá</th>
+                    <th scope="col">Giảm giá</th>
+                    <th scope="col">Loại</th>
+                    <th scope="col">Thành tiền</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Order?.OrderProducts)
+                {
+                    var intoMoney = (item.Price * item.Quantity) - (item.Price * (item.Promotion * item.Quantity) / 100);
+                    <tr>
+                        <td>@item.Product.Name</td>
+                        <td>@item.Quantity</td>
+                        <td>@String.Format(format,"{0:c0}",@item.Price)</td>
+                        <td>@item.Promotion%</td>
+                        <td>
+                            @if (item.IsWholesale)
+                            {
+
+                                <span class="text-primary">Sỉ</span>
+                            }
+                            else
+                            {
+                                <span style="color:#808080">Lẻ</span>
+                            }
+                        </td>
+                        <td>@String.Format(format,"{0:c0}",intoMoney)</td>
+                    </tr>
+                }
+
+
+            </tbody>
+        </table>
+        @if (Model.Order?.Voucher != null)
+        {
+            <p><span style="font-weight: bold;">Tặng voucher</span> : @String.Format(format, "{0:c0}", Model.Order.Voucher.Price ): </p>
+        }
+        <p><span style="font-weight: bold;">Tổng tiền thanh toán : </span>@String.Format(format,"{0:c0}",@Model.TotalPrice)</p>
+        <div style="float: right;" class="option-order d-flex">
+            @if (Model.OrderId is null)
+            {
+                <form>
+                    <button class="btn btn-sm btn-primary">Xuất hóa đơn</button>
+                </form>
+
+            }
+            @if (Model.OrderId != null)
+            {
+                <form method="post" asp-route-id="@Model.Id" asp-action="recall" asp-controller="invoice">
+                    <button class="btn btn-sm btn-primary">Thu hồi hóa đơn</button>
+                </form>
+
+            }
+
+            <a class="btn btn-sm btn-warning  mx-1">Ghi nợ</a>
+            <a class="btn btn-sm btn-secondary  mx-1"><i class="bi bi-printer"></i> In</a>
+            <a asp-area="manager" asp-controller="invoice" asp-action="index" class="btn btn-sm btn-danger mx-1">Về danh sách</a>
+
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <h5><i class="bi bi-receipt-cutoff"></i> Chi tiết hóa đơn đặt hàng</h5>
+        <hr>
+        <p><span style="font-weight: bold;">Mã đơn hàng</span>: @Model.Order.Id</p>
+        <p><span style="font-weight: bold;">Người đặt</span>: @Model.Order.Customer.Name</p>
+        <p><span style="font-weight: bold;">Số ĐT</span> : @Model.Order.Customer.MobilePhone</p>
+        <p><span style="font-weight: bold;">Email</span> : @Model.Order.Customer.Email</p>
+        <hr />
+        <p><span style="font-weight: bold;">Người nhận</span> : @Model.Order.Customer.NameReceiver</p>
+        <p><span style="font-weight: bold;">Số ĐT</span> : @Model.Order.Customer.MobilePhoneReceiver</p>
+
+        <hr />
+        <p><span style="font-weight: bold;">Ngày giờ</span> : @Model.DatetimeDetail</p>
+        <p><span style="font-weight: bold;">Trạng thái</span> : @isInvoice</p>
+    </div>
+    <span></span>
+</div>

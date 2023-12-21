@@ -1,0 +1,66 @@
+﻿@model IEnumerable<OrderDetailDto>
+@{
+    Layout = "~/Views/Shared/_LayOutOrderManager.cshtml";
+   
+    var format = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+    ViewData["ActiveNavbar"] = "OrderRecycleBin";
+    ViewData["title"] = "Đơn hàng rác";
+}
+
+<div class="row mt-3">
+    <div class="col-md-8">
+        <p><i class="bi bi-receipt-cutoff"></i> Có <span>@Model.Count()</span> đơn hàng rác </p>
+        <hr>
+        <table class="table table-dark table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Mã</th>
+                    <th scope="col">Ngày đặt</th>
+                    <th scope="col">Giá</th>          
+                    <th scope="col">Trạng thái</th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+                  
+                    <tr>
+
+                        <td>@item.Id</td>
+                        <td>@item.DatetimeDetail</td>
+                        <td>@String.Format(format, "{0:c0}", item.TotalPrice)</td>
+                        <td>
+                            <a asp-action="detail" asp-area="manager" asp-route-id="@item.Id" class="btn btn-sm btn-danger">Đơn hàng rác</a>
+                        </td>
+                    </tr>
+                  
+                }
+
+            </tbody>
+        </table>
+    </div>
+
+    <div class="col-md-4">
+        <div class="order-message">
+            <h5>Thông báo</h5>
+            <hr>
+            
+            <p style="font-weight: bold;"><i class="bi bi-receipt-cutoff"></i> Đơn hàng rác gần đây</p>
+            @foreach (var item in Model)
+            {
+                <p><span style="font-weight: bold;">@item.Customer.Name</span> vừa đặt <a asp-action="detail" asp-area="manager" asp-route-id="@item.Id">đơn hàng</a> với giá trị  @String.Format(format,"{0:c0}",item.TotalPrice ) <br /> <spn style="font-style: oblique;">@item.ConvertDatetime</spn></p>
+            }
+
+        </div>
+    </div>
+
+</div>
+
+
+
+@section Scripts{
+
+}
+

@@ -1,0 +1,31 @@
+﻿@model CartController.ViewCartModel
+
+@{
+    Layout = "~/Views/Shared/_LayoutTop.cshtml";
+    var format = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+
+}
+
+<div class="container">
+
+
+    <div class="card" style="width: 18rem;">
+        <img style="width: 80px; height: auto; background: #0d6efd; margin: 20px;" src="~/logo/go-pharmacy.png" />
+        <div class="card-body">
+            <h5 class="card-title">Xin chào : @Model.Customer.Name</h5>
+            <p class="card-text">Cảm ơn Quý Khách ! Quý khách đã đặt hàng thành công , nhân viên sẽ liên hệ hổ trợ Quý Khách trong vòng ít phút sau.</p>
+        </div>
+        
+        <div class="card-body">
+            <a asp-controller="home" asp-action="index" class="card-link">Tới cửa hàng</a>
+        </div>
+    </div>
+</div>
+
+@section MenuSmallGroups{
+    @await Component.InvokeAsync(MenuGroups.COMPONENTNAME,
+             new MenuGroups.Menu()
+             {
+                 Groups = Model.Groups,
+             })
+}

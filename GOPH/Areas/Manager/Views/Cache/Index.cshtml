@@ -3,15 +3,13 @@
 @{
     ViewData["Title"] = "Cập nhật bộ nhớ cache";
     var statusMessage = TempData["StatusMessage"] as string;
-
+    Layout = "~/Views/Shared/_LayoutManagerProduct.cshtml";
+    ViewData["ActiveNavbar"] = "Cache";
 }
 
-<div class="container mt-5">
-    <partial name="_AlertMessage" model="@statusMessage" />
-    <h3> @ViewData["Title"] </h3>
-    <form method="post" asp-action="update">
-        <button type="submit" class="btn btn-sm btn-primary">Cập nhật</button>
-    </form>
+<div class="container mt-2">
+    <h5><i class="bi bi-arrow-90deg-up"></i> @ViewData["Title"] </h5>
+   
     @if (Model?.ObjCache.Count() > 0)
     {
         <table class="table">
@@ -33,6 +31,10 @@
                 }
             </tbody>
         </table>
+
+        <form method="post" asp-action="update">
+            <button type="submit" class="btn btn-sm btn-primary">Cập nhật</button>
+        </form>
 
     }
     else

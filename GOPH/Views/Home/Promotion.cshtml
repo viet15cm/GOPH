@@ -1,0 +1,41 @@
+﻿@model HomeController.ViewModel
+@{
+    Layout = "~/Views/Shared/_LayoutProduct.cshtml";
+    ViewData["Title"] = "Khuyến mãi hot";
+
+    var format = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+}
+<div class="bd-right-main-product">
+    <input type="hidden" id="router-id" value="@Model.GroupId" />
+
+    <div class="list-card-product">
+        <img src="~/image/san-pham-ban-chay.svg" />
+        <h1 class="special-offer-banner">Khuyến mãi hot</h1>
+        <div id="list-card-product" class=" cards">
+            @await Html.PartialAsync("_CardProducts", Model.ProductHots)
+        </div>
+
+    </div>
+
+
+</div>
+@section MenuGroups {
+    @await Component.InvokeAsync(MenuGroups.COMPONENTNAME,
+             new MenuGroups.Menu()
+             {
+                 Groups = Model.Groups,
+             })
+}
+
+@section MenuSmallGroups{
+    @await Component.InvokeAsync(MenuGroups.COMPONENTNAME,
+             new MenuGroups.Menu()
+             {
+                 Groups = Model.Groups,
+             })
+}
+
+@section Scripts{
+    <script src="~/js/addtocart.js"></script>
+    <script src="~/js/scrollbarsohowproduct.js"></script>
+}

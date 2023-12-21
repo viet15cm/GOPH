@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 namespace GOPH.Areas.Identity.Pages.Role
 {
 
-    [Authorize(Policy = "Administrator")]
+    //[Authorize(Policy = "Administrator")]
     public class RolePageModel : PageModel
     {
         protected readonly RoleManager<IdentityRole> _roleManager;

@@ -1,0 +1,19 @@
+﻿@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService authorizationService
+
+@{
+    var resultAuthorization = await authorizationService.AuthorizeAsync(this.User, "Customer");
+
+}
+
+
+@if (resultAuthorization.Succeeded)
+{
+
+}
+
+<li class="nav-item">
+    <a asp-area="" asp-action="index" asp-controller="WholesaleShow" class="nav-link text-white">
+        Giá sỉ <img style="width: 28px; height: auto;" src="~/iconcontan/hot-icon.gif" />
+    </a>
+</li>

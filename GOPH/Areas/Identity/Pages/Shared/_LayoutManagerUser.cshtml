@@ -1,0 +1,45 @@
+﻿@inject IHttpContextAccessor _httpcontext
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var domain = string.Format("{0}://{1}", _httpcontext.HttpContext.Request.Scheme, _httpcontext.HttpContext.Request.Host.ToString());
+    var statusMessage = TempData["StatusMessage"] as string;
+}
+
+<div class="container mt-2">
+    <input type="hidden" id="domain" value="@domain" />
+    <input type="hidden" id="number-page" value="1" />
+    <partial name="_AlertMessage" model="@statusMessage" />
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+
+                <div class="list-group  mt-2">
+                    @*@ActiveNavPages.ProductActiveClass(ViewContext)*@
+                    <h5 class="list-group-item my-0">Quản lý </h5>
+                    <a class="list-group-item " asp-area="manager" asp-controller="product" asp-action="index">
+                        User
+                    </a>
+                    <a class="list-group-item " asp-area="manager" asp-controller="commodityGroup" asp-action="index">
+                        Role
+                    </a>
+
+                </div>
+            </div>
+            <div class="col-md-9">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+
+
+    <div class="myAlert-bottom alert alert-primary" role="alert">
+    </div>
+    <div id="modal-all" class="modal-all">
+        <div class="loadding-all"><img style="width: 50px; height:50px;" src="~/iconcontan/load.gif" /></div>
+    </div>
+
+</div>
+
+
+@await RenderSectionAsync("Scripts", required: false)

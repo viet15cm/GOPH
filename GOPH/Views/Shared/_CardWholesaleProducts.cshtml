@@ -1,0 +1,60 @@
+﻿@model PagedList<Wholesale>
+@{
+    var format = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+}
+
+@foreach (var item in Model)
+{
+    <div class="product-card">
+        
+        <div class="badge-hot">Giá sỉ</div>
+      
+
+        @if (@item.Promotion > 0)
+        {
+            <div class="discount-product">
+                @String.Format("{0}{1}{2}","-", @item.Promotion,"%")
+            </div>
+        }
+        <div class="product-tumb">
+            @if (item.Product.Images?.Count > 0)
+            {
+                <a asp-area="" asp-controller="home" asp-action="detail" asp-route-id="@item.Product.Id"><img src="~/ImageManager/ProductImg/@item.Product.Images.ToList()[0].Url" alt=""></a>
+            }
+            else if (!string.IsNullOrEmpty(item.Product.UrlImage))
+            {
+                <a asp-area="" asp-controller="home" asp-action="detail" asp-route-id="@item.Product.Id"><img src="@item.Product.UrlImage" alt=""></a>
+
+            }
+            else
+            {
+                <a asp-area="" asp-controller="home" asp-action="detail" asp-route-id="@item.Product.Id"><img src="~/image/goph.jpg" /></a>
+
+            }
+        </div>
+        <div class="product-details">
+            <span class="product-catagory">@item.Product.CommodityGroup?.Name</span>
+            <h4><a asp-area="" asp-controller="home" asp-action="detail" asp-route-id="@item.Product.Id">@item.Product.Name</a></h4>
+
+            <div class="product-bottom-details">
+                <div class="product-price">
+                    @if (item.Product.IsPrice)
+                    {
+                      
+                       <small>@String.Format(format, "{0:c0}", @item.Product.Price )</small>
+                        
+
+                    }
+                   
+                    @String.Format(format, "{0:c0}", @item.Price )
+      
+
+                </div>
+                <div class="product-links">
+                    <a><i class="bi bi-chat-heart"></i></a>
+                    <a onclick="addtocart(this,`@item.Product.Id`)"><i class="bi bi-bag-plus"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+}

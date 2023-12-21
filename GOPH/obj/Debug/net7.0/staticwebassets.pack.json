@@ -5,32 +5,180 @@
       "PackagePath": "staticwebassets\\GOPH.bundle.scp.css"
     },
     {
+      "Id": "D:\\C#\\GOPH\\goph\\wwwroot\\Iconcontan\\5939991.png",
+      "PackagePath": "staticwebassets\\Iconcontan\\5939991.png"
+    },
+    {
+      "Id": "D:\\C#\\GOPH\\goph\\wwwroot\\Iconcontan\\cart.png",
+      "PackagePath": "staticwebassets\\Iconcontan\\cart.png"
+    },
+    {
+      "Id": "D:\\C#\\GOPH\\goph\\wwwroot\\Iconcontan\\category.png",
+      "PackagePath": "staticwebassets\\Iconcontan\\category.png"
+    },
+    {
       "Id": "D:\\C#\\GOPH\\goph\\wwwroot\\Iconcontan\\delete-cart.png",
       "PackagePath": "staticwebassets\\Iconcontan\\delete-cart.png"
+    },
+    {
+      "Id": "D:\\C#\\GOPH\\goph\\wwwroot\\Iconcontan\\google-map.jpg",
+      "PackagePath": "staticwebassets\\Iconcontan\\google-map.jpg"
+    },
+    {
+      "Id": "D:\\C#\\GOPH\\goph\\wwwroot\\Iconcontan\\home.png",
+      "PackagePath": "staticwebassets\\Iconcontan\\home.png"
     },
     {
       "Id": "D:\\C#\\GOPH\\goph\\wwwroot\\Iconcontan\\hot-icon.gif",
       "PackagePath": "staticwebassets\\Iconcontan\\hot-icon.gif"
     },
     {
-      "Id": "D:\\C#\\GOPH\\goph\\wwwroot\\Iconcontan\\icon-facebook.png",
-      "PackagePath": "staticwebassets\\Iconcontan\\icon-facebook.png"
+      "Id": "D:\\C#\\GOPH\\goph\\wwwroot\\Iconcontan\\icon-call-phone.svg",
+      "PackagePath": "staticwebassets\\Iconcontan\\icon-call-phone.svg"
     },
     {
-      "Id": "D:\\C#\\GOPH\\goph\\wwwroot\\Iconcontan\\icon-phone.png",
-      "PackagePath": "staticwebassets\\Iconcontan\\icon-phone.png"
+      "Id": "D:\\C#\\GOPH\\goph\\wwwroot\\Iconcontan\\icon-call-zalo.svg",
+      "PackagePath": "staticwebassets\\Iconcontan\\icon-call-zalo.svg"
     },
     {
       "Id": "D:\\C#\\GOPH\\goph\\wwwroot\\Iconcontan\\load.gif",
       "PackagePath": "staticwebassets\\Iconcontan\\load.gif"
     },
     {
-      "Id": "D:\\C#\\GOPH\\goph\\wwwroot\\Iconcontan\\zalo-icon.png",
-      "PackagePath": "staticwebassets\\Iconcontan\\zalo-icon.png"
+      "Id": "D:\\C#\\GOPH\\goph\\wwwroot\\Iconcontan\\supporrt.svg",
+      "PackagePath": "staticwebassets\\Iconcontan\\supporrt.svg"
+    },
+    {
+      "Id": "D:\\C#\\GOPH\\goph\\wwwroot\\ImageManager\\BannerEvent\\230011614_a46673f4.webp",
+      "PackagePath": "staticwebassets\\ImageManager\\BannerEvent\\230011614_a46673f4.webp"
+    },
+    {
+      "Id": "D:\\C#\\GOPH\\goph\\wwwroot\\ImageManager\\Banner\\EFPI5135-1-1536x531.jpg",
+      "PackagePath": "staticwebassets\\ImageManager\\Banner\\EFPI5135-1-1536x531.jpg"
+    },
+    {
+      "Id": "D:\\C#\\GOPH\\goph\\wwwroot\\ImageManager\\Banner\\banner-1.webp",
+      "PackagePath": "staticwebassets\\ImageManager\\Banner\\banner-1.webp"
+    },
+    {
+      "Id": "D:\\C#\\GOPH\\goph\\wwwroot\\ImageManager\\Banner\\banner-2.webp",
+      "PackagePath": "staticwebassets\\ImageManager\\Banner\\banner-2.webp"
+    },
+    {
+      "Id": "D:\\C#\\GOPH\\goph\\wwwroot\\ImageManager\\Banner\\banner-3.webp",
+      "PackagePath": "staticwebassets\\ImageManager\\Banner\\banner-3.webp"
+    },
+    {
+      "Id": "D:\\C#\\GOPH\\goph\\wwwroot\\ImageManager\\Banner\\banner-4.webp",
+      "PackagePath": "staticwebassets\\ImageManager\\Banner\\banner-4.webp"
+    },
+    {
+      "Id": "D:\\C#\\GOPH\\goph\\wwwroot\\ImageManager\\Banner\\banner-5.jpg",
+      "PackagePath": "staticwebassets\\ImageManager\\Banner\\banner-5.jpg"
     },
     {
       "Id": "D:\\C#\\GOPH\\goph\\wwwroot\\ImageManager\\Banner\\bannergo-ph.jpg",
       "PackagePath": "staticwebassets\\ImageManager\\Banner\\bannergo-ph.jpg"
+    },
+    {
+      "Id": "D:\\C#\\GOPH\\goph\\wwwroot\\ImageManager\\Banner\\mau-banner-dep.jpg",
+      "PackagePath": "staticwebassets\\ImageManager\\Banner\\mau-banner-dep.jpg"
+    },
+    {
+      "Id": "D:\\C#\\GOPH\\goph\\wwwroot\\ImageManager\\ProductImg\\230238286_0effc623.webp",
+      "PackagePath": "staticwebassets\\ImageManager\\ProductImg\\230238286_0effc623.webp"
+    },
+    {
+      "Id": "D:\\C#\\GOPH\\goph\\wwwroot\\ImageManager\\ProductImg\\230324219_786ebef7.jpg",
+      "PackagePath": "staticwebassets\\ImageManager\\ProductImg\\230324219_786ebef7.jpg"
+    },
+    {
+      "Id": "D:\\C#\\GOPH\\goph\\wwwroot\\ImageManager\\ProductImg\\230528291_1a653264.webp",
+      "PackagePath": "staticwebassets\\ImageManager\\ProductImg\\230528291_1a653264.webp"
+    },
+    {
+      "Id": "D:\\C#\\GOPH\\goph\\wwwroot\\ImageManager\\ProductImg\\230546324_5db1a853.webp",
+      "PackagePath": "staticwebassets\\ImageManager\\ProductImg\\230546324_5db1a853.webp"
+    },
+    {
+      "Id": "D:\\C#\\GOPH\\goph\\wwwroot\\ImageManager\\ProductImg\\230552167_2e5bed48.webp",
+      "PackagePath": "staticwebassets\\ImageManager\\ProductImg\\230552167_2e5bed48.webp"
+    },
+    {
+      "Id": "D:\\C#\\GOPH\\goph\\wwwroot\\ImageManager\\ProductImg\\230647724_7df10619.jpg",
+      "PackagePath": "staticwebassets\\ImageManager\\ProductImg\\230647724_7df10619.jpg"
+    },
+    {
+      "Id": "D:\\C#\\GOPH\\goph\\wwwroot\\ImageManager\\ProductImg\\230800416_eea82576.jpg",
+      "PackagePath": "staticwebassets\\ImageManager\\ProductImg\\230800416_eea82576.jpg"
+    },
+    {
+      "Id": "D:\\C#\\GOPH\\goph\\wwwroot\\ImageManager\\ProductImg\\231434945_d86dc691.jpg",
+      "PackagePath": "staticwebassets\\ImageManager\\ProductImg\\231434945_d86dc691.jpg"
+    },
+    {
+      "Id": "D:\\C#\\GOPH\\goph\\wwwroot\\ImageManager\\ProductImg\\231449878_1cd3a65b.png",
+      "PackagePath": "staticwebassets\\ImageManager\\ProductImg\\231449878_1cd3a65b.png"
+    },
+    {
+      "Id": "D:\\C#\\GOPH\\goph\\wwwroot\\ImageManager\\ProductImg\\231502451_70996f8a.png",
+      "PackagePath": "staticwebassets\\ImageManager\\ProductImg\\231502451_70996f8a.png"
+    },
+    {
+      "Id": "D:\\C#\\GOPH\\goph\\wwwroot\\ImageManager\\ProductImg\\231512571_debd64cd.png",
+      "PackagePath": "staticwebassets\\ImageManager\\ProductImg\\231512571_debd64cd.png"
+    },
+    {
+      "Id": "D:\\C#\\GOPH\\goph\\wwwroot\\ImageManager\\ProductImg\\232238036_cf63cf53.jpg",
+      "PackagePath": "staticwebassets\\ImageManager\\ProductImg\\232238036_cf63cf53.jpg"
+    },
+    {
+      "Id": "D:\\C#\\GOPH\\goph\\wwwroot\\ImageManager\\ProductImg\\233819297_c7bf23ed.jpg",
+      "PackagePath": "staticwebassets\\ImageManager\\ProductImg\\233819297_c7bf23ed.jpg"
+    },
+    {
+      "Id": "D:\\C#\\GOPH\\goph\\wwwroot\\ImageManager\\ProductImg\\234231901_dd32a9b8.png",
+      "PackagePath": "staticwebassets\\ImageManager\\ProductImg\\234231901_dd32a9b8.png"
+    },
+    {
+      "Id": "D:\\C#\\GOPH\\goph\\wwwroot\\ImageManager\\ProductImg\\234236172_354e80e6.png",
+      "PackagePath": "staticwebassets\\ImageManager\\ProductImg\\234236172_354e80e6.png"
+    },
+    {
+      "Id": "D:\\C#\\GOPH\\goph\\wwwroot\\ImageManager\\ProductImg\\235000192_e8b1ef5f.webp",
+      "PackagePath": "staticwebassets\\ImageManager\\ProductImg\\235000192_e8b1ef5f.webp"
+    },
+    {
+      "Id": "D:\\C#\\GOPH\\goph\\wwwroot\\ImageManager\\ProductImg\\235130950_b73134a6.jpg",
+      "PackagePath": "staticwebassets\\ImageManager\\ProductImg\\235130950_b73134a6.jpg"
+    },
+    {
+      "Id": "D:\\C#\\GOPH\\goph\\wwwroot\\ImageManager\\ProductImg\\235337896_d4b27ca5.webp",
+      "PackagePath": "staticwebassets\\ImageManager\\ProductImg\\235337896_d4b27ca5.webp"
+    },
+    {
+      "Id": "D:\\C#\\GOPH\\goph\\wwwroot\\ImageManager\\ProductImg\\235357620_c8264ec5.webp",
+      "PackagePath": "staticwebassets\\ImageManager\\ProductImg\\235357620_c8264ec5.webp"
+    },
+    {
+      "Id": "D:\\C#\\GOPH\\goph\\wwwroot\\ImageManager\\ProductImg\\235404349_979293d1.png",
+      "PackagePath": "staticwebassets\\ImageManager\\ProductImg\\235404349_979293d1.png"
+    },
+    {
+      "Id": "D:\\C#\\GOPH\\goph\\wwwroot\\ImageManager\\ProductImg\\235448722_7c821dc0.jpg",
+      "PackagePath": "staticwebassets\\ImageManager\\ProductImg\\235448722_7c821dc0.jpg"
+    },
+    {
+      "Id": "D:\\C#\\GOPH\\goph\\wwwroot\\Image\\camera.png",
+      "PackagePath": "staticwebassets\\Image\\camera.png"
+    },
+    {
+      "Id": "D:\\C#\\GOPH\\goph\\wwwroot\\Image\\default.jpg",
+      "PackagePath": "staticwebassets\\Image\\default.jpg"
+    },
+    {
+      "Id": "D:\\C#\\GOPH\\goph\\wwwroot\\Image\\delete.png",
+      "PackagePath": "staticwebassets\\Image\\delete.png"
     },
     {
       "Id": "D:\\C#\\GOPH\\goph\\wwwroot\\Image\\go-group.png",
@@ -645,12 +793,24 @@
       "PackagePath": "staticwebassets\\css\\detail-product.css"
     },
     {
+      "Id": "D:\\C#\\GOPH\\goph\\wwwroot\\css\\icon-hot-line.css",
+      "PackagePath": "staticwebassets\\css\\icon-hot-line.css"
+    },
+    {
+      "Id": "D:\\C#\\GOPH\\goph\\wwwroot\\css\\img-manager.css",
+      "PackagePath": "staticwebassets\\css\\img-manager.css"
+    },
+    {
       "Id": "D:\\C#\\GOPH\\goph\\wwwroot\\css\\navbar-search.css",
       "PackagePath": "staticwebassets\\css\\navbar-search.css"
     },
     {
       "Id": "D:\\C#\\GOPH\\goph\\wwwroot\\css\\site.css",
       "PackagePath": "staticwebassets\\css\\site.css"
+    },
+    {
+      "Id": "D:\\C#\\GOPH\\goph\\wwwroot\\css\\slideshow.css",
+      "PackagePath": "staticwebassets\\css\\slideshow.css"
     },
     {
       "Id": "D:\\C#\\GOPH\\goph\\wwwroot\\favicon.ico",
@@ -667,6 +827,18 @@
     {
       "Id": "D:\\C#\\GOPH\\goph\\wwwroot\\js\\default.js",
       "PackagePath": "staticwebassets\\js\\default.js"
+    },
+    {
+      "Id": "D:\\C#\\GOPH\\goph\\wwwroot\\js\\drop-pagin.js",
+      "PackagePath": "staticwebassets\\js\\drop-pagin.js"
+    },
+    {
+      "Id": "D:\\C#\\GOPH\\goph\\wwwroot\\js\\internal-message.js",
+      "PackagePath": "staticwebassets\\js\\internal-message.js"
+    },
+    {
+      "Id": "D:\\C#\\GOPH\\goph\\wwwroot\\js\\scrol-navbartop.js",
+      "PackagePath": "staticwebassets\\js\\scrol-navbartop.js"
     },
     {
       "Id": "D:\\C#\\GOPH\\goph\\wwwroot\\js\\scrollbarsohowproduct.js",
@@ -923,6 +1095,14 @@
     {
       "Id": "D:\\C#\\GOPH\\goph\\wwwroot\\lib\\jquery\\dist\\jquery.min.map",
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.map"
+    },
+    {
+      "Id": "D:\\C#\\GOPH\\goph\\wwwroot\\lib\\microsoft-signalr\\signalr.js",
+      "PackagePath": "staticwebassets\\lib\\microsoft-signalr\\signalr.js"
+    },
+    {
+      "Id": "D:\\C#\\GOPH\\goph\\wwwroot\\lib\\microsoft-signalr\\signalr.min.js",
+      "PackagePath": "staticwebassets\\lib\\microsoft-signalr\\signalr.min.js"
     },
     {
       "Id": "D:\\C#\\GOPH\\goph\\wwwroot\\logo\\go-pharmacy.png",

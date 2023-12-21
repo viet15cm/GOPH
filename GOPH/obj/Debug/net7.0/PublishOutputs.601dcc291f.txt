@@ -13,12 +13,6 @@ D:\C#\GOPH\GOPH\obj\Release\net7.0\PubTmp\Out\EPPlus.dll
 D:\C#\GOPH\GOPH\obj\Release\net7.0\PubTmp\Out\EPPlus.Interfaces.dll
 D:\C#\GOPH\GOPH\obj\Release\net7.0\PubTmp\Out\EPPlus.System.Drawing.dll
 D:\C#\GOPH\GOPH\obj\Release\net7.0\PubTmp\Out\MailKit.dll
-D:\C#\GOPH\GOPH\obj\Release\net7.0\PubTmp\Out\System.Web.Mvc.dll
-D:\C#\GOPH\GOPH\obj\Release\net7.0\PubTmp\Out\System.Web.Razor.dll
-D:\C#\GOPH\GOPH\obj\Release\net7.0\PubTmp\Out\System.Web.Helpers.dll
-D:\C#\GOPH\GOPH\obj\Release\net7.0\PubTmp\Out\System.Web.WebPages.Deployment.dll
-D:\C#\GOPH\GOPH\obj\Release\net7.0\PubTmp\Out\System.Web.WebPages.Razor.dll
-D:\C#\GOPH\GOPH\obj\Release\net7.0\PubTmp\Out\System.Web.WebPages.dll
 D:\C#\GOPH\GOPH\obj\Release\net7.0\PubTmp\Out\Microsoft.AspNetCore.Cryptography.Internal.dll
 D:\C#\GOPH\GOPH\obj\Release\net7.0\PubTmp\Out\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
 D:\C#\GOPH\GOPH\obj\Release\net7.0\PubTmp\Out\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
@@ -28,6 +22,7 @@ D:\C#\GOPH\GOPH\obj\Release\net7.0\PubTmp\Out\Microsoft.EntityFrameworkCore.dll
 D:\C#\GOPH\GOPH\obj\Release\net7.0\PubTmp\Out\Microsoft.EntityFrameworkCore.Abstractions.dll
 D:\C#\GOPH\GOPH\obj\Release\net7.0\PubTmp\Out\Microsoft.EntityFrameworkCore.Relational.dll
 D:\C#\GOPH\GOPH\obj\Release\net7.0\PubTmp\Out\Microsoft.EntityFrameworkCore.SqlServer.dll
+D:\C#\GOPH\GOPH\obj\Release\net7.0\PubTmp\Out\Microsoft.Extensions.DependencyModel.dll
 D:\C#\GOPH\GOPH\obj\Release\net7.0\PubTmp\Out\Microsoft.Extensions.Identity.Core.dll
 D:\C#\GOPH\GOPH\obj\Release\net7.0\PubTmp\Out\Microsoft.Extensions.Identity.Stores.dll
 D:\C#\GOPH\GOPH\obj\Release\net7.0\PubTmp\Out\Microsoft.Extensions.Options.dll
@@ -41,7 +36,6 @@ D:\C#\GOPH\GOPH\obj\Release\net7.0\PubTmp\Out\Microsoft.IdentityModel.Protocols.
 D:\C#\GOPH\GOPH\obj\Release\net7.0\PubTmp\Out\Microsoft.IdentityModel.Tokens.dll
 D:\C#\GOPH\GOPH\obj\Release\net7.0\PubTmp\Out\Microsoft.IO.RecyclableMemoryStream.dll
 D:\C#\GOPH\GOPH\obj\Release\net7.0\PubTmp\Out\Microsoft.SqlServer.Server.dll
-D:\C#\GOPH\GOPH\obj\Release\net7.0\PubTmp\Out\Microsoft.Web.Infrastructure.dll
 D:\C#\GOPH\GOPH\obj\Release\net7.0\PubTmp\Out\Microsoft.Win32.SystemEvents.dll
 D:\C#\GOPH\GOPH\obj\Release\net7.0\PubTmp\Out\MimeKit.dll
 D:\C#\GOPH\GOPH\obj\Release\net7.0\PubTmp\Out\Newtonsoft.Json.dll

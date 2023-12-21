@@ -1,0 +1,40 @@
+﻿@model WholesaleShowController.ViewModel
+
+@{
+    Layout = "~/Views/Shared/_LayoutProduct.cshtml";
+    ViewData["Title"] = "Trang Chủ";
+
+    var format = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+}
+<div class="bd-right-main-product">
+ 
+    <div class="list-card-product">
+        <img src="~/image/san-pham-ban-chay.svg" />
+        <h1 class="special-offer-banner">Mục giá sỉ</h1>
+        <div id="list-card-product" class=" cards">
+            @await Html.PartialAsync("_CardWholesaleProducts", Model.ProductWholesales)
+        </div>
+
+    </div>
+
+</div>
+@section MenuGroups {
+    @await Component.InvokeAsync(MenuGroups.COMPONENTNAME,
+             new MenuGroups.Menu()
+             {
+                 Groups = Model.Groups,
+             })
+}
+
+@section MenuSmallGroups{
+    @await Component.InvokeAsync(MenuGroups.COMPONENTNAME,
+             new MenuGroups.Menu()
+             {
+                 Groups = Model.Groups,
+             })
+}
+
+@section Scripts{
+    <script src="~/js/addtocart.js"></script>
+    <script src="~/js/scrollbarsohowproduct.js"></script>
+}

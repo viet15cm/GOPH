@@ -6,7 +6,11 @@ namespace GOPH.Dto
 {
     public class ProductForUpdateDto
     {
+        [Required(ErrorMessage = "{0} không được bỏ trống.")]
         [Display(Name = "Mã")]
+        public string Id { get; set; }
+      
+        [Display(Name = "Mã Vạch")]
         [NumberCodeConfirmed]
         public string Code { get; set; }
 
@@ -14,6 +18,8 @@ namespace GOPH.Dto
         [Required(ErrorMessage = "{0} không được bỏ trống.")]
         public string Name { get; set; }
 
+        [Display(Name = "Tên hiển thị")]
+        public string DisplayName { get; set; }
 
         [Display(Name = "Giá vốn")]
         [Required(ErrorMessage = "{0} không được bỏ trống.")]
@@ -23,7 +29,9 @@ namespace GOPH.Dto
         [Required(ErrorMessage = "{0} không được bỏ trống.")]
         public decimal Price { get; set; }
 
-
+        [Display(Name = "Ngày cập nhật")]
+        public DateTime DateUpdate { get; set; }
+        
         [Range(0, 100, ErrorMessage = "Giảm giá khoảng từ 0% đến 100%")]
         [Display(Name = "Giảm giá (%)")]
         [IntValidation]
@@ -33,6 +41,10 @@ namespace GOPH.Dto
         public string IsPrice { get; set; }
 
         public string Hot { get; set; }
+
+
+        [Display(Name = "Sự kiện")]
+        public string IsEvent { get; set; }
 
         [Display(Name = "Loại")]
         public string CommodidyId { get; set; }
@@ -49,5 +61,9 @@ namespace GOPH.Dto
             return bool.Parse(this.Hot);
         }
 
+        public bool GetIsEvent()
+        {
+            return bool.Parse(this.IsEvent);
+        }
     }
 }

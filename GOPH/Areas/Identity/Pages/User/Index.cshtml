@@ -2,6 +2,8 @@
 @using Paging;
 @model IndexModel
 @{
+
+    Layout = "~/Areas/Identity/Pages/Shared/_LayoutManagerUser.cshtml";
     var statusMessage = TempData["StatusMessage"] as string;
     ViewData["title"] = "Danh sách users";
 
@@ -13,55 +15,77 @@
                 IsPage = true
             };
 }
-<div class="container d-md-flex justify-content-center">
-    <div class="mt-5">
-        <div class="alert alert-link p-0">
-            <a asp-page="./index">@ViewData["title"]</a>
-        </div>
-        <partial name="_AlertMessage" model="@statusMessage" />
-        <div class="d-flex flex-grow">
 
-            <form class="d-flex mx-2">
-                <input class="form-control me-2" type="search" placeholder="Tên tài khoản" aria-label="Search">
-                <button class="btn btn-outline-primary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+<nav id="navbar-search" class="navbar navbar-light navbar-search">
+    <div class="container">
+        <div class="navbar-below-left">
+           @* <form method="post" asp-page-handler="ImportCustomer">
+                <button type="submit" >Import Customer</button>
+            </form>*@
+
+            <a class="btn btn-sm btn-primary" >+Tạo mới</a>
+        </div>
+
+        <div class="navbar-below-right">
+
+            <form id="submit-search" method="post" asp-action="searchindex">
+                <div class="search-input">
+                    <input id="name-list" type="search" aria-label="Search" placeholder="Số điện thoại hoặc tên" name="search">
+                    <input type="hidden" id="hfProduct" name="productId" />
+
+                    <div id="autocom-box" class="autocom-box">
+                        <!-- here list are inserted from javascript -->
+                    </div>
+                    <button id="icon-search" class="icon-search" type="submit"><i class="bi bi-search"></i></button>
+                    <button id="icon-load" class="icon-search"><img style="width: 30px; height:30px;" src="~/iconcontan/load.gif" /></button>
+                </div>
+
             </form>
-            <a class="btn btn-primary" asp-area="Identity" asp-page="./Create">+ Tạo mới</a>
         </div>
-        <table class="table table-success table-striped">
-            <thead>
-                <tr>
-                    <th scope="col">Tên</th>
-                    <th scope="col">Vai trò</th>
-                    <th scope="col">Tác vụ</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model.users)
-                {
-                    <tr>
-                        @if (string.IsNullOrEmpty(item.UserRoles))
-                        {
-                            <th scope="row">@item.UserName<br /><p class="text-danger">Chưa có</p></th>
-                        }
-                        else
-                        {
-                            <th scope="row">@item.UserName<br /><p class="text-primary">(@item.UserRoles)</p></th>
-                        }
 
-                        <td><a asp-route-id="@item.Id" asp-area="Identity" asp-page="./AddRole" class="link-primary">+ Cập nhật</a></td>
-                        <td>
-                            <a asp-area="Identity" asp-page="./Edit" asp-route-id="@item.Id">Đổi mật khẩu</a>@Html.Raw("&emsp;")
-                            <a asp-area="Identity" asp-page="./Delete" asp-route-id="@item.Id">Xóa</a>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-        @await Html.PartialAsync("_PaginPartial", paging)
     </div>
-   
-</div>
+</nav>
 
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Tên</th>
+            <th scope="col">Số điện thoại</th>
+            <th scope="col">Vai trò</th>
+            <th scope="col">Tác vụ</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.users)
+        {
+            <tr>
+         
+              <th scope="row">@string.Format($"{item.LastName} {item.FirstName}")</th>
+                
+               
+                        
+                <td>@item.PhoneNumber</td>
+                @if (string.IsNullOrEmpty(item.UserRoles))
+                {
+                    <td><p class="text-danger">Chưa có</p></td>
+                }
+                else
+                {
+                    <td> <p class="text-primary">(@item.UserRoles)</td>
+                }
+
+@*
+                <td><a asp-route-id="@item.Id" asp-area="Identity" asp-page="./AddRole" class="link-primary">Cập nhật</a></td>
+                        *@
+                <td>
+                    <a asp-area="Identity" asp-page="./Edit" asp-route-id="@item.Id">Chi tiết</a>@Html.Raw("&emsp;") 
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@await Html.PartialAsync("_PaginPartial", paging)
+   
 @section Scripts{
     @await Html.PartialAsync("_ValidationScriptsPartial")
 }
